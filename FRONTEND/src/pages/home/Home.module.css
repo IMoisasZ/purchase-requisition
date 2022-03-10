@@ -1,0 +1,39 @@
+* {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-a;
+	align-items: center;
+}
+
+.container .div_h1,
+.container .div_p,
+.container .div_button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container .div_p p {
+	font-size: 1.5rem;
+	margin-bottom: 3rem;
+	font-weight: bold;
+	padding: 0;
+}
+
+.container .div_injetaq p {
+	background-color: #4682b4;
+	color: #fff;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	font-size: 3rem;
+	cursor: pointer;
+	transition: 2s;
+}
+
+.container .div_injetaq p:hover {
+	background-color: #fff;
+	color: black;
+}

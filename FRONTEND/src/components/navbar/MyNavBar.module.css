@@ -1,0 +1,54 @@
+.container {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+}
+
+.container .div_logo {
+	display: flex;
+	justify-content: flex-start;
+	margin: 0.5em;
+}
+
+.container .div_logo img {
+	height: 5em;
+	width: 7em;
+	cursor: pointer;
+}
+
+.container .div_list {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+
+.container ul {
+	display: flex;
+}
+
+.container li {
+	margin-right: 2em;
+	list-style: none;
+	padding: 0.5em;
+	border-radius: 0.5em;
+	cursor: pointer;
+	transition: 1s;
+	font-size: 1.5em;
+}
+
+.container li:hover {
+	background-color: #4b0082;
+	color: white;
+}
+
+.container .link {
+	color: #fff;
+	text-decoration: none;
+}
+
+.container .div_avatar {
+	display: flex;
+	justify-content: flex-end;
+	margin: 0.5em;
+	cursor: pointer;
+}
