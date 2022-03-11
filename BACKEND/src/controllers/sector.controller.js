@@ -5,7 +5,7 @@ async function createSector(req, res, next) {
 		const sector = req.body
 
 		if (!sector.sector) {
-			res.status(400).json({ erro: 'Nome do setor é obrigatório!' })
+			res.status(400).json({ error: 'Nome do setor é obrigatório!' })
 		}
 
 		res.send(await SectorService.createSector(sector))
@@ -20,8 +20,12 @@ async function updateSector(req, res, next) {
 	try {
 		const sector = req.body
 
+		if (!sector.sector_id) {
+			res.status(400).json({ error: 'O id do setor é obrigatório!' })
+		}
+
 		if (!sector.sector) {
-			res.status(400).json({ erro: 'Nome do setor é obrigatório!' })
+			res.status(400).json({ error: 'Nome do setor é obrigatório!' })
 		}
 
 		res.send(await SectorService.updateSector(sector))
@@ -52,9 +56,21 @@ async function getSector(req, res, next) {
 	}
 }
 
+async function disableEnable(req, res, next) {
+	try {
+		const sector = req.body
+
+		res.send(await SectorService.disableEnable(sector))
+		logger.info(`PUT - /sector - ${JSON.stringify(sector)}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createSector,
 	updateSector,
 	getSectors,
 	getSector,
+	disableEnable,
 }

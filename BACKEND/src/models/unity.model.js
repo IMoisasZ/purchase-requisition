@@ -12,6 +12,7 @@ const Unity = dbConnection.define(
 		unity_tag: {
 			type: Sequelize.STRING,
 			allowNull: false,
+			unique: true,
 		},
 		description: {
 			type: Sequelize.STRING,

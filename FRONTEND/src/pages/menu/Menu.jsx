@@ -12,7 +12,7 @@ function Menu() {
 					<ul>
 						<li>Cadastros</li>
 						<ul>
-							<Link to='/setor'>
+							<Link to='/sector'>
 								<li>Setor</li>
 							</Link>
 							<Link to='/unity'>

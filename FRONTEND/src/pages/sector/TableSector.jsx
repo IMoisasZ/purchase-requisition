@@ -7,7 +7,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded'
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import api from '../../api/api'
-import style from '../setor/TableSector.module.css'
+import style from './TableSector.module.css'
 
 function TableSector({ edit, show, msg }) {
 	const [listSectors, setListSectors] = useState([])
@@ -23,7 +23,6 @@ function TableSector({ edit, show, msg }) {
 	const startIndex = currentPage * itensPorPagina
 	const endIndex = startIndex + itensPorPagina
 	const currentItens = listSectors.slice(startIndex, endIndex)
-	const numeroRegistros = listSectors.length
 
 	const handleSelectPagination = (e) => {
 		setItensPorPagina(Number(e.currentTarget.value))
@@ -42,8 +41,8 @@ function TableSector({ edit, show, msg }) {
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro,
-				),
+						: error.response.data.erro
+				)
 			)
 		}
 	}
@@ -96,7 +95,8 @@ function TableSector({ edit, show, msg }) {
 											value={setor.sector_id}
 											handleClick={(e) => {
 												handleEditSector(setor.sector_id)
-											}}>
+											}}
+										>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar setor ${setor.sector}`}
@@ -109,10 +109,11 @@ function TableSector({ edit, show, msg }) {
 											width='1.5em'
 											border='none'
 											value={setor.sector_id}
-											handleClick={(e) => {
+											handleClick={() => {
 												setDisable(setor.sector_id)
 												setActived(!setor.actived)
-											}}>
+											}}
+										>
 											{setor.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}

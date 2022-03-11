@@ -7,5 +7,6 @@ route.post('/', SectorController.createSector)
 route.patch('/', SectorController.updateSector)
 route.get('/', SectorController.getSectors)
 route.get('/:sector_id', SectorController.getSector)
+route.put('/', SectorController.disableEnable)
 
 export default route

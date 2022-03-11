@@ -4,7 +4,7 @@ use purchase_requisitions;
 
 create table sector (
 	sector_id int primary key auto_increment,
-    sector varchar(20) not null,
+    sector varchar(20) unique not null,
     actived boolean default true,
     createdAt datetime,
     updatedAt datetime
@@ -22,7 +22,7 @@ create table area (
 
 create table unity (
 	unity_id int primary key auto_increment,
-    unity_tag varchar(5) not null,
+    unity_tag varchar(5) unique not null,
     description varchar(20) not null,
     actived boolean default true,
     createdAt datetime,

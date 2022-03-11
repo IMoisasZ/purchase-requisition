@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import Container from '../../components/MyContainer'
 import Input from '../../components/input/MyInput'
 import CheckBox from '../../components/checkBox/MyCheckBox'
 import Button from '../../components/button/MyButton'
 import Message from '../../components/message/Message'
 import TableSector from './TableSector'
-import style from '../setor/FormSetor.module.css'
+import style from './FormSector.module.css'
 import api from '../../api/api'
 
-function FormSetor() {
+function FormSector() {
 	// create
 	const [id, setId] = useState('')
-	const [setor, setSetor] = useState('')
-	const [ativo, setAtivo] = useState('true')
+	const [sector, setSector] = useState('')
+	const [actived, setActived] = useState('true')
 	const [message, setMessage] = useState(undefined)
 	const [type, setType] = useState(undefined)
 	const [show, setShow] = useState('create')
@@ -24,8 +23,8 @@ function FormSetor() {
 	// edit
 	useEffect(() => {
 		setId(edit.sector_id)
-		setSetor(edit.sector)
-		setAtivo(edit.actived)
+		setSector(edit.sector)
+		setActived(edit.actived)
 	}, [edit])
 
 	useEffect(() => {
@@ -37,19 +36,29 @@ function FormSetor() {
 			setNameButton('Editar')
 		}
 	}, [id])
-	console.log(typeof id)
 
 	// create
 	const handleId = (e) => {
 		setId(() => e.target.value)
 	}
 
-	const handleSetor = (e) => {
-		setSetor(() => e.target.value.toUpperCase())
+	const handleSector = (e) => {
+		setSector(() => e.target.value.toUpperCase())
 	}
 
-	const togleAtivo = () => {
-		setAtivo(!ativo)
+	const togleActived = () => {
+		setActived(!actived)
+	}
+
+	const handleNew = () => {
+		setId('')
+		setSector('')
+		setActived(true)
+		setMessage(undefined)
+		setType(undefined)
+		setNameButton('Incluir')
+		setEdit({})
+		setTypeHttp('post')
 	}
 
 	const submit = async (e) => {
@@ -57,52 +66,40 @@ function FormSetor() {
 		if (typeHttp === 'post') {
 			try {
 				await api.post('sector', {
-					sector: setor,
-					actived: ativo,
+					sector: sector,
+					actived,
 				})
 
 				setType('success')
 				setMessage('Setor incluído com sucesso!')
-				setTimeout(() => {
-					handleNovo()
-				}, 2000)
 			} catch (error) {
-				console.log(error.response.data.erros)
 				if (error.response.data.erros === 'Validation error') {
 					setType('error')
 					setMessage('Setor já cadastrado!')
 				} else {
 					setType('error')
-					setMessage(error.response.data.erros)
+					setMessage(error.response.data.error)
 				}
-				setTimeout(() => {
-					handleNovo()
-				}, 2000)
 			}
 		} else {
 			try {
 				await api.patch('sector', {
 					sector_id: id,
-					sector: setor,
-					actived: ativo,
+					sector,
+					actived,
 				})
 
 				setType('edit')
 				setMessage('Setor alterado com sucesso!')
-				setTimeout(() => {
-					handleNovo()
-				}, 2000)
 			} catch (error) {
+				console.log({ error })
 				if (error.response.data.erros === 'Validation error') {
 					setType('error')
 					setMessage('Setor já cadastrado!')
 				} else {
 					setType('error')
-					setMessage(error.response.data.erros)
+					setMessage(error.response.data.error)
 				}
-				setTimeout(() => {
-					handleNovo()
-				}, 2000)
 			}
 		}
 	}
@@ -112,25 +109,13 @@ function FormSetor() {
 		setShow('list')
 	}
 
-	const handleCadastrarSetor = () => {
+	const handleAddSector = () => {
 		setShow('create')
-	}
-
-	const handleNovo = () => {
-		setId('')
-		setSetor('')
-		setAtivo(true)
-		setMessage(undefined)
-		setType(undefined)
-		setShow('create')
-		setNameButton('Incluir')
-		setEdit({})
-		setTypeHttp('post')
 	}
 
 	if (show === 'create') {
 		return (
-			<Container minHeight='52.5vh'>
+			<>
 				{typeHttp === 'post' ? (
 					<p
 						style={{
@@ -138,7 +123,8 @@ function FormSetor() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Inclusão
 					</p>
 				) : (
@@ -148,7 +134,8 @@ function FormSetor() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Edição
 					</p>
 				)}
@@ -163,20 +150,20 @@ function FormSetor() {
 						disable={true}
 					/>
 					<Input
-						name='setor'
+						name='sector'
 						label='Setor'
-						value={setor}
+						value={sector}
 						type='text'
-						handleChange={handleSetor}
+						handleChange={handleSector}
 						placeholder='Nome do setor'
 						disable={false}
 					/>
 					<CheckBox
 						name='ativo'
 						label='Ativo'
-						value={ativo}
-						togleChange={togleAtivo}
-						checked={ativo && true}
+						value={actived}
+						togleChange={togleActived}
+						checked={actived && true}
 					/>
 					<div className={style.buttons}>
 						<Button type='submt' height='2em' width='4em' marginTop='1em'>
@@ -187,7 +174,8 @@ function FormSetor() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleListSectors}>
+							handleClick={handleListSectors}
+						>
 							Setores
 						</Button>
 						<Button
@@ -195,29 +183,30 @@ function FormSetor() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleNovo}>
+							handleClick={handleNew}
+						>
 							Novo
 						</Button>
 					</div>
 				</form>
 				{message !== undefined ? <Message type={type}>{message}</Message> : ''}
-			</Container>
+			</>
 		)
 	} else {
 		return (
-			<Container minHeight='52.5vh'>
+			<>
 				<TableSector
 					edit={setEdit}
 					value={edit}
 					show={setShow}
 					msg={setMessage}
 				/>
-				<Button handleClick={handleCadastrarSetor} fontSize='1em' width='8em'>
+				<Button handleClick={handleAddSector} fontSize='1em' width='8em'>
 					Cadastrar Setor
 				</Button>
-			</Container>
+			</>
 		)
 	}
 }
 
-export default FormSetor
+export default FormSector

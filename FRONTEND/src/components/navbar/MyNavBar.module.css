@@ -2,6 +2,7 @@
 	display: flex;
 	align-items: center;
 	flex-direction: row;
+	justify-content: space-between;
 }
 
 .container .div_logo {
@@ -51,4 +52,15 @@
 	justify-content: flex-end;
 	margin: 0.5em;
 	cursor: pointer;
+}
+
+.container.div_menu {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.container.div_menu button {
+	cursor: pointer;
+	background-color: transparent;
+	transition: 1s;
 }

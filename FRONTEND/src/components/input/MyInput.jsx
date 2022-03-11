@@ -9,11 +9,13 @@ function MyInput({
 	handleChange,
 	placeholder,
 	disable = false,
+	width,
 }) {
 	return (
 		<div className={style.container}>
 			<label htmlFor={name}>{label}</label>
 			<input
+				style={{ width }}
 				id={name}
 				name={name}
 				value={value}

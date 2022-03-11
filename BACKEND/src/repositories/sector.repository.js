@@ -50,10 +50,30 @@ async function getSectorBySector(sector) {
 	}
 }
 
+async function disableEnable(sector) {
+	try {
+		await SectorModel.update(
+			{
+				sector_id: sector.sector_id,
+				actived: sector.actived,
+			},
+			{
+				where: {
+					sector_id: sector.sector_id,
+				},
+			}
+		)
+		return await getSector(sector.sector_id)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createSector,
 	updateSector,
 	getSectors,
 	getSector,
 	getSectorBySector,
+	disableEnable,
 }

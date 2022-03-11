@@ -15,25 +15,6 @@ function MyNavBar() {
 					</Link>
 				</div>
 
-				<div className={style.div_list}>
-					<ul>
-						<li>
-							<Link className={style.link} to='/cadastros'>
-								Cadastros
-							</Link>
-						</li>
-						<li>
-							<Link className={style.link} to='/requisicao'>
-								Requisição
-							</Link>
-						</li>
-						<li>
-							<Link className={style.link} to='/consultas_relatorios'>
-								Consultas/Relatórios
-							</Link>
-						</li>
-					</ul>
-				</div>
 				<div className={style.div_avatar}>
 					<MyAvatar />
 				</div>

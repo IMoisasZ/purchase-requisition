@@ -6,7 +6,7 @@ import style from './Home.module.css'
 
 function Home() {
 	return (
-		<Container minHeight='62vh'>
+		<Container minHeight='71.3vh'>
 			<div className={style.container}>
 				<div className={style.div_h1}>
 					<h1>Requisição de Compras</h1>

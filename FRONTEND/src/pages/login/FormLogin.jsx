@@ -32,7 +32,7 @@ function FormLogin() {
 	}
 
 	return (
-		<Container minHeight='52.4vh'>
+		<>
 			<form className={style.container} onSubmit={handleSubmit}>
 				<Input
 					name='email'
@@ -64,7 +64,7 @@ function FormLogin() {
 					</Button>
 				</Link>
 			</form>
-		</Container>
+		</>
 	)
 }
 
