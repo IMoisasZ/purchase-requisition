@@ -4,6 +4,7 @@ import Input from '../../components/input/MyInput'
 import CheckBox from '../../components/checkBox/MyCheckBox'
 import Button from '../../components/button/MyButton'
 import Message from '../../components/message/Message'
+import TableUnity from './TableUnity'
 import styles from '../unity/FormUnity.module.css'
 import api from '../../api/api'
 
@@ -15,6 +16,7 @@ function FormUnity() {
 	const [message, setMessage] = useState(undefined)
 	const [type, setType] = useState('')
 	const [editing, setEditing] = useState(false)
+	const [show, setShow] = useState('create')
 
 	const handleId = (e) => {
 		setId(() => e.target.value)
@@ -89,61 +91,76 @@ function FormUnity() {
 			}, 2000)
 		}
 	}
-	return (
-		<Container minHeight='52vh'>
-			<form onSubmit={submit} className={styles.container}>
-				<Input
-					name='id'
-					label='ID'
-					value={id}
-					type='numeric'
-					handleChange={handleId}
-					placeholder='ID'
-					disable={true}
-				/>
-				<Input
-					name='unity'
-					label='Unidade'
-					value={unity}
-					type='text'
-					handleChange={handleUnity}
-					placeholder='Digite a a tag da unidade'
-				/>
-				<Input
-					name='description'
-					label='Descrição'
-					value={description}
-					type='text'
-					handleChange={handleDescription}
-					placeholder='Digite a descrição da unidade'
-				/>
-				<CheckBox
-					name='actived'
-					label='Ativo'
-					value={actived}
-					togleChange={togleActived}
-					checked={actived && true}
-				/>
 
-				<div className={styles.btn}>
-					<Button type='submit'>Incluir</Button>
-					<Button type='button' handleClick={() => setEditing(true)}>
-						Unidades
-					</Button>
-					<Button type='button' handleClick={handleNew}>
-						Novo
-					</Button>
-				</div>
-			</form>
-			{message ? (
-				<Message type={type} width='34em'>
-					{message}
-				</Message>
-			) : (
-				''
-			)}
-		</Container>
-	)
+	if (show === 'create') {
+		return (
+			<Container minHeight='52vh'>
+				<form onSubmit={submit} className={styles.container}>
+					<Input
+						name='id'
+						label='ID'
+						value={id}
+						type='numeric'
+						handleChange={handleId}
+						placeholder='ID'
+						disable={true}
+					/>
+					<Input
+						name='unity'
+						label='Unidade'
+						value={unity}
+						type='text'
+						handleChange={handleUnity}
+						placeholder='Digite a a tag da unidade'
+					/>
+					<Input
+						name='description'
+						label='Descrição'
+						value={description}
+						type='text'
+						handleChange={handleDescription}
+						placeholder='Digite a descrição da unidade'
+					/>
+					<CheckBox
+						name='actived'
+						label='Ativo'
+						value={actived}
+						togleChange={togleActived}
+						checked={actived && true}
+					/>
+
+					<div className={styles.btn}>
+						<Button type='submit'>Incluir</Button>
+						<Button type='button' handleClick={() => setShow('units')}>
+							Unidades
+						</Button>
+						<Button type='button' handleClick={handleNew}>
+							Novo
+						</Button>
+					</div>
+				</form>
+				{message ? (
+					<Message type={type} width='34em'>
+						{message}
+					</Message>
+				) : (
+					''
+				)}
+			</Container>
+		)
+	} else {
+		return (
+			<Container minHeight='52.5vh'>
+				<TableUnity />
+				<Button
+					handleClick={() => setShow('create')}
+					fontSize='1em'
+					width='8em'>
+					Cadastrar Unidade
+				</Button>
+			</Container>
+		)
+	}
 }
 
 export default FormUnity

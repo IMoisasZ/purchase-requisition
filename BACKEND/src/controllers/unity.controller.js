@@ -3,11 +3,11 @@ import UnityService from '../services/unity.service.js'
 async function createUnity(req, res, next) {
 	try {
 		const unity = req.body
-
+		console.log(unity)
 		if (!unity.unity_tag)
-			res.statu(400).json({ error: 'A sigla é obrigatória!' })
-		if (!unity.description)
-			res.statu(400).json({ error: 'A descrição é obrigatória!' })
+			res.status(400).json({ error: 'A sigla é obrigatória!' })
+		// if (!unity.description)
+		// 	res.status(400).json({ error: 'A descrição é obrigatória!' })
 
 		res.send(await UnityService.createUnity(unity))
 		logger.info(`POST - /unity - ${JSON.stringify(unity)}`)
@@ -21,11 +21,11 @@ async function updateUnity(req, res, next) {
 		const unity = req.body
 
 		if (!unity.unity_id)
-			res.statu(400).json({ error: 'O ID da unidade é obrigatória!' })
+			res.status(400).json({ error: 'O ID da unidade é obrigatória!' })
 		if (!unity.unity_tag)
-			res.statu(400).json({ error: 'A sigla é obrigatória!' })
+			res.status(400).json({ error: 'A sigla é obrigatória!' })
 		if (!unity.description)
-			res.statu(400).json({ error: 'A descrição é obrigatória!' })
+			res.status(400).json({ error: 'A descrição é obrigatória!' })
 
 		res.send(await UnityService.updateUnity(unity))
 		logger.info(`PATCH - /unity - ${JSON.stringify(unity)}`)

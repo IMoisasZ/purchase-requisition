@@ -12,6 +12,7 @@ const Unity = dbConnection.define(
 		unity_tag: {
 			type: Sequelize.STRING,
 			allowNull: false,
+			uique: true,
 		},
 		description: {
 			type: Sequelize.STRING,
@@ -22,7 +23,7 @@ const Unity = dbConnection.define(
 			default: true,
 		},
 	},
-	{ tableName: 'unity' }
+	{ tableName: 'unity' },
 )
 
 export default Unity

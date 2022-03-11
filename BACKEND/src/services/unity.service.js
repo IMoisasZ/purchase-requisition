@@ -2,19 +2,6 @@ import UnityRepository from '../repositories/unity.repository.js'
 
 async function createUnity(unity) {
 	try {
-		const foundUnityDescription = await UnityRepository.getUnityByDescription(
-			unity.description,
-		)
-		const foundUnityTag = await UnityRepository.getUnityByTag(unity.description)
-
-		if (foundUnityDescription) {
-			throw new Error(`A unidade ${unity.description} já foi cadastrada!`)
-		}
-
-		if (foundUnityTag) {
-			throw new Error(`A sigla ${unity.unity_tag} já foi cadastrada!`)
-		}
-
 		unity.unity_tag = unity.unity_tag.toUpperCase()
 		unity.description = unity.description.toUpperCase()
 
@@ -26,19 +13,6 @@ async function createUnity(unity) {
 
 async function updateUnity(unity) {
 	try {
-		const foundUnityDescription = await UnityRepository.getUnityByDescription(
-			unity.description,
-		)
-		const foundUnityTag = await UnityRepository.getUnityByTag(unity.description)
-
-		if (foundUnityDescription) {
-			throw new Error(`A unidade ${unity.description} já foi cadastrada!`)
-		}
-
-		if (foundUnityTag) {
-			throw new Error(`A sigla ${unity.unity_tag} já foi cadastrada!`)
-		}
-
 		unity.unity_tag = unity.unity_tag.toUpperCase()
 		unity.description = unity.description.toUpperCase()
 

@@ -1,3 +1,4 @@
+import React from 'react'
 import style from '../pagination/SelectPagination.module.css'
 function SelectPagination({ handleOnChange }) {
 	return (

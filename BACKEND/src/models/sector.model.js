@@ -12,6 +12,7 @@ const Sector = dbConnection.define(
 		sector: {
 			type: Sequelize.STRING,
 			allowNull: false,
+			unique: true,
 		},
 		actived: {
 			type: Sequelize.BOOLEAN,

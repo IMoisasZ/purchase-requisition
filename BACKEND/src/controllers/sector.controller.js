@@ -20,6 +20,10 @@ async function updateSector(req, res, next) {
 	try {
 		const sector = req.body
 
+		if (!sector.sector_id) {
+			res.status(400).json({ erro: 'O id do setor é obrigatório!' })
+		}
+
 		if (!sector.sector) {
 			res.status(400).json({ erro: 'Nome do setor é obrigatório!' })
 		}
@@ -52,9 +56,25 @@ async function getSector(req, res, next) {
 	}
 }
 
+async function disableEnable(req, res, next) {
+	try {
+		const sector = req.body
+
+		if (!sector.sector_id) {
+			res.status(400).json({ error: 'O id do setor deve ser preenchido!' })
+		}
+
+		res.send(await SectorService.disableEnable(sector))
+		logger.info(`PACTH - /sector - ${JSON.stringify(sector)}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createSector,
 	updateSector,
 	getSectors,
 	getSector,
+	disableEnable,
 }
