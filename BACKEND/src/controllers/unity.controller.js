@@ -26,7 +26,7 @@ async function updateUnity(req, res, next) {
 			res.status(400).json({ error: 'O ID da unidade é obrigatória!' })
 		}
 		if (!unity.unity_tag) {
-			res.status(400).json({ error: 'A sigla é obrigatória!' })
+			res.status(400).json({ error: 'A unidade é obrigatória!' })
 		}
 		if (!unity.description) {
 			res.status(400).json({ error: 'A descrição é obrigatória!' })

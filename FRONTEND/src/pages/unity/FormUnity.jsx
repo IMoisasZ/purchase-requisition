@@ -4,7 +4,7 @@ import Input from '../../components/input/MyInput'
 import CheckBox from '../../components/checkBox/MyCheckBox'
 import Button from '../../components/button/MyButton'
 import Message from '../../components/message/Message'
-import TableUnity from './TableUity'
+import TableUnity from './TableUnity'
 import styles from '../unity/FormUnity.module.css'
 import api from '../../api/api'
 
@@ -167,9 +167,16 @@ function FormUnity() {
 		)
 	} else {
 		return (
-			<Container minHeight='52vh'>
+			<>
 				<TableUnity />
-			</Container>
+				<Button
+					handleClick={() => setShow('create')}
+					fontSize='1em'
+					width='8em'
+				>
+					Cadastrar Unidade
+				</Button>
+			</>
 		)
 	}
 }
