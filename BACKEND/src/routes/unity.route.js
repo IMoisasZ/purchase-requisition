@@ -7,5 +7,6 @@ route.post('/', UnityController.createUnity)
 route.patch('/', UnityController.updateUnity)
 route.get('/', UnityController.getUnits)
 route.get('/:unity_id', UnityController.getUnity)
+route.put('/', UnityController.disableEnable)
 
 export default route

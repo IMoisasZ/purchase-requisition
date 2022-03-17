@@ -4,7 +4,7 @@ import FormUnity from './FormUnity'
 
 function Unity() {
 	return (
-		<Container>
+		<Container minHeight='72vh'>
 			<h1 style={{ textAlign: 'center' }}>Unidade</h1>
 			<FormUnity />
 		</Container>

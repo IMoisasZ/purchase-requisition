@@ -38,9 +38,24 @@ async function getUnity(unity_id) {
 	} catch (error) {}
 }
 
+async function disableEnable(unity) {
+	try {
+		const result = await UnityRepository.getUnity(unity.unity_id)
+
+		if (!result) {
+			throw new Error(`Unidade inexistente!`)
+		}
+
+		return await UnityRepository.disableEnable(unity)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createUnity,
 	updateUnity,
 	getUnits,
 	getUnity,
+	disableEnable,
 }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Container from '../../components/MyContainer'
 import Input from '../../components/input/MyInput'
 import Button from '../../components/button/MyButton'
 import style from '../login/FormLogin.module.css'

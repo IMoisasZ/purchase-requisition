@@ -18,7 +18,7 @@ function Menu() {
 							<Link to='/unity'>
 								<li>Unidade</li>
 							</Link>
-							<Link to='area'>
+							<Link to='/area'>
 								<li>Area</li>
 							</Link>
 							<Link to='perfil_usuario'>

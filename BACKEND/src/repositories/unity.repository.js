@@ -62,6 +62,25 @@ async function getUnityByTag(unity) {
 	}
 }
 
+async function disableEnable(unity) {
+	try {
+		await UnityModel.update(
+			{
+				unity_id: unity.unity_id,
+				actived: unity.actived,
+			},
+			{
+				where: {
+					unity_id: unity.unity_id,
+				},
+			},
+		)
+		return await getUnity(unity.unity_id)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createUnity,
 	updateUnity,
@@ -69,4 +88,5 @@ export default {
 	getUnity,
 	getUnityByDescription,
 	getUnityByTag,
+	disableEnable,
 }

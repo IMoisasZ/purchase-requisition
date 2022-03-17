@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import Container from '../../components/MyContainer'
+import React, { useEffect, useState } from 'react'
 import Input from '../../components/input/MyInput'
 import CheckBox from '../../components/checkBox/MyCheckBox'
 import Button from '../../components/button/MyButton'
@@ -15,8 +14,10 @@ function FormUnity() {
 	const [actived, setActived] = useState(true)
 	const [message, setMessage] = useState(undefined)
 	const [type, setType] = useState('')
-	const [editing, setEditing] = useState(false)
 	const [show, setShow] = useState('create')
+	const [edit, setEdit] = useState({})
+	const [nameBtn, setNameBtn] = useState('Incluir')
+	const [state, setState] = useState('Inclusão')
 
 	const handleId = (e) => {
 		setId(() => e.target.value)
@@ -34,6 +35,10 @@ function FormUnity() {
 		setActived(!actived)
 	}
 
+	const handleListUnits = () => {
+		setShow('units')
+	}
+
 	const handleNew = () => {
 		setId('')
 		setUnity('')
@@ -41,12 +46,25 @@ function FormUnity() {
 		setActived(true)
 		setMessage(undefined)
 		setType('')
-		setEditing(false)
+		setNameBtn('Incluir')
+		setState('Inclusão')
 	}
+
+	useEffect(() => {
+		setId(edit.unity_id)
+		setUnity(edit.unity_tag)
+		setDescription(edit.description)
+		setActived(edit.actived)
+	}, [edit])
+
+	useEffect(() => {
+		setNameBtn('Incluir')
+		setState('Inclusão')
+	}, [])
 
 	const submit = async (e) => {
 		e.preventDefault()
-		if (!editing) {
+		if (id === '') {
 			try {
 				await api.post('unity', {
 					unity_tag: unity,
@@ -75,7 +93,7 @@ function FormUnity() {
 					description,
 					actived,
 				})
-				setType('success')
+				setType('edit')
 				setMessage('Unidade alterada com sucesso!')
 			} catch (error) {
 				if (error.response.data.erros === 'Validation error') {
@@ -95,6 +113,27 @@ function FormUnity() {
 	if (show === 'create') {
 		return (
 			<>
+				{state === 'Inclusão' ? (
+					<p
+						style={{
+							color: 'green',
+							fontSize: '1.5em',
+							textAlign: 'center',
+							margin: '0',
+						}}>
+						Inclusão
+					</p>
+				) : (
+					<p
+						style={{
+							color: 'orange',
+							fontSize: '1.5em',
+							textAlign: 'center',
+							margin: '0',
+						}}>
+						Edição
+					</p>
+				)}
 				<form onSubmit={submit} className={styles.container}>
 					<Input
 						name='id'
@@ -134,15 +173,14 @@ function FormUnity() {
 
 					<div className={styles.btn}>
 						<Button type='submt' height='2em' width='4em' marginTop='1em'>
-							Incluir
+							{nameBtn}
 						</Button>
 						<Button
 							type='button'
 							height='2em'
 							width='5em'
 							marginTop='1em'
-							handleClick={() => setShow('units')}
-						>
+							handleClick={handleListUnits}>
 							Unidades
 						</Button>
 						<Button
@@ -150,8 +188,7 @@ function FormUnity() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleNew}
-						>
+							handleClick={handleNew}>
 							Novo
 						</Button>
 					</div>
@@ -168,12 +205,18 @@ function FormUnity() {
 	} else {
 		return (
 			<>
-				<TableUnity />
+				<TableUnity
+					edit={setEdit}
+					value={edit}
+					show={setShow}
+					msg={setMessage}
+					state={setState}
+					btn={setNameBtn}
+				/>
 				<Button
 					handleClick={() => setShow('create')}
 					fontSize='1em'
-					width='8em'
-				>
+					width='8em'>
 					Cadastrar Unidade
 				</Button>
 			</>

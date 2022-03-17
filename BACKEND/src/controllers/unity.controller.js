@@ -57,9 +57,21 @@ async function getUnity(req, res, next) {
 	}
 }
 
+async function disableEnable(req, res, next) {
+	try {
+		const unity = req.body
+
+		res.send(await UnityService.disableEnable(unity))
+		logger.info(`PUT - /unity - ${JSON.stringify(unity)}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createUnity,
 	updateUnity,
 	getUnits,
 	getUnity,
+	disableEnable,
 }

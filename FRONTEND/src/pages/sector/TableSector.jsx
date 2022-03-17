@@ -41,8 +41,8 @@ function TableSector({ edit, show, msg }) {
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro
-				)
+						: error.response.data.erro,
+				),
 			)
 		}
 	}
@@ -71,7 +71,7 @@ function TableSector({ edit, show, msg }) {
 		return (
 			<div className={style.container}>
 				<table>
-					<caption>Lista de Setores</caption>
+					<caption>Lista de sectores</caption>
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -81,25 +81,24 @@ function TableSector({ edit, show, msg }) {
 						</tr>
 					</thead>
 					<tbody>
-						{currentItens.map((setor) => {
+						{currentItens.map((sector) => {
 							return (
-								<tr key={setor.sector_id}>
-									<td>{setor.sector_id}</td>
-									<td>{setor.sector}</td>
-									<td>{setor.actived ? 'Sim' : 'Não'}</td>
+								<tr key={sector.sector_id}>
+									<td>{sector.sector_id}</td>
+									<td>{sector.sector}</td>
+									<td>{sector.actived ? 'Sim' : 'Não'}</td>
 									<td>
 										<Button
 											height='1.5em'
 											width='1.5em'
 											border='none'
-											value={setor.sector_id}
+											value={sector.sector_id}
 											handleClick={(e) => {
-												handleEditSector(setor.sector_id)
-											}}
-										>
+												handleEditSector(sector.sector_id)
+											}}>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
-												titleAccess={`Editar setor ${setor.sector}`}
+												titleAccess={`Editar setor ${sector.sector}`}
 											/>
 										</Button>
 									</td>
@@ -108,21 +107,20 @@ function TableSector({ edit, show, msg }) {
 											height='1.5em'
 											width='1.5em'
 											border='none'
-											value={setor.sector_id}
+											value={sector.sector_id}
 											handleClick={() => {
-												setDisable(setor.sector_id)
-												setActived(!setor.actived)
-											}}
-										>
-											{setor.actived ? (
+												setDisable(sector.sector_id)
+												setActived(!sector.actived)
+											}}>
+											{sector.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}
-													titleAccess={`Setor ${setor.sector} ativado!`}
+													titleAccess={`Setor ${sector.sector} ativado!`}
 												/>
 											) : (
 												<DisabledByDefaultRoundedIcon
 													style={{ color: 'red' }}
-													titleAccess={`Setor ${setor.sector} desativado!`}
+													titleAccess={`Setor ${sector.sector} desativado!`}
 												/>
 											)}
 										</Button>
