@@ -3,6 +3,7 @@ import Input from '../../components/input/MyInput'
 import Select from '../../components/select/MySelect'
 import CheckBox from '../../components/checkBox/MyCheckBox'
 import Button from '../../components/button/MyButton'
+import TableArea from './TableArea'
 import api from '../../api/api'
 import style from '../area/FormArea.module.css'
 import Message from '../../components/message/Message'
@@ -19,10 +20,22 @@ function FormArea() {
 	const [message, setMessage] = useState(undefined)
 	const [type, setType] = useState(undefined)
 	const [btnDisable, setBtnDisable] = useState(false)
+	const [edit, setEdit] = useState({})
+
+	useEffect(() => {
+		setId(edit.area_id)
+		setArea(edit.area)
+		setSector(edit.sector_id)
+		setActived(edit.actived)
+	}, [edit])
 
 	useEffect(() => {
 		allSector()
 	}, [])
+
+	const togleActived = () => {
+		setActived(!actived)
+	}
 
 	const allSector = async () => {
 		const result = await api.get('/sector')
@@ -65,86 +78,108 @@ function FormArea() {
 			setMessage('Area incluída com sucesso!')
 			time()
 		} catch (error) {
+			console.log({ error })
 			setType('error')
-			error.response.data.error
-				? setMessage(error.response.data.error)
-				: setMessage(error.response.data.erros)
+			error.response.data.error && setMessage(error.response.data.error)
+			error.response.data.erros === 'Validation error'
+				? setMessage('Area já cadastrada!')
+				: setMessage(error.response.data.error)
 		}
 		time()
 	}
 
-	return (
-		<>
-			<form className={style.container} onSubmit={submit}>
-				<Input
-					label='ID'
-					name='id'
-					value={id}
-					type='numeric'
-					placeholder='ID'
-					disable={true}
-					handleChange={(e) => setId(e.target.value)}
+	const handleAddArea = () => {
+		setShow('create')
+	}
+
+	if (show === 'create') {
+		return (
+			<>
+				<form className={style.container} onSubmit={submit}>
+					<Input
+						label='ID'
+						name='id'
+						value={id}
+						type='numeric'
+						placeholder='ID'
+						disable={true}
+						handleChange={(e) => setId(e.target.value)}
+					/>
+					<Input
+						label='Area'
+						name='area'
+						value={area}
+						type='text'
+						placeholder='Digite a area'
+						disable={false}
+						handleChange={(e) => setArea(e.target.value.toUpperCase())}
+					/>
+					<Select
+						text='Setor'
+						name='sector'
+						value={sector}
+						handleChange={(e) => setSector(e.target.value)}
+						initial_text='Escolha um setor...'>
+						{listSector.map((sector) => {
+							return (
+								<option key={sector.sector_id} value={sector.sector_id}>
+									{sector.sector}
+								</option>
+							)
+						})}
+					</Select>
+					<CheckBox
+						name='actived'
+						label='Ativo'
+						value={actived}
+						checked={actived && true}
+						togleChange={togleActived}
+					/>
+					<div className={style.buttons}>
+						<Button
+							type='submt'
+							height='2em'
+							width='4em'
+							marginTop='1em'
+							disable={btnDisable && true}>
+							{nameButton}
+						</Button>
+						<Button
+							type='button'
+							height='2em'
+							width='4em'
+							marginTop='1em'
+							handleClick={handleListAreas}>
+							Setores
+						</Button>
+						<Button
+							type='button'
+							height='2em'
+							width='4em'
+							marginTop='1em'
+							handleClick={handleNew}>
+							Novo
+						</Button>
+					</div>
+				</form>
+				{message !== undefined ? <Message type={type}>{message}</Message> : ''}
+			</>
+		)
+	} else {
+		return (
+			<>
+				<TableArea
+					edit={setEdit}
+					value={edit}
+					show={setShow}
+					msg={setMessage}
 				/>
-				<Input
-					label='Area'
-					name='area'
-					value={area}
-					type='text'
-					placeholder='Digite a area'
-					disable={false}
-					handleChange={(e) => setArea(e.target.value.toUpperCase())}
-				/>
-				<Select
-					text='Setor'
-					name='sector'
-					value={sector}
-					handleChange={(e) => setSector(e.target.value)}
-					initial_text='Escolha um setor...'>
-					{listSector.map((sector) => {
-						return (
-							<option key={sector.sector_id} value={sector.sector_id}>
-								{sector.sector}
-							</option>
-						)
-					})}
-				</Select>
-				<CheckBox
-					name='actived'
-					label='Ativo'
-					value={actived}
-					checked={actived && true}
-					togleChange={(e) => setActived(e.target.value)}
-				/>
-				<div className={style.buttons}>
-					<Button
-						type='submt'
-						height='2em'
-						width='4em'
-						marginTop='1em'
-						disable={btnDisable && true}>
-						{nameButton}
-					</Button>
-					<Button
-						type='button'
-						height='2em'
-						width='4em'
-						marginTop='1em'
-						handleClick={handleListAreas}>
-						Setores
-					</Button>
-					<Button
-						type='button'
-						height='2em'
-						width='4em'
-						marginTop='1em'
-						handleClick={handleNew}>
-						Novo
-					</Button>
-				</div>
-			</form>
-			{message !== undefined ? <Message type={type}>{message}</Message> : ''}
-		</>
-	)
+				<Button handleClick={handleAddArea} fontSize='1em' width='8em'>
+					Cadastrar Area
+				</Button>
+			</>
+		)
+	}
 }
 
 export default FormArea
