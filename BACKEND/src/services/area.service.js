@@ -3,17 +3,6 @@ import SectorRepository from '../repositories/sector.repository.js'
 
 async function createArea(area) {
 	try {
-		const foundArea = await AreaRepository.getAreaByArea(area.area)
-		const foundSector = await SectorRepository.getSector(area.sector_id)
-
-		if (foundArea) {
-			throw new Error('Area já cadastrada!')
-		}
-
-		if (!foundSector) {
-			throw new Error('Setor inexistente!')
-		}
-
 		area.area = area.area.toUpperCase()
 
 		return await AreaRepository.createArea(area)
@@ -24,17 +13,6 @@ async function createArea(area) {
 
 async function updateArea(area) {
 	try {
-		const foundArea = await AreaRepository.getAreaByArea(area.area)
-		const foundSector = await SectorRepository.getSector(area.sector_id)
-
-		if (foundArea) {
-			throw new Error('Area já cadastrada!')
-		}
-
-		if (!foundSector) {
-			throw new Error('Setor inexistente!')
-		}
-
 		area.area = area.area.toUpperCase()
 
 		return await AreaRepository.updateArea(area)
