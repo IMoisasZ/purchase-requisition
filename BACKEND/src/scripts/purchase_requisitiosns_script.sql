@@ -12,7 +12,7 @@ create table sector (
 
 create table area (
 	area_id int primary key auto_increment,
-    area varchar(30) not null,
+    area varchar(30) not null unique,
     sector_id int not null,
     foreign key(sector_id) references sector(sector_id),
     actived boolean default true,
