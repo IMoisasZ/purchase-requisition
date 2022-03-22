@@ -13,6 +13,7 @@ const Area = dbConnection.define(
 		area: {
 			type: Sequelize.STRING,
 			allowNull: false,
+			unique: true,
 		},
 		sector_id: {
 			type: Sequelize.INTEGER,
