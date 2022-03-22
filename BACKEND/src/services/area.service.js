@@ -35,9 +35,14 @@ async function getArea(area_id) {
 	return result
 }
 
+async function disableEnable(area) {
+	return await AreaRepository.disableEnable(area)
+}
+
 export default {
 	createArea,
 	updateArea,
 	getAreas,
 	getArea,
+	disableEnable,
 }

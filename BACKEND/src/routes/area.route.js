@@ -7,5 +7,6 @@ route.post('/', AreaController.createArea)
 route.patch('/', AreaController.updateArea)
 route.get('/', AreaController.getAreas)
 route.get('/:area_id', AreaController.getArea)
+route.put('/', AreaController.disableEnable)
 
 export default route

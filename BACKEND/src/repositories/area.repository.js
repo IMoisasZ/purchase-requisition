@@ -63,10 +63,30 @@ async function getAreaByArea(area) {
 	}
 }
 
+async function disableEnable(area) {
+	try {
+		await AreaModel.update(
+			{
+				area_id: area.area_id,
+				actived: area.actived,
+			},
+			{
+				where: {
+					area_id: area.area_id,
+				},
+			},
+		)
+		return await getArea(area.area_id)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createArea,
 	updateArea,
 	getAreas,
 	getArea,
 	getAreaByArea,
+	disableEnable,
 }

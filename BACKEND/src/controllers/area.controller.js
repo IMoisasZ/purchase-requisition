@@ -50,9 +50,21 @@ async function getArea(req, res, next) {
 	}
 }
 
+async function disableEnable(req, res, next) {
+	try {
+		const area = req.body
+
+		res.send(await AreaService.disableEnable(area))
+		logger.info(`PUT /area - ${JSON.stringify(area)}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createArea,
 	updateArea,
 	getAreas,
 	getArea,
+	disableEnable,
 }
