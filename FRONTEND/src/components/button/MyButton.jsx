@@ -6,6 +6,7 @@ export default function MyButton({
 	type = 'button',
 	handleClick,
 	value,
+	disable = false,
 	height = '3em',
 	width = '6em',
 	marginTop,
@@ -17,7 +18,8 @@ export default function MyButton({
 			<button
 				className={style.button}
 				type={type}
-				value
+				value={value}
+				disabled={disable}
 				onClick={handleClick}
 				style={{ height, width, marginTop, fontSize, border }}>
 				{children}

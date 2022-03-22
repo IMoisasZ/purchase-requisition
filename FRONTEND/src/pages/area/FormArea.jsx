@@ -18,6 +18,8 @@ function FormArea() {
 	const [show, setShow] = useState('create')
 	const [message, setMessage] = useState(undefined)
 	const [type, setType] = useState(undefined)
+	const [btnDisable, setBtnDisable] = useState(false)
+
 	useEffect(() => {
 		allSector()
 	}, [])
@@ -40,6 +42,15 @@ function FormArea() {
 		setMessage(undefined)
 		setType(undefined)
 		setShow('create')
+		setBtnDisable(false)
+		clearTimeout(time)
+	}
+
+	const time = () => {
+		setBtnDisable(true)
+		setTimeout(() => {
+			handleNew()
+		}, 2000)
 	}
 
 	const submit = async (e) => {
@@ -52,18 +63,14 @@ function FormArea() {
 			setListArea(result.data)
 			setType('success')
 			setMessage('Area incluída com sucesso!')
-			setTimeout(() => {
-				handleNew()
-			}, 2000)
+			time()
 		} catch (error) {
 			setType('error')
 			error.response.data.error
 				? setMessage(error.response.data.error)
 				: setMessage(error.response.data.erros)
 		}
-		setTimeout(() => {
-			handleNew()
-		}, 2000)
+		time()
 	}
 
 	return (
@@ -92,8 +99,7 @@ function FormArea() {
 					name='sector'
 					value={sector}
 					handleChange={(e) => setSector(e.target.value)}
-					initial_text='Escolha um setor...'
-				>
+					initial_text='Escolha um setor...'>
 					{listSector.map((sector) => {
 						return (
 							<option key={sector.sector_id} value={sector.sector_id}>
@@ -110,7 +116,12 @@ function FormArea() {
 					togleChange={(e) => setActived(e.target.value)}
 				/>
 				<div className={style.buttons}>
-					<Button type='submt' height='2em' width='4em' marginTop='1em'>
+					<Button
+						type='submt'
+						height='2em'
+						width='4em'
+						marginTop='1em'
+						disable={btnDisable && true}>
 						{nameButton}
 					</Button>
 					<Button
@@ -118,8 +129,7 @@ function FormArea() {
 						height='2em'
 						width='4em'
 						marginTop='1em'
-						handleClick={handleListAreas}
-					>
+						handleClick={handleListAreas}>
 						Setores
 					</Button>
 					<Button
@@ -127,8 +137,7 @@ function FormArea() {
 						height='2em'
 						width='4em'
 						marginTop='1em'
-						handleClick={handleNew}
-					>
+						handleClick={handleNew}>
 						Novo
 					</Button>
 				</div>
