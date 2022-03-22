@@ -25,7 +25,13 @@ async function updateArea(area) {
 
 async function getAreas() {
 	try {
-		return await AreaModel.findAll()
+		return await AreaModel.findAll({
+			include: [
+				{
+					model: SectorModel,
+				},
+			],
+		})
 	} catch (error) {
 		throw error
 	}
