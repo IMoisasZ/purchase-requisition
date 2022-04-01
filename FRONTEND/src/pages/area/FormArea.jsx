@@ -14,8 +14,9 @@ function FormArea() {
 	const [sector, setSector] = useState('')
 	const [actived, setActived] = useState(true)
 	const [listSector, setListSector] = useState([])
-	const [listArea, setListArea] = useState([])
-	const [nameButton, setNameButton] = useState('Incluir')
+	// const [listArea, setListArea] = useState([])
+	const [nameButton, setNameBtn] = useState('Incluir')
+	const [state, setState] = useState('Inclusão')
 	const [show, setShow] = useState('create')
 	const [message, setMessage] = useState(undefined)
 	const [type, setType] = useState(undefined)
@@ -31,6 +32,11 @@ function FormArea() {
 
 	useEffect(() => {
 		allSector()
+	}, [])
+
+	useEffect(() => {
+		setNameBtn('Incluir')
+		setState('Inclusão')
 	}, [])
 
 	const togleActived = () => {
@@ -56,6 +62,7 @@ function FormArea() {
 		setType(undefined)
 		setShow('create')
 		setBtnDisable(false)
+		setState('Inclusão')
 		clearTimeout(time)
 	}
 
@@ -68,25 +75,50 @@ function FormArea() {
 
 	const submit = async (e) => {
 		e.preventDefault()
-		try {
-			const result = await api.post('/area', {
-				area,
-				sector_id: sector,
-			})
-			setListArea(result.data)
-			setType('success')
-			setMessage('Area incluída com sucesso!')
-			time()
-		} catch (error) {
-			console.log({ error })
-			setType('error')
-			error.response.data.error && setMessage(error.response.data.error)
-			error.response.data.erros === 'Validation error'
-				? setMessage('Area já cadastrada!')
-				: setMessage(error.response.data.error)
+		if (id === '') {
+			try {
+				await api.post('area', {
+					area,
+					sector_id: sector,
+					actived,
+				})
+				// setListArea(result.data)
+				setType('success')
+				setMessage('Area incluída com sucesso!')
+				// time()
+			} catch (error) {
+				console.log({ error })
+				setType('error')
+				error.response.data.error && setMessage(error.response.data.error)
+				error.response.data.erros === 'Validation error'
+					? setMessage('Area já cadastrada!')
+					: setMessage(error.response.data.error)
+			}
+			// time()
+		} else {
+			try {
+				await api.patch('area', {
+					area_id: id,
+					area,
+					sector_id: sector,
+					actived,
+				})
+				setType('edit')
+				setMessage('Área alterada com sucesso!')
+			} catch (error) {
+				if (error.response.data.erros === 'Validation error') {
+					setType('error')
+					setMessage('Área já cadastrada!')
+				} else {
+					setType('error')
+					setMessage(error.response.data.erros)
+				}
+			}
+			// time()
 		}
-		time()
 	}
+
+	console.log(message)
 
 	const handleAddArea = () => {
 		setShow('create')
@@ -95,15 +127,39 @@ function FormArea() {
 	if (show === 'create') {
 		return (
 			<>
+				{state === 'Inclusão' ? (
+					<p
+						style={{
+							color: 'green',
+							fontSize: '1.5em',
+							textAlign: 'center',
+							margin: '0',
+						}}
+					>
+						Inclusão
+					</p>
+				) : (
+					<p
+						style={{
+							color: 'orange',
+							fontSize: '1.5em',
+							textAlign: 'center',
+							margin: '0',
+						}}
+					>
+						Edição
+					</p>
+				)}
 				<form className={style.container} onSubmit={submit}>
 					<Input
-						label='ID'
+						label=''
 						name='id'
-						value={id}
+						value=''
 						type='numeric'
 						placeholder='ID'
 						disable={true}
 						handleChange={(e) => setId(e.target.value)}
+						hide={true}
 					/>
 					<Input
 						label='Area'
@@ -119,7 +175,8 @@ function FormArea() {
 						name='sector'
 						value={sector}
 						handleChange={(e) => setSector(e.target.value)}
-						initial_text='Escolha um setor...'>
+						initial_text='Escolha um setor...'
+					>
 						{listSector.map((sector) => {
 							return (
 								<option key={sector.sector_id} value={sector.sector_id}>
@@ -141,7 +198,8 @@ function FormArea() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							disable={btnDisable && true}>
+							disable={btnDisable && true}
+						>
 							{nameButton}
 						</Button>
 						<Button
@@ -149,20 +207,28 @@ function FormArea() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleListAreas}>
-							Setores
+							handleClick={handleListAreas}
+						>
+							Áreas
 						</Button>
 						<Button
 							type='button'
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleNew}>
+							handleClick={handleNew}
+						>
 							Novo
 						</Button>
 					</div>
 				</form>
-				{message !== undefined ? <Message type={type}>{message}</Message> : ''}
+				{message ? (
+					<Message type={type} width='29em'>
+						{message}
+					</Message>
+				) : (
+					''
+				)}
 			</>
 		)
 	} else {
@@ -173,6 +239,8 @@ function FormArea() {
 					value={edit}
 					show={setShow}
 					msg={setMessage}
+					state={setState}
+					btn={setNameBtn}
 				/>
 				<Button handleClick={handleAddArea} fontSize='1em' width='8em'>
 					Cadastrar Area

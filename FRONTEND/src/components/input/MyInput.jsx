@@ -10,6 +10,7 @@ function MyInput({
 	placeholder,
 	disable = false,
 	width,
+	hide = false,
 }) {
 	return (
 		<div className={style.container}>
@@ -23,6 +24,7 @@ function MyInput({
 				onChange={handleChange}
 				placeholder={placeholder}
 				disabled={disable}
+				hidden={hide}
 			/>
 		</div>
 	)

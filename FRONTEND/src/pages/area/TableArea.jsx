@@ -9,7 +9,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import api from '../../api/api'
 import style from './TableArea.module.css'
 
-function TableArea({ edit, show, msg }) {
+function TableArea({ edit, show, msg, state, btn }) {
 	const [listAreas, setListAreas] = useState([])
 	const [disable, setDisable] = useState({})
 	const [actived, setActived] = useState(true)
@@ -35,14 +35,16 @@ function TableArea({ edit, show, msg }) {
 			edit(result.data)
 			show('create')
 			msg(undefined)
+			state('Edição')
+			btn('Editar')
 		} catch (error) {
 			setType('error')
 			setMessage(
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro,
-				),
+						: error.response.data.erro
+				)
 			)
 		}
 	}
@@ -97,7 +99,8 @@ function TableArea({ edit, show, msg }) {
 											value={area.area_id}
 											handleClick={(e) => {
 												handleEditArea(area.area_id)
-											}}>
+											}}
+										>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar area ${area.area}`}
@@ -113,7 +116,8 @@ function TableArea({ edit, show, msg }) {
 											handleClick={() => {
 												setDisable(area.area_id)
 												setActived(!area.actived)
-											}}>
+											}}
+										>
 											{area.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}

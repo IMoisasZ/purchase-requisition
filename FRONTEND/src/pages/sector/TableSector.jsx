@@ -41,8 +41,8 @@ function TableSector({ edit, show, msg }) {
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro,
-				),
+						: error.response.data.erro
+				)
 			)
 		}
 	}
@@ -71,7 +71,7 @@ function TableSector({ edit, show, msg }) {
 		return (
 			<div className={style.container}>
 				<table>
-					<caption>Lista de sectores</caption>
+					<caption>Lista de setores</caption>
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -95,7 +95,8 @@ function TableSector({ edit, show, msg }) {
 											value={sector.sector_id}
 											handleClick={(e) => {
 												handleEditSector(sector.sector_id)
-											}}>
+											}}
+										>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar setor ${sector.sector}`}
@@ -111,7 +112,8 @@ function TableSector({ edit, show, msg }) {
 											handleClick={() => {
 												setDisable(sector.sector_id)
 												setActived(!sector.actived)
-											}}>
+											}}
+										>
 											{sector.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}

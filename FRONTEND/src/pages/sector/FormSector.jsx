@@ -140,15 +140,18 @@ function FormSector() {
 					</p>
 				)}
 				<form className={style.container} onSubmit={submit}>
-					<Input
-						name='id'
-						label='ID'
-						value={id}
-						type='numeric'
-						handleChange={handleId}
-						placeholder='ID'
-						disable={true}
-					/>
+					<div>
+						<Input
+							name='id'
+							label='ID'
+							value={id}
+							type='numeric'
+							handleChange={handleId}
+							placeholder='ID'
+							disable={true}
+							hide={true}
+						/>
+					</div>
 					<Input
 						name='sector'
 						label='Setor'

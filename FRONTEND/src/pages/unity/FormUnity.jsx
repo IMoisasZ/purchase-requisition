@@ -120,7 +120,8 @@ function FormUnity() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Inclusão
 					</p>
 				) : (
@@ -130,20 +131,22 @@ function FormUnity() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Edição
 					</p>
 				)}
 				<form onSubmit={submit} className={styles.container}>
 					<Input
 						name='id'
-						label='ID'
-						value={id}
+						label=''
+						value=''
 						type='numeric'
 						handleChange={handleId}
 						placeholder='ID'
 						disable={true}
 						width='32em'
+						hide={true}
 					/>
 					<Input
 						name='unity'
@@ -180,7 +183,8 @@ function FormUnity() {
 							height='2em'
 							width='5em'
 							marginTop='1em'
-							handleClick={handleListUnits}>
+							handleClick={handleListUnits}
+						>
 							Unidades
 						</Button>
 						<Button
@@ -188,7 +192,8 @@ function FormUnity() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleNew}>
+							handleClick={handleNew}
+						>
 							Novo
 						</Button>
 					</div>
@@ -216,7 +221,8 @@ function FormUnity() {
 				<Button
 					handleClick={() => setShow('create')}
 					fontSize='1em'
-					width='8em'>
+					width='8em'
+				>
 					Cadastrar Unidade
 				</Button>
 			</>
