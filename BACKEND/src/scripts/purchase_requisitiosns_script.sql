@@ -4,7 +4,7 @@ use purchase_requisitions;
 
 create table sector (
 	sector_id int primary key auto_increment,
-    sector varchar(20) unique not null,
+    sector varchar(30) unique not null,
     actived boolean default true,
     createdAt datetime,
     updatedAt datetime
