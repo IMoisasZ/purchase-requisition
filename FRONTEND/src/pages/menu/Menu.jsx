@@ -21,7 +21,7 @@ function Menu() {
 							<Link to='/area'>
 								<li>Area</li>
 							</Link>
-							<Link to='perfil_usuario'>
+							<Link to='/role'>
 								<li>Perfil de Usuário</li>
 							</Link>
 							<Link to='usuario'>
