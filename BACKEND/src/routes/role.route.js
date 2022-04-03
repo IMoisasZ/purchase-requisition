@@ -7,5 +7,6 @@ route.post('/', RoleController.createRole)
 route.patch('/', RoleController.updateRole)
 route.get('/', RoleController.getRoles)
 route.get('/:role_id', RoleController.getRole)
+route.put('/', RoleController.disableEnable)
 
 export default route

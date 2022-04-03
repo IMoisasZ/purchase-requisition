@@ -12,6 +12,7 @@ const Role = dbConnection.define(
 		role: {
 			type: Sequelize.STRING,
 			allowNull: false,
+			unique: true,
 		},
 		actived: {
 			type: Sequelize.BOOLEAN,

@@ -2,12 +2,6 @@ import RoleRepositry from '../repositories/role.repository.js'
 
 async function createRole(role) {
 	try {
-		const foundRole = await RoleRepositry.getRoleByRole(role.role)
-
-		if (foundRole) {
-			throw new Error('Perfil de usuário já cadastrado!')
-		}
-
 		role.role = role.role.toUpperCase()
 
 		return await RoleRepositry.createRole(role)
@@ -18,12 +12,6 @@ async function createRole(role) {
 
 async function updateRole(role) {
 	try {
-		const foundRole = await RoleRepositry.getRoleByRole(role.role)
-
-		if (foundRole) {
-			throw new Error('Perfil de usuário já cadastrado!')
-		}
-
 		role.role = role.role.toUpperCase()
 
 		return await RoleRepositry.updateRole(role)
@@ -50,9 +38,14 @@ async function getRole(role_id) {
 	}
 }
 
+async function disableEnable(role) {
+	return await RoleRepositry.disableEnable(role)
+}
+
 export default {
 	createRole,
 	updateRole,
 	getRoles,
 	getRole,
+	disableEnable,
 }

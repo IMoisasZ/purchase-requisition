@@ -52,9 +52,20 @@ async function getRole(req, res, next) {
 	}
 }
 
+async function disableEnable(req, res, next) {
+	try {
+		const role = req.body
+		res.send(await RoleService.disableEnable(role))
+		logger.info(`PUT - /role - ${JSON.stringify(role)}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createRole,
 	updateRole,
 	getRoles,
 	getRole,
+	disableEnable,
 }

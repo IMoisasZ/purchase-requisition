@@ -50,10 +50,30 @@ async function getRoleByRole(role) {
 	}
 }
 
+async function disableEnable(role) {
+	try {
+		await RoleModel.update(
+			{
+				role_id: role.role_id,
+				actived: role.actived,
+			},
+			{
+				where: {
+					role_id: role.role_id,
+				},
+			},
+		)
+		return await getRole(role.role_id)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createRole,
 	updateRole,
 	getRoles,
 	getRole,
 	getRoleByRole,
+	disableEnable,
 }
