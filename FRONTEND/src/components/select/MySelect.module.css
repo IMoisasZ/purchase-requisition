@@ -8,3 +8,7 @@
 .container select {
 	text-align: center;
 }
+
+.container label {
+	margin-bottom: 1em;
+}
