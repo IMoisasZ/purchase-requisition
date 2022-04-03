@@ -123,8 +123,7 @@ function FormSector() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}
-					>
+						}}>
 						Inclusão
 					</p>
 				) : (
@@ -134,24 +133,21 @@ function FormSector() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}
-					>
+						}}>
 						Edição
 					</p>
 				)}
 				<form className={style.container} onSubmit={submit}>
-					<div>
-						<Input
-							name='id'
-							label='ID'
-							value={id}
-							type='numeric'
-							handleChange={handleId}
-							placeholder='ID'
-							disable={true}
-							hide={true}
-						/>
-					</div>
+					<Input
+						name='id'
+						label=''
+						value=''
+						type='numeric'
+						handleChange={handleId}
+						placeholder='ID'
+						disable={true}
+						hide={true}
+					/>
 					<Input
 						name='sector'
 						label='Setor'
@@ -177,8 +173,7 @@ function FormSector() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleListSectors}
-						>
+							handleClick={handleListSectors}>
 							Setores
 						</Button>
 						<Button
@@ -186,8 +181,7 @@ function FormSector() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleNew}
-						>
+							handleClick={handleNew}>
 							Novo
 						</Button>
 					</div>
