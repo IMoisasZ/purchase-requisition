@@ -43,8 +43,8 @@ function TableArea({ edit, show, msg, state, btn }) {
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro
-				)
+						: error.response.data.erro,
+				),
 			)
 		}
 	}
@@ -73,7 +73,7 @@ function TableArea({ edit, show, msg, state, btn }) {
 		return (
 			<div className={style.container}>
 				<table>
-					<caption>Lista de areas</caption>
+					<caption>Lista de áreas</caption>
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -99,8 +99,7 @@ function TableArea({ edit, show, msg, state, btn }) {
 											value={area.area_id}
 											handleClick={(e) => {
 												handleEditArea(area.area_id)
-											}}
-										>
+											}}>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar area ${area.area}`}
@@ -116,8 +115,7 @@ function TableArea({ edit, show, msg, state, btn }) {
 											handleClick={() => {
 												setDisable(area.area_id)
 												setActived(!area.actived)
-											}}
-										>
+											}}>
 											{area.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}

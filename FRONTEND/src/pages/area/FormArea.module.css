@@ -17,3 +17,7 @@
 	align-items: center;
 	width: 80%;
 }
+
+.container select {
+	margin-bottom: 1em;
+}

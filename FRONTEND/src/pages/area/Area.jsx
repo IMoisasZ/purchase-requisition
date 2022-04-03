@@ -6,7 +6,7 @@ function Area() {
 	return (
 		<>
 			<Container>
-				<h1 style={{ textAlign: 'center' }}>Area</h1>
+				<h1 style={{ textAlign: 'center' }}>Área</h1>
 				<FormArea />
 			</Container>
 		</>
