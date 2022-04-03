@@ -42,7 +42,7 @@ create table cost_center(
 
 create table role (
 	role_id int primary key auto_increment,
-    role varchar(20) not null,
+    role varchar(20) not null unique,
     actived boolean default true,
     createdAt datetime,
     updatedAt datetime
