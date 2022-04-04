@@ -7,5 +7,7 @@ route.post('/', ProductController.createProduct)
 route.patch('/', ProductController.updateProduct)
 route.get('/', ProductController.getProducts)
 route.get('/:product_id', ProductController.getProduct)
+route.put('/', ProductController.disableEnable)
+route.delete('/:product_id', ProductController.deleteProduct)
 
 export default route

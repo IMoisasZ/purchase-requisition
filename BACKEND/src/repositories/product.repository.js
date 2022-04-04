@@ -63,10 +63,43 @@ async function getProductByProduct(product) {
 	}
 }
 
+async function disableEnable(product) {
+	try {
+		await ProductModel.update(
+			{
+				product_id: product.product_id,
+				actived: product.actived,
+			},
+			{
+				where: {
+					product_id: product.product_id,
+				},
+			},
+		)
+		return await getProduct(product.product_id)
+	} catch (error) {
+		throw error
+	}
+}
+
+async function deleteProduct(product_id) {
+	try {
+		return await ProductModel.destroy({
+			where: {
+				product_id,
+			},
+		})
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createProduct,
 	updateProduct,
 	getProducts,
 	getProduct,
 	getProductByProduct,
+	disableEnable,
+	deleteProduct,
 }

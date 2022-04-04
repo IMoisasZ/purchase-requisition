@@ -3,14 +3,7 @@ import UnityRepository from '../repositories/unity.repository.js'
 
 async function createProduct(product) {
 	try {
-		const foundProduct = await ProductRepository.getProductByProduct(
-			product.description,
-		)
 		const foundUnity = await UnityRepository.getUnity(product.unity_id)
-
-		if (foundProduct) {
-			throw new Error('Descriçao já cadastrada!')
-		}
 
 		if (!foundUnity) {
 			throw new Error('Unidade inexistente!')
@@ -26,14 +19,7 @@ async function createProduct(product) {
 
 async function updateProduct(product) {
 	try {
-		const foundProduct = await ProductRepository.getProductByProduct(
-			product.description,
-		)
 		const foundUnity = await UnityRepository.getUnity(product.unity_id)
-
-		if (foundProduct) {
-			throw new Error('Descriçao já cadastrada!')
-		}
 
 		if (!foundUnity) {
 			throw new Error('Unidade inexistente!')
@@ -65,9 +51,39 @@ async function getProduct(product_id) {
 	}
 }
 
+async function disableEnable(product) {
+	try {
+		const result = await ProductRepository.getProduct(product.product_id)
+
+		if (!result) {
+			throw new Error(`Produto inexistente!`)
+		}
+
+		return await ProductRepository.disableEnable(product)
+	} catch (error) {
+		throw error
+	}
+}
+
+async function deleteProduct(product_id) {
+	try {
+		const result = await ProductRepository.getProduct(product_id)
+		console.log(result)
+		if (result === null) {
+			throw new Error(`Produto inexistente!`)
+		}
+
+		return await ProductRepository.deleteProduct(product_id)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createProduct,
 	updateProduct,
 	getProducts,
 	getProduct,
+	disableEnable,
+	deleteProduct,
 }

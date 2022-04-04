@@ -50,9 +50,30 @@ async function getProduct(req, res, next) {
 	}
 }
 
+async function disableEnable(req, res, next) {
+	try {
+		const product = req.body
+		res.send(await ProductService.disableEnable(product))
+		logger.info(`PUT - /product - ${JSON.stringify(product)}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
+async function deleteProduct(req, res, next) {
+	try {
+		res.send(await ProductService.deleteProduct(req.params.product_id))
+		logger.info(`DELTE - /delete/:${req.params.product_id}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createProduct,
 	updateProduct,
 	getProducts,
 	getProduct,
+	disableEnable,
+	deleteProduct,
 }
