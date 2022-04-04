@@ -9,6 +9,7 @@ import Sector from '../pages/sector/Sector'
 import Unity from '../pages/unity/Unity'
 import Area from '../pages/area/Area'
 import Role from '../pages/role/Role'
+import Product from '../pages/product/Product'
 
 function KfpRoutes({ children }) {
 	return (
@@ -23,6 +24,7 @@ function KfpRoutes({ children }) {
 					<Route path='/unity' element={<Unity />} />
 					<Route path='/area' element={<Area />} />
 					<Route path='/role' element={<Role />} />
+					<Route path='/product' element={<Product />} />
 				</Routes>
 				<Footer />
 			</Router>

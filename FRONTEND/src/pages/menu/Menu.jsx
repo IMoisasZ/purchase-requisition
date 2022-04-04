@@ -27,7 +27,7 @@ function Menu() {
 							<Link to='usuario'>
 								<li>Usuário</li>
 							</Link>
-							<Link to='produto'>
+							<Link to='/product'>
 								<li>Produto</li>
 							</Link>
 						</ul>
