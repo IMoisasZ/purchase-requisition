@@ -66,8 +66,8 @@ create table user (
 
 create table product (
 	product_id int primary key auto_increment,
-    code_dbcorp int,
-    description varchar(130) not null,
+    code_dbcorp int unique,
+    description varchar(255) not null unique,
     unity_id int not null,
     foreign key(unity_id) references unity(unity_id),
     actived boolean default true,
