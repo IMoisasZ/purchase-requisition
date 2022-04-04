@@ -12,11 +12,13 @@ const Product = dbConnection.define(
 		},
 		code_dbcorp: {
 			type: Sequelize.INTEGER,
-			allowNull: false,
+			allowNull: true,
+			unique: true,
 		},
 		description: {
 			type: Sequelize.STRING,
 			allowNull: false,
+			unique: true,
 		},
 		unity_id: {
 			type: Sequelize.INTEGER,
