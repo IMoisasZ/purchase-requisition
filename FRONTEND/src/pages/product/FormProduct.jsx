@@ -9,7 +9,7 @@ import style from '../product/FormProduct.module.css'
 import Message from '../../components/message/Message'
 
 function FormProduct() {
-	const [id, setId] = useState('')
+	const [id, setId] = useState(undefined)
 	const [codeDbcorp, setCodeDbcorp] = useState('')
 	const [product, setProduct] = useState('')
 	const [unity, setUnity] = useState('')
@@ -27,7 +27,7 @@ function FormProduct() {
 		setId(edit.product_id)
 		setCodeDbcorp(edit.code_dbcorp)
 		setProduct(edit.description)
-		setUnity(edit.product_id)
+		setUnity(edit.unity_id)
 		setActived(edit.actived)
 	}, [edit])
 
@@ -55,7 +55,7 @@ function FormProduct() {
 	}
 
 	const handleNew = () => {
-		setId('')
+		setId(undefined)
 		setCodeDbcorp('')
 		setProduct('')
 		setUnity(allUnity())
@@ -65,6 +65,7 @@ function FormProduct() {
 		setShow('create')
 		setBtnDisable(false)
 		setState('Inclusão')
+		setNameBtn('Incluir')
 		clearTimeout(time)
 	}
 
@@ -75,9 +76,12 @@ function FormProduct() {
 		}, 2000)
 	}
 
+	console.log(id)
+
 	const submit = async (e) => {
 		e.preventDefault()
-		if (id === '') {
+		if (id === undefined) {
+			console.log(id)
 			try {
 				await api.post('product', {
 					code_dbcorp: codeDbcorp,
@@ -89,7 +93,6 @@ function FormProduct() {
 				setMessage('Produto incluído com sucesso!')
 				time()
 			} catch (error) {
-				console.log({ error })
 				setType('error')
 				error.response.data.error && setMessage(error.response.data.error)
 				error.response.data.erros === 'Validation error'

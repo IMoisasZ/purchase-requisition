@@ -12,11 +12,9 @@ import style from './TableProduct.module.css'
 
 function TableProduct({ edit, show, msg, state, btn }) {
 	const [listProducts, setListProducts] = useState([])
-	const [disable, setDisable] = useState({})
-	const [actived, setActived] = useState(true)
 	const [message, setMessage] = useState(undefined)
 	const [type, setType] = useState('')
-	const [productId, setProductId] = useState(undefined)
+	const [deleted, setDeleted] = useState('')
 
 	// pagination
 	const [itensPorPagina, setItensPorPagina] = useState(2)
@@ -51,45 +49,40 @@ function TableProduct({ edit, show, msg, state, btn }) {
 		}
 	}
 
+	const allProducts = async () => {
+		const products = await api.get('/product')
+		setListProducts(products.data)
+	}
+
 	useEffect(() => {
-		const allProducts = async () => {
-			const products = await api.get('/product')
-			setListProducts(products.data)
-		}
 		allProducts()
 	}, [])
 
-	useEffect(() => {
-		const disableProduct = async () => {
-			if (disable) {
-				await api.put(`/product`, {
-					product_id: disable,
-					actived: actived,
-				})
-				const result = await api.get('/product')
-				setListProducts(result.data)
+	const handleDisableEnable = async (product_id, actived) => {
+		console.log(product_id, actived)
+		await api.put(`/product`, {
+			product_id,
+			actived: !actived,
+		})
+		// const result = await api.get('/product')
+		// setListProducts(result.data)
+		allProducts()
+	}
+
+	const handleDelete = async (product_id) => {
+		if (product_id !== undefined) {
+			try {
+				await api.delete(`/product/${product_id}`)
+				setType('success')
+				setMessage('Produto excluído com sucesso!')
+				allProducts()
+			} catch (error) {
+				setType(error)
+				setMessage(error.response.data.error)
 			}
-			return
 		}
-		disableProduct()
-	}, [actived, disable])
-	console.log(typeof disable)
-	useEffect(() => {
-		const handleDelete = async (productId) => {
-			if (productId !== undefined) {
-				try {
-					await api.delete(`/product/${productId}`)
-					setType('success')
-					setMessage('Produto excluído com sucesso!')
-				} catch (error) {
-					setType(error)
-					setMessage(error.response.data.error)
-				}
-			}
-			return
-		}
-		handleDelete()
-	}, [productId])
+		return
+	}
 
 	if (listProducts.length > 0) {
 		return (
@@ -137,8 +130,7 @@ function TableProduct({ edit, show, msg, state, btn }) {
 											border='none'
 											value={product.product_id}
 											handleClick={() => {
-												setDisable(product.product_id)
-												setActived(!product.actived)
+												handleDisableEnable(product.product_id, product.actived)
 											}}>
 											{product.actived ? (
 												<CheckCircleIcon
@@ -160,7 +152,9 @@ function TableProduct({ edit, show, msg, state, btn }) {
 											width='1.5em'
 											border='none'
 											value={product.product_id}
-											handleClick={setProductId(product.product_id)}>
+											handleClick={() => {
+												handleDelete(product.product_id)
+											}}>
 											<DeleteIcon
 												style={{ color: 'red' }}
 												titleAccess={`Excluir ${product.description}`}
@@ -172,13 +166,6 @@ function TableProduct({ edit, show, msg, state, btn }) {
 						})}
 					</tbody>
 				</table>
-				{message !== undefined ? (
-					<Message type={type} width='40em'>
-						{message}
-					</Message>
-				) : (
-					''
-				)}
 				{/* pagination */}
 				<div className={style.container_pagination}>
 					<ButtonPagination
@@ -200,6 +187,13 @@ function TableProduct({ edit, show, msg, state, btn }) {
 					/>
 					<SelectPagination handleOnChange={handleSelectPagination} />
 				</div>
+				{message !== undefined ? (
+					<Message type={type} width='40em'>
+						{message}
+					</Message>
+				) : (
+					''
+				)}
 			</div>
 		)
 	} else {
