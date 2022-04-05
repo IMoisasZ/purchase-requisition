@@ -31,7 +31,7 @@ create table unity (
 
 create table cost_center(
 	cost_center_id int primary key auto_increment,
-    cost_center varchar(20) not null,
+    cost_center varchar(20) not null unique,
     description varchar(100) not null,
     area_id int not null,
     foreign key(area_id) references area(area_id),
