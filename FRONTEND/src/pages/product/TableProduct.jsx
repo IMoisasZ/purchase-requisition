@@ -6,15 +6,13 @@ import SelectPagination from '../../components/pagination/SelectPagination'
 import EditRoundedIcon from '@mui/icons-material/EditRounded'
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import DeleteIcon from '@mui/icons-material/Delete'
 import api from '../../api/api'
 import style from './TableProduct.module.css'
 
-function TableProduct({ edit, show, msg, state, btn }) {
+function TableProduct({ edit, show, msg, state, btn, status }) {
 	const [listProducts, setListProducts] = useState([])
 	const [message, setMessage] = useState(undefined)
 	const [type, setType] = useState('')
-	const [deleted, setDeleted] = useState('')
 
 	// pagination
 	const [itensPorPagina, setItensPorPagina] = useState(2)
@@ -32,11 +30,15 @@ function TableProduct({ edit, show, msg, state, btn }) {
 	const handleEditProduct = async (product_id) => {
 		try {
 			const result = await api.get(`/product/${product_id}`)
+			const statusProduct = await api.get(
+				`/requisition_itens/product-requisition/${product_id}`,
+			)
 			edit(result.data)
 			show('create')
 			msg(undefined)
 			state('Edição')
 			btn('Editar')
+			status(statusProduct.data)
 		} catch (error) {
 			setType('error')
 			setMessage(
@@ -64,24 +66,7 @@ function TableProduct({ edit, show, msg, state, btn }) {
 			product_id,
 			actived: !actived,
 		})
-		// const result = await api.get('/product')
-		// setListProducts(result.data)
 		allProducts()
-	}
-
-	const handleDelete = async (product_id) => {
-		if (product_id !== undefined) {
-			try {
-				await api.delete(`/product/${product_id}`)
-				setType('success')
-				setMessage('Produto excluído com sucesso!')
-				allProducts()
-			} catch (error) {
-				setType(error)
-				setMessage(error.response.data.error)
-			}
-		}
-		return
 	}
 
 	if (listProducts.length > 0) {
@@ -96,7 +81,7 @@ function TableProduct({ edit, show, msg, state, btn }) {
 							<th>Produto</th>
 							<th>Unidade</th>
 							<th>Ativo</th>
-							<th colSpan={3}>Ações</th>
+							<th colSpan={2}>Ações</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -143,22 +128,6 @@ function TableProduct({ edit, show, msg, state, btn }) {
 													titleAccess={`Produto ${product.description} desativado!`}
 												/>
 											)}
-										</Button>
-									</td>
-									<td>
-										<Button
-											type='button'
-											height='1.5em'
-											width='1.5em'
-											border='none'
-											value={product.product_id}
-											handleClick={() => {
-												handleDelete(product.product_id)
-											}}>
-											<DeleteIcon
-												style={{ color: 'red' }}
-												titleAccess={`Excluir ${product.description}`}
-											/>
 										</Button>
 									</td>
 								</tr>

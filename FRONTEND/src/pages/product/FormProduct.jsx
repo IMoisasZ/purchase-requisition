@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import DeleteIcon from '@mui/icons-material/Delete'
 import Input from '../../components/input/MyInput'
 import Select from '../../components/select/MySelect'
 import CheckBox from '../../components/checkBox/MyCheckBox'
@@ -22,6 +23,7 @@ function FormProduct() {
 	const [type, setType] = useState(undefined)
 	const [btnDisable, setBtnDisable] = useState(false)
 	const [edit, setEdit] = useState({})
+	const [statusProduct, setStatusProduct] = useState(true)
 
 	useEffect(() => {
 		setId(edit.product_id)
@@ -54,6 +56,20 @@ function FormProduct() {
 		setShow('list')
 	}
 
+	const handleDelete = async () => {
+		try {
+			const result = await api.delete(`/product/${id}`)
+			setType('success')
+			setMessage(result.data.msg)
+			time()
+		} catch (error) {
+			console.log({ error })
+			setType('error')
+			setMessage(error.response.data.error)
+			time()
+		}
+	}
+
 	const handleNew = () => {
 		setId(undefined)
 		setCodeDbcorp('')
@@ -66,6 +82,7 @@ function FormProduct() {
 		setBtnDisable(false)
 		setState('Inclusão')
 		setNameBtn('Incluir')
+		setStatusProduct(true)
 		clearTimeout(time)
 	}
 
@@ -75,8 +92,6 @@ function FormProduct() {
 			handleNew()
 		}, 2000)
 	}
-
-	console.log(id)
 
 	const submit = async (e) => {
 		e.preventDefault()
@@ -154,6 +169,21 @@ function FormProduct() {
 					</p>
 				)}
 				<form className={style.container} onSubmit={submit}>
+					<Button
+						type='button'
+						height='1.5em'
+						width='2.1em'
+						border='none'
+						handleClick={handleDelete}
+						hide={statusProduct}>
+						<DeleteIcon
+							style={{
+								fontSize: '1.5em',
+								color: 'red',
+							}}
+							titleAccess={`Excluir produto ${product}`}
+						/>
+					</Button>
 					<Input
 						label=''
 						name='id'
@@ -165,7 +195,7 @@ function FormProduct() {
 						hide={true}
 					/>
 					<Input
-						label='Código DB{orp'
+						label='Código DBCorp'
 						name='code_dbcorp'
 						value={codeDbcorp}
 						type='numeric'
@@ -250,6 +280,7 @@ function FormProduct() {
 					msg={setMessage}
 					state={setState}
 					btn={setNameBtn}
+					status={setStatusProduct}
 				/>
 				<Button handleClick={handleAddProduct} fontSize='1em' width='8em'>
 					Cadastrar Produto
