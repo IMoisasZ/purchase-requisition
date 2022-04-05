@@ -4,7 +4,7 @@ import style from '../select/MySelect.module.css'
 function MySelect({
 	text,
 	name,
-	value,
+	value = '',
 	handleChange,
 	children,
 	initial_text,
@@ -24,7 +24,8 @@ function MySelect({
 					height,
 					border: '2px solid black',
 					borderRadius: '0.3em',
-				}}>
+				}}
+			>
 				<option>{initial_text}</option>
 				{children}
 			</select>
