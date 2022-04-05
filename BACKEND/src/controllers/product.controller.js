@@ -62,7 +62,8 @@ async function disableEnable(req, res, next) {
 
 async function deleteProduct(req, res, next) {
 	try {
-		res.send(await ProductService.deleteProduct(req.params.product_id))
+		const data = await ProductService.deleteProduct(req.params.product_id)
+		res.status(200).json({ msg: 'Produto excluído com sucesso!' })
 		logger.info(`DELTE - /delete/:${req.params.product_id}`)
 	} catch (error) {
 		next(error)
