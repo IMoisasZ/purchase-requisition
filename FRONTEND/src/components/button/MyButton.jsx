@@ -12,6 +12,8 @@ export default function MyButton({
 	marginTop,
 	fontSize = '1.5rem',
 	border,
+	hide = false,
+	title = '',
 }) {
 	return (
 		<div className={style.container}>
@@ -21,6 +23,8 @@ export default function MyButton({
 				value={value}
 				disabled={disable}
 				onClick={handleClick}
+				hidden={hide}
+				title={title}
 				style={{ height, width, marginTop, fontSize, border }}>
 				{children}
 			</button>
