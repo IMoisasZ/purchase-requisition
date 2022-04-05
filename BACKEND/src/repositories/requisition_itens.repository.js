@@ -3,7 +3,7 @@ import RequisitionItensModel from '../models/requisition_itens.model.js'
 async function createRequisitionItens(requisition_itens) {
 	try {
 		const newRequisitionItens = await RequisitionItensModel.create(
-			requisition_itens,
+			requisition_itens
 		)
 		return await getRequisitionItens(newRequisitionItens.requisition_itens_id)
 	} catch (error) {
@@ -58,15 +58,22 @@ async function deleteRequisitionItens(requisition_itens_id) {
 
 async function getRequisitionByProduct(product_id) {
 	try {
-		await RequisitionItensModel.findAll({
+		return await RequisitionItensModel.findAll({
 			where: {
 				product_id,
 			},
 		})
-		return await getRequisitionItens(product_id)
 	} catch (error) {
 		throw error
 	}
+}
+
+async function getRequisitionByCostCenter(cost_center_id) {
+	return await RequisitionItensModel.findAll({
+		where: {
+			cost_center_id,
+		},
+	})
 }
 
 export default {
@@ -76,4 +83,5 @@ export default {
 	getRequisitionItens,
 	deleteRequisitionItens,
 	getRequisitionByProduct,
+	getRequisitionByCostCenter,
 }
