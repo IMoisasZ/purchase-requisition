@@ -50,15 +50,25 @@ create table role (
 
 create table user (
 	user_id int primary key auto_increment,
-    name varchar(20) not null,
+    name varchar(30) not null,
     last_name varchar(30) not null,
     sector_id int not null,
     foreign key (sector_id) references sector(sector_id),
     role_id int not null,
     foreign key (role_id) references role(role_id),
     responsable_id int,
-    email varchar(50) not null,
+    email varchar(50) not null unique,
     password varchar(12) not null,
+    actived boolean default true,
+    createdAt datetime,
+    updatedAt datetime
+);
+
+create table responsable (
+	responsable_id int primary key auto_increment,
+    user_id int not null unique,
+    foreign key (user_id) references user(user_id),
+    name varchar(30) not null,
     actived boolean default true,
     createdAt datetime,
     updatedAt datetime
