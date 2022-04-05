@@ -1,0 +1,51 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 80em;
+	margin: 0 auto;
+	justify-content: space-around;
+	text-align: center;
+}
+
+.container table {
+	border: 1px solid gray;
+	border-radius: 1em;
+	padding: 2em;
+}
+
+.container table thead th {
+	border-bottom: 1px solid gray;
+}
+
+.container tbody tr {
+	border-bottom: 1px solid gray;
+	font-weight: 500;
+	cursor: pointer;
+	transition: 1s;
+}
+
+.container tbody tr:hover {
+	background-color: #4682b4;
+	color: white;
+}
+
+.container caption {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.container_sem_registros {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container_sem_registros p {
+	font-weight: 600;
+}
+
+.container_pagination {
+	display: flex;
+	flex-direction: column;
+	margin: 0.3em 0;
+}
