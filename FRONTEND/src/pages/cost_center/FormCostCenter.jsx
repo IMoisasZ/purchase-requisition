@@ -32,7 +32,10 @@ function FormCostCenter() {
 	}, [edit])
 
 	useEffect(() => {
-		allAreas()
+		const result = async () => {
+			await allAreas()
+		}
+		result()
 	}, [])
 
 	useEffect(() => {
@@ -54,11 +57,12 @@ function FormCostCenter() {
 		setShow('list')
 	}
 
-	const handleNew = () => {
+	const handleNew = async () => {
 		setId(undefined)
 		setCostCenter('')
 		setDescription('')
-		setListArea(allAreas())
+		setListArea(await allAreas())
+		setArea('Escolha uma área...')
 		setActived(true)
 		setMessage(undefined)
 		setType(undefined)
@@ -99,6 +103,7 @@ function FormCostCenter() {
 			time()
 		} else {
 			try {
+				console.log(id, costCenter, description, area, actived)
 				await api.patch('/cost_center', {
 					cost_center_id: id,
 					cost_center: costCenter,
@@ -136,7 +141,8 @@ function FormCostCenter() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Inclusão
 					</p>
 				) : (
@@ -146,7 +152,8 @@ function FormCostCenter() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Edição
 					</p>
 				)}
@@ -184,11 +191,12 @@ function FormCostCenter() {
 						name='area'
 						value={area}
 						handleChange={(e) => setArea(e.target.value)}
-						initial_text='Escolha uma área...'>
-						{listArea.map((area) => {
+						initial_text='Escolha uma área...'
+					>
+						{listArea.map((ar) => {
 							return (
-								<option key={area.area_id} value={area.area_id}>
-									{area.area}
+								<option key={ar.area_id} value={ar.area_id}>
+									{ar.area}
 								</option>
 							)
 						})}
@@ -206,7 +214,8 @@ function FormCostCenter() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							disable={btnDisable && true}>
+							disable={btnDisable && true}
+						>
 							{nameBtn}
 						</Button>
 						<Button
@@ -216,7 +225,8 @@ function FormCostCenter() {
 							marginTop='1em'
 							handleClick={handleListCostCenter}
 							disable={btnDisable && true}
-							title='Ir para lista de centro de custos!'>
+							title='Ir para lista de centro de custos!'
+						>
 							Lista CC
 						</Button>
 						<Button
@@ -224,7 +234,8 @@ function FormCostCenter() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleNew}>
+							handleClick={handleNew}
+						>
 							Novo
 						</Button>
 					</div>
@@ -253,7 +264,8 @@ function FormCostCenter() {
 					handleClick={handleAddCostCenter}
 					fontSize='1em'
 					width='8em'
-					title='Cadastrar Centro de Custos!'>
+					title='Cadastrar Centro de Custos!'
+				>
 					Cadastrar CC
 				</Button>
 			</>

@@ -41,8 +41,8 @@ function TableCostCenter({ edit, show, msg, state, btn }) {
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro,
-				),
+						: error.response.data.erro
+				)
 			)
 		}
 	}
@@ -53,15 +53,18 @@ function TableCostCenter({ edit, show, msg, state, btn }) {
 	}
 
 	useEffect(() => {
-		allCostCenter()
+		const result = async () => {
+			await allCostCenter()
+		}
+		result()
 	}, [])
 
 	const handleDisableEnable = async (cost_center_id, actived) => {
-		await api.put(`/cost_center`, {
+		await api.put(`cost_center`, {
 			cost_center_id,
 			actived: !actived,
 		})
-		allCostCenter()
+		await allCostCenter()
 	}
 
 	if (listCostCenter.length > 0) {
@@ -96,7 +99,8 @@ function TableCostCenter({ edit, show, msg, state, btn }) {
 											value={cc.cost_center_id}
 											handleClick={(e) => {
 												handleEditCostCenter(cc.cost_center_id)
-											}}>
+											}}
+										>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar centro de custos ${cc.description}`}
@@ -111,7 +115,8 @@ function TableCostCenter({ edit, show, msg, state, btn }) {
 											value={cc.cost_center_id}
 											handleClick={() => {
 												handleDisableEnable(cc.cost_center_id, cc.actived)
-											}}>
+											}}
+										>
 											{cc.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}
