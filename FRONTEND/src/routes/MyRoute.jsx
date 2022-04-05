@@ -10,6 +10,7 @@ import Unity from '../pages/unity/Unity'
 import Area from '../pages/area/Area'
 import Role from '../pages/role/Role'
 import Product from '../pages/product/Product'
+import CostCenter from '../pages/cost_center/CostCenter'
 
 function KfpRoutes({ children }) {
 	return (
@@ -25,6 +26,7 @@ function KfpRoutes({ children }) {
 					<Route path='/area' element={<Area />} />
 					<Route path='/role' element={<Role />} />
 					<Route path='/product' element={<Product />} />
+					<Route path='/cost-center' element={<CostCenter />} />
 				</Routes>
 				<Footer />
 			</Router>
