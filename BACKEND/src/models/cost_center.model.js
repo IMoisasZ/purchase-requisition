@@ -13,6 +13,7 @@ const CostCenter = dbConnection.define(
 		cost_center: {
 			type: Sequelize.STRING,
 			allowNull: false,
+			unique: true,
 		},
 		description: {
 			type: Sequelize.STRING,
