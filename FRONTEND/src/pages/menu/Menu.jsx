@@ -24,7 +24,7 @@ function Menu() {
 							<Link to='/role'>
 								<li>Perfil de Usuário</li>
 							</Link>
-							<Link to='usuario'>
+							<Link to='/user'>
 								<li>Usuário</li>
 							</Link>
 							<Link to='/product'>
@@ -32,6 +32,9 @@ function Menu() {
 							</Link>
 							<Link to='/cost-center'>
 								<li>Centro de Custos</li>
+							</Link>
+							<Link to='/responsable'>
+								<li>Responsáveis</li>
 							</Link>
 						</ul>
 					</ul>

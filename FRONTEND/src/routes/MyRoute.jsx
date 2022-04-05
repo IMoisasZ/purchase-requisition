@@ -11,6 +11,8 @@ import Area from '../pages/area/Area'
 import Role from '../pages/role/Role'
 import Product from '../pages/product/Product'
 import CostCenter from '../pages/cost_center/CostCenter'
+import User from '../pages/user/User'
+import Responsable from '../pages/responsable/Responsable'
 
 function KfpRoutes({ children }) {
 	return (
@@ -27,6 +29,8 @@ function KfpRoutes({ children }) {
 					<Route path='/role' element={<Role />} />
 					<Route path='/product' element={<Product />} />
 					<Route path='/cost-center' element={<CostCenter />} />
+					<Route path='/user' element={<User />} />
+					<Route path='/responsable' element={<Responsable />} />
 				</Routes>
 				<Footer />
 			</Router>
