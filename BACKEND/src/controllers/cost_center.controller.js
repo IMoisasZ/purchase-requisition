@@ -34,33 +34,7 @@ async function updateCostCenter(req, res, next) {
 			res.status(400).json({ error: 'O centro de custos é obrigatório!' })
 
 		res.send(await CostCenterService.updateCostCenter(cost_center))
-		logger.info(
-			`PATCH - /cost_center/cost_center - ${JSON.stringify(cost_center)}`
-		)
-	} catch (error) {
-		next(error)
-	}
-}
-
-async function updateCostCenterData(req, res, next) {
-	try {
-		const cost_center = req.body
-
-		if (!cost_center.cost_center_id)
-			res.status(400).json({ error: 'O ID do centro de custos é obrigatório!' })
-
-		if (!cost_center.description)
-			res
-				.status(400)
-				.json({ error: 'A descrição do centro de custos é obrigatória!' })
-
-		if (!cost_center.area_id)
-			res.status(400).json({ error: 'A area é obrigatória!' })
-
-		res.send(await CostCenterService.updateCostCenterData(cost_center))
-		logger.info(
-			`PATCH - /cost_center/cost_center_data - ${JSON.stringify(cost_center)}`
-		)
+		logger.info(`PATCH - /cost_center - ${JSON.stringify(cost_center)}`)
 	} catch (error) {
 		next(error)
 	}
@@ -84,10 +58,20 @@ async function getCostCenter(req, res, next) {
 	}
 }
 
+async function disableEnable(req, res, next) {
+	try {
+		const cost_center = req.body
+		res.send(await CostCenterService.disableEnable(cost_center))
+		logger.info(`PUT - /cost_center - ${JSON.stringify(cost_center)}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createCostCenter,
 	updateCostCenter,
-	updateCostCenterData,
 	getAllCostCenter,
 	getCostCenter,
+	disableEnable,
 }

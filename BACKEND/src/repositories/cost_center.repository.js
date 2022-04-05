@@ -11,40 +11,35 @@ async function createCostCenter(cost_center) {
 	}
 }
 
-async function updateCostCenter(cost_center) {
-	try {
-		await CostCenterModel.update(
-			{
-				cost_center: cost_center.cost_center,
-			},
-			{
-				where: {
-					cost_center_id: cost_center.cost_center_id,
-				},
-			}
-		)
-		return await getCostCenter(cost_center.cost_center_id)
-	} catch (error) {
-		throw error
-	}
-}
-
-async function updateCostCenterData(cost_center) {
-	try {
-		await CostCenterModel.update(
-			{
-				description: cost_center.description,
-				area_id: cost_center.area_id,
-			},
-			{
-				where: {
-					cost_center_id: cost_center.cost_center_id,
-				},
-			}
-		)
-		return await getCostCenter(cost_center.cost_center_id)
-	} catch (error) {
-		throw error
+async function updateCostCenter(newCostCenter, cost_center) {
+	if (newCostCenter) {
+		try {
+			await CostCenterModel.update(
+				{ newCostCenter },
+				{
+					where: {
+						cost_center_id: newCostCenter.cost_center_id,
+					},
+				}
+			)
+			return await getCostCenter(newCostCenter.cost_center_id)
+		} catch (error) {
+			throw error
+		}
+	} else {
+		try {
+			await CostCenterModel.update(
+				{ cost_center },
+				{
+					where: {
+						cost_center_id: cost_center.cost_center_id,
+					},
+				}
+			)
+			return await getCostCenter(cost_center.cost_center_id)
+		} catch (error) {
+			throw error
+		}
 	}
 }
 
@@ -98,11 +93,30 @@ async function getCostCenterByCostCenter(cost_center) {
 	}
 }
 
+async function disableEnable(cost_center) {
+	try {
+		await CostCenterModel.update(
+			{
+				cost_center_id: cost_center.cost_center_id,
+				actived: cost_center.actived,
+			},
+			{
+				where: {
+					cost_center_id: cost_center.cost_center_id,
+				},
+			}
+		)
+		return await getCostCenter(cost_center.cost_center_id)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createCostCenter,
 	updateCostCenter,
-	updateCostCenterData,
 	getAllCostCenter,
 	getCostCenter,
 	getCostCenterByCostCenter,
+	disableEnable,
 }

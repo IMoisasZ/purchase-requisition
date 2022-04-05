@@ -1,18 +1,10 @@
 import CostCenterRepository from '../repositories/cost_center.repository.js'
 import AreaRepository from '../repositories/area.repository.js'
+import RequisitionItensRepository from '../repositories/requisition_itens.repository.js'
 
 async function createCostCenter(cost_center) {
 	try {
-		const foundCostCenter =
-			await CostCenterRepository.getCostCenterByCostCenter(
-				cost_center.cost_center,
-			)
-
 		const foundArea = await AreaRepository.getArea(cost_center.area_id)
-
-		if (foundCostCenter) {
-			throw new Error('Centro de custos já cadastrado!')
-		}
 
 		if (!foundArea) {
 			throw new Error('Area inexistente!')
@@ -28,40 +20,30 @@ async function createCostCenter(cost_center) {
 
 async function updateCostCenter(cost_center) {
 	try {
-		const foundCostCenter =
-			await CostCenterRepository.getCostCenterByCostCenter(
-				cost_center.cost_center,
+		const foundArea = await AreaRepository.getArea(cost_center.area_id)
+
+		if (foundArea === null) {
+			throw new Error('Area inexistente!')
+		}
+
+		const foundCostCenterRequisition =
+			await RequisitionItensRepository.getRequisitionByCostCenter(
+				cost_center.cost_center_id
 			)
 
-		const foundArea = await AreaRepository.getArea(cost_center.area_id)
-
-		if (foundCostCenter) {
-			throw new Error('Centro de custos já cadastrado!')
+		if (foundCostCenterRequisition) {
+			const newCostCenter = {
+				cost_center_id: cost_center.cost_center_id,
+				description: cost_center.description.toUpperCase(),
+				area_id: cost_center.area_id,
+				actived: cost_center.actived,
+			}
+			console.log(newCostCenter)
+			return await CostCenterRepository.updateCostCenter(newCostCenter)
+		} else {
+			cost_center.description = cost_center.description.toUpperCase()
+			return await CostCenterRepository.updateCostCenter(cost_center)
 		}
-
-		if (!foundArea) {
-			throw new Error('Area inexistente!')
-		}
-
-		cost_center.description = cost_center.description.toUpperCase()
-
-		return await CostCenterRepository.updateCostCenter(cost_center)
-	} catch (error) {
-		throw error
-	}
-}
-
-async function updateCostCenterData(cost_center) {
-	try {
-		const foundArea = await AreaRepository.getArea(cost_center.area_id)
-
-		if (!foundArea) {
-			throw new Error('Area inexistente!')
-		}
-
-		cost_center.description = cost_center.description.toUpperCase()
-
-		return await CostCenterRepository.updateCostCenterData(cost_center)
 	} catch (error) {
 		throw error
 	}
@@ -85,10 +67,26 @@ async function getCostCenter(cost_center_id) {
 	}
 }
 
+async function disableEnable(cost_center) {
+	try {
+		const result = await CostCenterRepository.getCostCenter(
+			cost_center.cost_center_id
+		)
+
+		if (result === null) {
+			throw new Error('Centro de custos inexistente!')
+		}
+
+		return await CostCenterRepository.disableEnable(cost_center)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createCostCenter,
 	updateCostCenter,
-	updateCostCenterData,
 	getAllCostCenter,
 	getCostCenter,
+	disableEnable,
 }

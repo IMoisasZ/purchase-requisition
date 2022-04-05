@@ -4,9 +4,9 @@ import CostCenterController from '../controllers/cost_center.controller.js'
 const route = express.Router()
 
 route.post('/', CostCenterController.createCostCenter)
-route.patch('/cost_center', CostCenterController.updateCostCenter)
-route.patch('/cost_center_data', CostCenterController.updateCostCenterData)
+route.patch('/', CostCenterController.updateCostCenter)
 route.get('/', CostCenterController.getAllCostCenter)
 route.get('/:cost_center_id', CostCenterController.getCostCenter)
+route.put('/', CostCenterController.disableEnable)
 
 export default route
