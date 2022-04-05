@@ -30,6 +30,9 @@ function Menu() {
 							<Link to='/product'>
 								<li>Produto</li>
 							</Link>
+							<Link to='/cost-center'>
+								<li>Centro de Custos</li>
+							</Link>
 						</ul>
 					</ul>
 				</section>
