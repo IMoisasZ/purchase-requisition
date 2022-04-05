@@ -10,6 +10,7 @@ import UnityRoute from './src/routes/unity.route.js'
 import ProductRoute from './src/routes/product.route.js'
 import RequisitionRoute from './src/routes/requisition.route.js'
 import RequisitionItensRoute from './src/routes/requisition_itens.route.js'
+import ResponsableRoute from './src/routes/responsable.route.js'
 
 // app
 const app = express()
@@ -30,6 +31,7 @@ app.use('/unity', UnityRoute)
 app.use('/product', ProductRoute)
 app.use('/requisition', RequisitionRoute)
 app.use('/requisition_itens', RequisitionItensRoute)
+app.use('/responsable', ResponsableRoute)
 
 // winston(log)
 const { combine, timestamp, label, printf } = winston.format
@@ -45,7 +47,7 @@ global.logger = winston.createLogger({
 	format: combine(
 		label({ label: 'purchase-requisitions' }),
 		timestamp(),
-		myformat,
+		myformat
 	),
 })
 
