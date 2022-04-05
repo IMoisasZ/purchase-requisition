@@ -1,9 +1,6 @@
 import UserModel from '../models/user.model.js'
 import SectorModel from '../models/sector.model.js'
 import RoleModel from '../models/role.model.js'
-import Sequelize from 'sequelize'
-
-const OP = Sequelize.Op
 
 async function createUser(user) {
 	try {
@@ -17,53 +14,12 @@ async function createUser(user) {
 async function updateUser(user) {
 	try {
 		await UserModel.update(
-			{
-				name: user.name,
-				last_name: user.last_name,
-				sector_id: user.sector_id,
-				role_id: user.role_id,
-			},
+			{ user },
 			{
 				where: {
 					user_id: user.user_id,
 				},
-			},
-		)
-		return await getUser(user.user_id)
-	} catch (error) {
-		throw error
-	}
-}
-
-async function updateUserEmail(user) {
-	try {
-		await UserModel.update(
-			{
-				email: user.email,
-			},
-			{
-				where: {
-					user_id: user.user_id,
-				},
-			},
-		)
-		return await getUser(user.user_id)
-	} catch (error) {
-		throw error
-	}
-}
-
-async function updateUserPassword(user) {
-	try {
-		await UserModel.update(
-			{
-				password: user.password,
-			},
-			{
-				where: {
-					user_id: user.user_id,
-				},
-			},
+			}
 		)
 		return await getUser(user.user_id)
 	} catch (error) {
@@ -117,12 +73,29 @@ async function getUserByEmail(email) {
 	}
 }
 
+async function disableEnable(user) {
+	try {
+		await UserModel.update(
+			{
+				user_id: user.user_id,
+				actived: user.actived,
+			},
+			{
+				where: {
+					user_id: user.user_id,
+				},
+			}
+		)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createUser,
 	updateUser,
-	updateUserEmail,
-	updateUserPassword,
 	getUsers,
 	getUser,
 	getUserByEmail,
+	disableEnable,
 }

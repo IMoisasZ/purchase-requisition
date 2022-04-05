@@ -1,13 +1,13 @@
 import express from 'express'
+import userController from '../controllers/user.controller.js'
 import RouteController from '../controllers/user.controller.js'
 
 const route = express.Router()
 
 route.post('/', RouteController.createUser)
-route.patch('/user_data', RouteController.updateUser)
-route.patch('/user_email', RouteController.updateUserEmail)
-route.patch('/user_password', RouteController.updateUserPassword)
+route.patch('/', RouteController.updateUser)
 route.get('/', RouteController.getUsers)
 route.get('/:user_id', RouteController.getUser)
+route.put('/', userController.disableEnable)
 
 export default route

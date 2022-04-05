@@ -47,41 +47,6 @@ async function updateUser(req, res, next) {
 	}
 }
 
-async function updateUserEmail(req, res, next) {
-	try {
-		const user = req.body
-
-		if (!user.user_id)
-			res.status(400).json({ error: 'O id do do usuário é obrigatório!' })
-		if (!user.email) res.status(400).json({ error: 'O email é obrigatório!' })
-		if (!user.confirm_email)
-			res.status(400).json({ error: 'Confirmação do email não informada!' })
-
-		res.send(await UserService.updateUserEmail(user))
-		logger.info(`PATCH /user - ${JSON.stringify(user)}`)
-	} catch (error) {
-		next(error)
-	}
-}
-
-async function updateUserPassword(req, res, next) {
-	try {
-		const user = req.body
-
-		if (!user.user_id)
-			res.status(400).json({ error: 'O id do do usuário é obrigatório!' })
-		if (!user.password)
-			res.status(400).json({ error: 'A senha é obrigatória!' })
-		if (!user.confirm_password)
-			res.status(400).json({ error: 'Confirmaçao da senha não informada!' })
-
-		res.send(await UserService.updateUserPassword(user))
-		logger.info(`PATCH /user - ${JSON.stringify(user)}`)
-	} catch (error) {
-		next(error)
-	}
-}
-
 async function getUsers(req, res, next) {
 	try {
 		res.send(await UserService.getUsers())
@@ -100,11 +65,20 @@ async function getUser(req, res, next) {
 	}
 }
 
+async function disableEnable(req, res, next) {
+	try {
+		const user = req.body
+		res.send(await UserService.disableEnable(user))
+		logger.info(`PUT - /user - ${JSON.stringify(user)}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createUser,
 	updateUser,
-	updateUserEmail,
-	updateUserPassword,
 	getUsers,
 	getUser,
+	disableEnable,
 }
