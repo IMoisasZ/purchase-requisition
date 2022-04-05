@@ -56,10 +56,24 @@ async function deleteRequisitionItens(requisition_itens_id) {
 	}
 }
 
+async function getRequisitionByProduct(product_id) {
+	try {
+		await RequisitionItensModel.findAll({
+			where: {
+				product_id,
+			},
+		})
+		return await getRequisitionItens(product_id)
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createRequisitionItens,
 	updateRequisitionItens,
 	getAllRequisitionItens,
 	getRequisitionItens,
 	deleteRequisitionItens,
+	getRequisitionByProduct,
 }

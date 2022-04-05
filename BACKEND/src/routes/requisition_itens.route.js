@@ -17,5 +17,9 @@ route.delete(
 	'/:requisition_itens_id',
 	RequisitionItensController.deleteRequisitionItens,
 )
+route.get(
+	'/product-requisition/:product_id',
+	RequisitionItensController.getRequisitionByProduct,
+)
 
 export default route

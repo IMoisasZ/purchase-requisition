@@ -1,4 +1,5 @@
 import RequisitionItensRepository from '../repositories/requisition_itens.repository.js'
+import ProductRepository from '../repositories/product.repository.js'
 
 async function createRequisitionItens(requisition_itens) {
 	return await RequisitionItensRepository.createRequisitionItens(
@@ -60,10 +61,29 @@ async function deleteRequisitionItens(requisition_itens_id) {
 	}
 }
 
+async function getRequisitionByProduct(product_id) {
+	try {
+		const result = await ProductRepository.getProduct(product_id)
+
+		if (!result) {
+			throw new Error('Produto inesistente!')
+		}
+
+		const product = await RequisitionItensRepository.getRequisitionByProduct(
+			product_id,
+		)
+
+		return product ? true : false
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createRequisitionItens,
 	updateRequisitionItens,
 	getAllRequisitionItens,
 	getRequisitionItens,
 	deleteRequisitionItens,
+	getRequisitionByProduct,
 }
