@@ -96,15 +96,26 @@ async function deleteRequisitionItens(req, res, next) {
 			req.params.requisition_itens_id,
 		)
 
-		res
-			.status(200)
-			.json({
-				msg: `O item ${req.params.requisition_itens_id} foi removido com sucesso!`,
-			})
+		res.status(200).json({
+			msg: `O item ${req.params.requisition_itens_id} foi removido com sucesso!`,
+		})
 
 		logger.info(
 			`DELETE - /requisition_itens - ${req.params.requisition_itens_id}`,
 		)
+	} catch (error) {
+		next(error)
+	}
+}
+
+async function getRequisitionByProduct(req, res, next) {
+	try {
+		res.send(
+			await RequisitionItensService.getRequisitionByProduct(
+				req.params.product_id,
+			),
+		)
+		logger.info(`GET /product-requisition/${req.params.product_id}`)
 	} catch (error) {
 		next(error)
 	}
@@ -116,4 +127,5 @@ export default {
 	getAllRequisitionItens,
 	getRequisitionItens,
 	deleteRequisitionItens,
+	getRequisitionByProduct,
 }
