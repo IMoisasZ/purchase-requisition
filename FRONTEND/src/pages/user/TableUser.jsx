@@ -41,8 +41,8 @@ function TableUser({ edit, show, msg, state, btn }) {
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro
-				)
+						: error.response.data.erro,
+				),
 			)
 		}
 	}
@@ -78,7 +78,6 @@ function TableUser({ edit, show, msg, state, btn }) {
 							<th>Nome</th>
 							<th>Setor</th>
 							<th>Perfil</th>
-							<th>Responsável</th>
 							<th>Email</th>
 							<th>Ativo</th>
 							<th colSpan={2}>Ações</th>
@@ -92,7 +91,6 @@ function TableUser({ edit, show, msg, state, btn }) {
 									<td>{user.name + ' ' + user.last_name}</td>
 									<td>{user.sector.sector}</td>
 									<td>{user.role.role}</td>
-									<td>{user.responsable_id}</td>
 									<td>{user.email}</td>
 									<td>{user.actived ? 'Sim' : 'Não'}</td>
 									<td>
@@ -103,8 +101,7 @@ function TableUser({ edit, show, msg, state, btn }) {
 											value={user.user_id}
 											handleClick={() => {
 												handleEditUser(user.user_id)
-											}}
-										>
+											}}>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar usuário ${user.name}`}
@@ -119,8 +116,7 @@ function TableUser({ edit, show, msg, state, btn }) {
 											value={user.user_id}
 											handleClick={() => {
 												handleDisableEnable(user.user_id, user.actived)
-											}}
-										>
+											}}>
 											{user.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}
