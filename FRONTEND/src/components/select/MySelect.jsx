@@ -10,6 +10,7 @@ function MySelect({
 	initial_text,
 	width = '24.5em',
 	height = '2.5em',
+	disable = false,
 }) {
 	return (
 		<div className={style.container}>
@@ -19,13 +20,13 @@ function MySelect({
 				id={name}
 				value={value}
 				onChange={handleChange}
+				disabled={disable}
 				style={{
 					width,
 					height,
 					border: '2px solid black',
 					borderRadius: '0.3em',
-				}}
-			>
+				}}>
 				<option>{initial_text}</option>
 				{children}
 			</select>
