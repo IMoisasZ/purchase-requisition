@@ -8,4 +8,31 @@
 	list-style: none;
 	font-size: 1.5em;
 	font-weight: bold;
+	text-decoration: none;
+}
+
+.container ul {
+	padding: 1em auto;
+}
+
+.container a{
+	text-decoration: none;
+}
+
+.container .menu{
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	margin-bottom: 1em;
+	transition: 1s;
+}
+
+.container .menu:hover{
+	color: #4682B4;
+}
+
+.container .menu svg{
+	margin-right: 0.5em;
+	font-size: 2em;
+	color: black
 }
