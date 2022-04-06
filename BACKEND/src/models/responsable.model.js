@@ -1,6 +1,5 @@
-import Sequelize, { BelongsTo } from 'sequelize'
+import Sequelize from 'sequelize'
 import DbConnection from '../connections/db.connection.js'
-import UserModel from './user.model.js'
 
 const Responsable = DbConnection.define(
 	'responsable',
@@ -15,16 +14,12 @@ const Responsable = DbConnection.define(
 			allowNull: false,
 			unique: true,
 		},
-		name: {
-			type: Sequelize.STRING,
-			allowNull: false,
-		},
 		actived: {
 			type: Sequelize.BOOLEAN,
 			default: true,
 		},
 	},
-	{ tableName: 'responsable' }
+	{ tableName: 'responsable' },
 )
-Responsable.belongsTo(UserModel, { foreignKey: 'user_id' })
+
 export default Responsable

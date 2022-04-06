@@ -57,6 +57,7 @@ create table user (
     role_id int not null,
     foreign key (role_id) references role(role_id),
     responsable_id int,
+	foreign key (responsable_id) references responsable(responsable_id),
     email varchar(50) not null unique,
     password varchar(12) not null,
     actived boolean default true,
@@ -67,8 +68,6 @@ create table user (
 create table responsable (
 	responsable_id int primary key auto_increment,
     user_id int not null unique,
-    foreign key (user_id) references user(user_id),
-    name varchar(30) not null,
     actived boolean default true,
     createdAt datetime,
     updatedAt datetime
