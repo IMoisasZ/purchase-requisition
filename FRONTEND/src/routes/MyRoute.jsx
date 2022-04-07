@@ -13,6 +13,7 @@ import Product from '../pages/product/Product'
 import CostCenter from '../pages/cost_center/CostCenter'
 import User from '../pages/user/User'
 import Responsable from '../pages/responsable/Responsable'
+import Requisition from '../pages/requisition/Requisition'
 
 function KfpRoutes({ children }) {
 	return (
@@ -31,6 +32,7 @@ function KfpRoutes({ children }) {
 					<Route path='/cost-center' element={<CostCenter />} />
 					<Route path='/user' element={<User />} />
 					<Route path='/responsable' element={<Responsable />} />
+					<Route path='/requisition' element={<Requisition />} />
 				</Routes>
 				<Footer />
 			</Router>
