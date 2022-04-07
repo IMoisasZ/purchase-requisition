@@ -1,0 +1,23 @@
+.container {
+    width: 65em;
+    margin: 0 auto;
+    border: solid 1px gray;
+    border-radius: 0.3em;
+    padding: 0.5em 2em;
+}
+
+.container .section_one{
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container .section_one Input{
+    margin: 0;
+}
+
+.container .section_two{
+    display: flex;
+    flex-direction: column;
+}
