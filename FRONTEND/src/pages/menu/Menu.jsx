@@ -77,7 +77,7 @@ function Menu() {
 					<ul>
 						<li>Requisição</li>
 						<ul>
-							<Link to='requisicao'>
+							<Link to='/requisition'>
 								<div className={style.menu}>
 									<FormatListNumberedIcon />
 									<li>Criar Requisição</li>
