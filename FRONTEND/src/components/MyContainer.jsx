@@ -9,6 +9,7 @@ export default function MyContainer({
 	minHeight = '69vh',
 	color = 'black',
 	border,
+	padding,
 }) {
 	return (
 		<>
@@ -20,8 +21,8 @@ export default function MyContainer({
 					minHeight,
 					color,
 					border,
-				}}
-			>
+					padding,
+				}}>
 				{children}
 			</Container>
 		</>
