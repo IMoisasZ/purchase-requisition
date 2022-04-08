@@ -11,10 +11,11 @@ function MySelect({
 	width = '24.5em',
 	height = '2.5em',
 	disable = false,
+	marginBottom = '1em',
 }) {
 	return (
 		<div className={style.container}>
-			<label>{text}</label>
+			<label style={{ marginBottom }}>{text}</label>
 			<select
 				name={name}
 				id={name}
