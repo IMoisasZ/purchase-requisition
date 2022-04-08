@@ -9,6 +9,7 @@ function MyTextArea({
 	cols = '30',
 	rows = '10',
 	value,
+	height,
 }) {
 	return (
 		<div
@@ -17,6 +18,7 @@ function MyTextArea({
 				justifyContent: 'center',
 				flexDirection: 'column',
 				alignItems: 'center',
+				height,
 			}}>
 			<label htmlFor={name}>{text}</label>
 			<textarea
