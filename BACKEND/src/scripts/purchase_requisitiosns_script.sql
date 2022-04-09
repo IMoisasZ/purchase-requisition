@@ -113,3 +113,22 @@ create table requisition_itens (
     createdAt datetime,
     updatedAt datetime
 );
+
+create table requisition_itens_temp (
+	requisition_itens_id int primary key auto_increment,
+	requisition_id int not null,
+    foreign key(requisition_id) references requisition(requisition_id),
+    quantity int not null,
+    unity_id int not null,
+    foreign key(unity_id) references unity(unity_id),
+    cost_center_id int not null,
+    foreign key (cost_center_id) references cost_center(cost_center_id),
+    product_id int not null,
+    foreign key(product_id) references product(product_id),
+    di varchar(120),
+    op varchar(120),
+    comments varchar(250),
+    deadline date not null,
+    createdAt datetime,
+    updatedAt datetime
+);
