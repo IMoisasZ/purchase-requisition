@@ -5,7 +5,7 @@ const route = express.Router()
 
 route.post('/', RequisitionItensTempController.createRequisitionItens)
 route.patch('/', RequisitionItensTempController.updateRequisitionItens)
-route.get('/', RequisitionItensTempController.getAllRequisitionItens)
+route.get('/requisition', RequisitionItensTempController.getAllRequisitionItens)
 route.get(
 	'/:requisition_itens_id',
 	RequisitionItensTempController.getRequisitionItens,
@@ -13,5 +13,9 @@ route.get(
 route.delete(
 	'/:requisition_itens_id',
 	RequisitionItensTempController.deleteRequisitionItens,
+)
+route.delete(
+	'/truncate/table',
+	RequisitionItensTempController.truncateRequisitionItensTemp,
 )
 export default route

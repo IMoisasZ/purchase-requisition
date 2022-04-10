@@ -4,17 +4,13 @@ async function createRequisitionItens(req, res, next) {
 	try {
 		const requisition_itens = req.body
 
-		if (!requisition_itens.requisition_id)
-			res.status(400).json({ error: 'A requisição é obrigatória!' })
-		if (!requisition_itens.quantity)
-			res.status(400).json({ error: 'A quantidade é obrigatória!' })
-		if (!requisition_itens.unity_id)
-			res.status(400).json({ error: 'A unidade é obrigatória!' })
-		if (!requisition_itens.cost_center_id)
-			res.status(400).json({ error: 'O centro de custos é obrigatório!' })
 		if (!requisition_itens.product_id)
 			res.status(400).json({ error: 'O produto é obrigatório!' })
-		if (!requisition_itens.deadline)
+		if (!requisition_itens.quantity)
+			res.status(400).json({ error: 'A quantidade é obrigatória!' })
+		if (!requisition_itens.cost_center_id)
+			res.status(400).json({ error: 'O centro de custos é obrigatório!' })
+		if (!requisition_itens.dead_line)
 			res.status(400).json({ error: 'O prazo é obrigatório!' })
 
 		res.send(
@@ -27,7 +23,7 @@ async function createRequisitionItens(req, res, next) {
 			`POST - /requisition_itens - ${JSON.stringify(requisition_itens)}`,
 		)
 	} catch (error) {
-		throw error
+		next(error)
 	}
 }
 
@@ -35,21 +31,13 @@ async function updateRequisitionItens(req, res, next) {
 	try {
 		const requisition_itens = req.body
 
-		if (!requisition_itens.requisition_itens_id)
-			res
-				.status(400)
-				.json({ error: 'O id do item da requisição é obrigatório!' })
-		if (!requisition_itens.requisition_id)
-			res.status(400).json({ error: 'A requisição é obrigatória!' })
-		if (!requisition_itens.quantity)
-			res.status(400).json({ error: 'A quantidade é obrigatória!' })
-		if (!requisition_itens.unity_id)
-			res.status(400).json({ error: 'A unidade é obrigatória!' })
-		if (!requisition_itens.cost_center_id)
-			res.status(400).json({ error: 'O centro de custos é obrigatório!' })
 		if (!requisition_itens.product_id)
 			res.status(400).json({ error: 'O produto é obrigatório!' })
-		if (!requisition_itens.deadline)
+		if (!requisition_itens.quantity)
+			res.status(400).json({ error: 'A quantidade é obrigatória!' })
+		if (!requisition_itens.cost_center_id)
+			res.status(400).json({ error: 'O centro de custos é obrigatório!' })
+		if (!requisition_itens.dead_line)
 			res.status(400).json({ error: 'O prazo é obrigatório!' })
 
 		res.send(
@@ -68,13 +56,9 @@ async function updateRequisitionItens(req, res, next) {
 
 async function getAllRequisitionItens(req, res, next) {
 	try {
-		res.send(
-			await RequisitionItensTempService.getAllRequisitionItens(
-				req.params.requisition_id,
-			),
-		)
+		res.send(await RequisitionItensTempService.getAllRequisitionItens())
 
-		logger.info(`GET - /requisition_itens - ${req.params.requisition_id}`)
+		logger.info(`GET - /requisition_itens - all itens temp}`)
 	} catch (error) {
 		next(error)
 	}
@@ -112,10 +96,22 @@ async function deleteRequisitionItens(req, res, next) {
 	}
 }
 
+async function truncateRequisitionItensTemp(req, res, next) {
+	try {
+		const result =
+			await RequisitionItensTempService.truncateRequisitionItensTemp()
+		res.status(200).json({ msg: 'Table limpa!' })
+		logger.info(`TRUNCATE - /post - truncate table`)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createRequisitionItens,
 	updateRequisitionItens,
 	getAllRequisitionItens,
 	getRequisitionItens,
 	deleteRequisitionItens,
+	truncateRequisitionItensTemp,
 }

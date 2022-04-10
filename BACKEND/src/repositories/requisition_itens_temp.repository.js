@@ -1,4 +1,7 @@
 import RequisitionItensTempModel from '../models/requisition_itens_temp.model.js'
+import ProductModel from '../models/product.model.js'
+import CostCenterModel from '../models/cost_center.model.js'
+import UnityModel from '../models/unity.model.js'
 
 async function createRequisitionItens(requisition_itens) {
 	try {
@@ -24,12 +27,22 @@ async function updateRequisitionItens(requisition_itens) {
 	}
 }
 
-async function getAllRequisitionItens(requisition_id) {
+async function getAllRequisitionItens() {
 	try {
 		return await RequisitionItensTempModel.findAll({
-			where: {
-				requisition_id,
-			},
+			include: [
+				{
+					model: ProductModel,
+					include: [
+						{
+							model: UnityModel,
+						},
+					],
+				},
+				{
+					model: CostCenterModel,
+				},
+			],
 		})
 	} catch (error) {
 		throw error
@@ -38,7 +51,21 @@ async function getAllRequisitionItens(requisition_id) {
 
 async function getRequisitionItens(requisition_itens_id) {
 	try {
-		return await RequisitionItensTempModel.findByPk(requisition_itens_id)
+		return await RequisitionItensTempModel.findByPk(requisition_itens_id, {
+			include: [
+				{
+					model: ProductModel,
+					include: [
+						{
+							model: UnityModel,
+						},
+					],
+				},
+				{
+					model: CostCenterModel,
+				},
+			],
+		})
 	} catch (error) {
 		throw error
 	}
@@ -56,10 +83,19 @@ async function deleteRequisitionItens(requisition_itens_id) {
 	}
 }
 
+async function truncateRequisitionItensTemp() {
+	try {
+		return await RequisitionItensTempModel.truncate()
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createRequisitionItens,
 	updateRequisitionItens,
 	getAllRequisitionItens,
 	getRequisitionItens,
 	deleteRequisitionItens,
+	truncateRequisitionItensTemp,
 }

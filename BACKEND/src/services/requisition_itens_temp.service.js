@@ -12,11 +12,9 @@ async function updateRequisitionItens(requisition_itens) {
 	)
 }
 
-async function getAllRequisitionItens(requisition_id) {
+async function getAllRequisitionItens() {
 	try {
-		const result = await RequisitionItensTempRepository.getAllRequisitionItens(
-			requisition_id,
-		)
+		const result = await RequisitionItensTempRepository.getAllRequisitionItens()
 
 		if (result === null) {
 			throw new Error('Reuisição inexistente!')
@@ -60,10 +58,15 @@ async function deleteRequisitionItens(requisition_itens_id) {
 	}
 }
 
+async function truncateRequisitionItensTemp() {
+	return await RequisitionItensTempRepository.truncateRequisitionItensTemp()
+}
+
 export default {
 	createRequisitionItens,
 	updateRequisitionItens,
 	getAllRequisitionItens,
 	getRequisitionItens,
 	deleteRequisitionItens,
+	truncateRequisitionItensTemp,
 }
