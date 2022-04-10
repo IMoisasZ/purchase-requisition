@@ -47,7 +47,6 @@ function TableResponsable() {
 		return (
 			<div className={style.container}>
 				<table>
-					<caption>Lista de responsáveis</caption>
 					<thead>
 						<tr>
 							<th>ID</th>

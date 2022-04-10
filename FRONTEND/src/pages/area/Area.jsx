@@ -1,12 +1,11 @@
 import React from 'react'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import FormArea from './FormArea'
 
 function Area() {
 	return (
 		<>
-			<Container>
-				<h1 style={{ textAlign: 'center' }}>Área</h1>
+			<Container nameH1='Área'>
 				<FormArea />
 			</Container>
 		</>

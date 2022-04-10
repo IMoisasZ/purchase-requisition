@@ -1,12 +1,11 @@
 import React from 'react'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import FormSector from './FormSector'
 
 function Sector() {
 	return (
 		<>
-			<Container>
-				<h1 style={{ textAlign: 'center' }}>Setor</h1>
+			<Container nameH1='Setor'>
 				<FormSector />
 			</Container>
 		</>

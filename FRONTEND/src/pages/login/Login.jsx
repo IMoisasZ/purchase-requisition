@@ -1,11 +1,10 @@
 import React from 'react'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import FormLogin from './FormLogin'
 
 function Login() {
 	return (
-		<Container>
-			<h1 style={{ textAlign: 'center' }}>Login</h1>
+		<Container nameH1='Login' hideIcon={true}>
 			<FormLogin />
 		</Container>
 	)

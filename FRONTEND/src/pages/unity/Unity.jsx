@@ -1,11 +1,10 @@
 import React from 'react'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import FormUnity from './FormUnity'
 
 function Unity() {
 	return (
-		<Container minHeight='72vh' maxWidth='100%'>
-			<h1 style={{ textAlign: 'center' }}>Unidade</h1>
+		<Container minHeight='72vh' maxWidth='100%' nameH1='Unidade'>
 			<FormUnity />
 		</Container>
 	)

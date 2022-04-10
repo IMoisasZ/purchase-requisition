@@ -1,12 +1,11 @@
 import React from 'react'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import FormRole from './FormRole'
 
 function Role() {
 	return (
 		<>
-			<Container>
-				<h1 style={{ textAlign: 'center' }}>Perfil de usuário</h1>
+			<Container nameH1='Perfil de Usuário'>
 				<FormRole />
 			</Container>
 		</>

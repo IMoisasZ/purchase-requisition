@@ -1,12 +1,11 @@
 import React from 'react'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import FormCostCenter from './FormCostCenter'
 
 function CostCenter() {
 	return (
 		<>
-			<Container>
-				<h1 style={{ textAlign: 'center' }}>Centro de Custos</h1>
+			<Container nameH1='Centro de Custos'>
 				<FormCostCenter />
 			</Container>
 		</>

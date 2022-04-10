@@ -1,12 +1,11 @@
 import React from 'react'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import FormProduct from './FormProduct'
 
 function Product() {
 	return (
 		<>
-			<Container>
-				<h1 style={{ textAlign: 'center' }}>Produto</h1>
+			<Container nameH1='Produto'>
 				<FormProduct />
 			</Container>
 		</>

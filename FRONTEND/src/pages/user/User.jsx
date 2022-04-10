@@ -1,12 +1,11 @@
 import React from 'react'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import FormUser from './FormUser'
 
 function User() {
 	return (
 		<>
-			<Container minHeight='40em'>
-				<h1 style={{ textAlign: 'center', margin: '0' }}>Usuário</h1>
+			<Container minHeight='40em' nameH1='Usuário'>
 				<FormUser />
 			</Container>
 		</>

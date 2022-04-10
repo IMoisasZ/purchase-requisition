@@ -1,12 +1,11 @@
 import React from 'react'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import TableResponsable from './TableResponsable'
 
 function Responsable() {
 	return (
 		<>
-			<Container>
-				<h1 style={{ textAlign: 'center' }}>Responsáveis</h1>
+			<Container nameH1='Lista de Responsáveis'>
 				<TableResponsable />
 			</Container>
 		</>

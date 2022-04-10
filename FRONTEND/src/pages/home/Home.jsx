@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import Button from '../../components/button/MyButton'
 import style from './Home.module.css'
 
 function Home() {
 	return (
-		<Container minHeight='71.3vh'>
+		<Container minHeight='71.3vh' hideIcon={true} hideH1={true}>
 			<div className={style.container}>
 				<div className={style.div_h1}>
 					<h1>Requisição de Compras</h1>

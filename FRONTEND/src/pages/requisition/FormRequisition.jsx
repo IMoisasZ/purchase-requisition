@@ -10,30 +10,65 @@ import style from './FormRequisition.module.css'
 import api from '../../api/api'
 
 function FormRequisition() {
+	// today
+	const dateToday = new Date()
+	const today =
+		dateToday.getDate() +
+		'/' +
+		(dateToday.getMonth() + 1) +
+		'/' +
+		dateToday.getFullYear()
+
 	// requisition
 	const [id, setId] = useState(undefined)
-	const [date, setDate] = useState('06/04/2022')
+	const [date, setDate] = useState(today)
 	const [status, setStatus] = useState('Pendente')
 	const [comments, setComments] = useState('')
+	const [nameButton, setNameButton] = useState('Incluir')
+	const [hide, setHide] = useState(true)
 
 	// requisition itens
+	const [requisitionItensId, setRequisitionItensId] = useState('')
 	const [product, setProduct] = useState('')
 	const [listProduct, setListProduct] = useState([])
 	const [quantity, setQuantity] = useState('')
-	const [unity, setUnity] = useState('')
+	const [unity, setUnity] = useState({})
 	const [costCenter, setCostCenter] = useState('')
 	const [listCostCenter, setListCostCenter] = useState([])
 	const [di, setDi] = useState('')
 	const [op, setOp] = useState('')
 	const [commentsItem, setCommentsItem] = useState('')
 	const [deadLine, setDeadLine] = useState('')
+	const [listRequsitionItens, setListRequisitionItens] = useState([])
 
 	// main
 	const [message, setMessage] = useState(undefined)
 	const [type, setType] = useState(undefined)
 
-	// table
-	const [dataTable, setDataTable] = useState([])
+	// edit item
+	const [edit, setEdit] = useState([])
+
+	useEffect(() => {
+		setRequisitionItensId(edit.requisition_itens_id)
+		setProduct(edit.product_id)
+		setQuantity(edit.quantity)
+		setCostCenter(edit.cost_center_id)
+		setDi(edit.di)
+		setOp(edit.op)
+		setDeadLine(edit.dead_line)
+		setCommentsItem(edit.comments)
+	}, [edit])
+
+	useEffect(() => {
+		if (product) {
+			const unityProduct = async () => {
+				const result = await api.get(`/product/${product}`)
+				setUnity(result.data.unity.unity_tag)
+			}
+			unityProduct()
+		}
+		setUnity('')
+	}, [product])
 
 	useEffect(() => {
 		const allLists = async () => {
@@ -43,81 +78,106 @@ function FormRequisition() {
 			setListCostCenter(listCostCenter.data)
 		}
 		allLists()
+		allItens()
 	}, [])
 
-	const handleProduct = (e) => {
-		setProduct(e.target.value)
+	const allItens = async () => {
+		if (id !== undefined) {
+			let result = await api.get(`/requisition_itens/requisition/${id}`)
+			setListRequisitionItens(result.data)
+		} else {
+			let resultTemp = await api.get(`/requisition_itens_temp/requisition`)
+			setListRequisitionItens(resultTemp.data)
+		}
+	}
+
+	const truncateTable = async () => {
+		const truncate = await api.delete('/requisition_itens_temp/truncate/table')
+		console.log(truncate)
 	}
 
 	useEffect(() => {
-		if (product !== 'Escolha um produto...') {
-			setUnity(product.split(' - ')[1])
-		} else {
-			setUnity('')
+		const handleHide = () => {
+			if (listRequsitionItens.length > 0) {
+				setHide(false)
+			} else {
+				setHide(true)
+			}
 		}
-	}, [product])
+		handleHide()
+	}, [listRequsitionItens])
 
-	const handleQuantityItens = () => {}
+	console.log(listRequsitionItens.length)
 
-	// object requisition
-	let requisitionData = []
-	console.log(requisitionData.length)
-	// object requisition itens
-	let requisitionItens = []
+	const handleRequisitionItens = () => {
+		setRequisitionItensId('')
+		setProduct('')
+		setUnity('')
+		setQuantity('')
+		setCostCenter('')
+		setDi('')
+		setOp('')
+		setDeadLine(today)
+		setNameButton('Incluir')
+		setMessage(undefined)
+	}
+
+	// truncateTable()
+
 	const submit = async (e) => {
 		e.preventDefault()
-		// localStorage.clear()
 		if (id === undefined) {
-			if (product && quantity && costCenter && deadLine) {
-				let newData = localStorage.getItem('data')
-				if (!newData) {
-					requisitionData.push({
-						date: date,
-						status: status,
-						comments: comments,
-					})
-					requisitionItens.push({
-						product_id: product.split(' - ')[0],
-						quantity: quantity,
+			if (nameButton === 'Incluir') {
+				try {
+					// insert in temporary table
+					const result = await api.post('requisition_itens_temp', {
+						product_id: product,
+						quantity,
 						cost_center_id: costCenter,
-						di: di,
-						op: op,
-						comments: commentsItem,
+						di,
+						op,
 						dead_line: deadLine,
+						comments: commentsItem,
 					})
 					setType('success')
 					setMessage('Item incluído com sucesso!')
-					setDataTable(requisitionItens)
-					localStorage.setItem('data', JSON.stringify(requisitionData))
-					localStorage.setItem('data_itens', JSON.stringify(requisitionItens))
-					requisitionItens = []
-					requisitionData = []
-				} else {
-					let newDataItem = localStorage.getItem('data_itens')
-					console.log(newDataItem)
-					requisitionItens = JSON.parse(newDataItem)
-					requisitionItens.push({
-						product_id: product.split(' - ')[0],
-						quantity,
-						cost_center_id: costCenter,
-						di: di || '',
-						op: op || '',
-						comments: commentsItem || '',
-						dead_line: deadLine,
-					})
-					setDataTable(requisitionItens)
-					localStorage.setItem('data_itens', JSON.stringify(requisitionItens))
-					requisitionItens = []
+					allItens()
+					setTimeout(() => {
+						handleRequisitionItens()
+					}, 1000)
+				} catch (error) {
+					setType('error')
+					setMessage(
+						error.response.data.error
+							? error.response.data.error
+							: error.response.data.erros,
+					)
 				}
 			} else {
-				setType('error')
-				setMessage('Os campos são obrigatórios!')
+				try {
+					// edit in temporary table
+					await api.patch('/requisition_itens_temp', {
+						requisition_itens_id: requisitionItensId,
+						product_id: product,
+						quantity,
+						cost_center_id: costCenter,
+						di,
+						op,
+						dead_line: deadLine.toString(),
+						comments: commentsItem,
+					})
+					setType('edit')
+					setMessage('Item alterado com sucesso!')
+					setTimeout(() => {
+						handleRequisitionItens()
+					}, 1000)
+				} catch (error) {
+					setType('error')
+					setMessage(error.data.response.error || error.data.response.erros)
+				}
 			}
-		}
+		} //else
 	}
-	console.log(requisitionData)
-
-	console.log(message)
 
 	return (
 		<>
@@ -127,7 +187,7 @@ function FormRequisition() {
 					alignItems: 'center',
 					justifyContent: 'center',
 				}}>
-				<ShoppingCart quantityItens={handleQuantityItens || 0} />
+				<ShoppingCart quantityItens={listRequsitionItens.length} />
 			</div>
 			<form className={style.container} onSubmit={submit}>
 				<section className={style.section_one}>
@@ -146,7 +206,7 @@ function FormRequisition() {
 						label='Data'
 						value={date}
 						width='12em'
-						type='date'
+						type='dateTime'
 						handleChange={(e) => setDate(e.currentTarget.date)}
 						placeholder='Data'
 						disable={true}
@@ -173,6 +233,7 @@ function FormRequisition() {
 						{comments}
 					</TextArea>
 				</section>
+				<hr />
 				<section className={style.section_three}>
 					<Select
 						text='Produto'
@@ -180,13 +241,11 @@ function FormRequisition() {
 						value={product}
 						marginBottom='0'
 						width='25em'
-						handleChange={handleProduct}
+						handleChange={(e) => setProduct(e.target.value)}
 						initial_text='Escolha um produto...'>
 						{listProduct.map((prod) => {
 							return (
-								<option
-									key={prod.product_id}
-									value={prod.product_id + ' - ' + prod.unity.unity_tag}>
+								<option key={prod.product_id} value={prod.product_id}>
 									{prod.description}
 								</option>
 							)
@@ -246,17 +305,6 @@ function FormRequisition() {
 					/>
 				</section>
 				<section className={style.section_three}>
-					<TextArea
-						name='comments_item'
-						text='Observação'
-						value={commentsItem}
-						height='3.4em'
-						cols='180'
-						rows='2'
-						handleChange={(e) => setCommentsItem(e.currentTarget.value)}
-						placeholder='Observação'>
-						{commentsItem}
-					</TextArea>
 					<Input
 						name='dead_line'
 						label='Prazo'
@@ -264,20 +312,47 @@ function FormRequisition() {
 						type='date'
 						width='10em'
 						handleChange={(e) => setDeadLine(e.target.value)}
-						placeholder='Data'
+						placeholder='Prazo'
 					/>
+					<TextArea
+						name='comments_item'
+						text='Observação'
+						value={commentsItem}
+						height='3.4em'
+						cols='140'
+						rows='2'
+						handleChange={(e) =>
+							setCommentsItem(e.currentTarget.value.toUpperCase())
+						}
+						placeholder='Observação'>
+						{commentsItem}
+					</TextArea>
 					<Button
 						width='4em'
 						height='1.5em'
 						marginBottom='0'
 						marginTop='0.7em'
 						type='submit'>
-						Incuir
+						{nameButton}
+					</Button>
+					<Button
+						width='9em'
+						height='1.5em'
+						marginBottom='0'
+						marginTop='0.7em'
+						type='button'
+						hide={hide}>
+						Salvar Requisição
 					</Button>
 				</section>
 				{message !== undefined ? <Message type={type}>{message}</Message> : ''}
 			</form>
-			<TableRequisition dataTable={dataTable} />
+			<TableRequisition
+				dataTable={listRequsitionItens}
+				edit={setEdit}
+				allItens={allItens}
+				nameButton={setNameButton}
+			/>
 		</>
 	)
 }

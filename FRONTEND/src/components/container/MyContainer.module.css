@@ -1,0 +1,15 @@
+.container{
+    position: absolute;
+    left: 0.5em;
+}
+
+.container svg{
+    font-size: 3em;
+    color: #4682B4;
+    transition: 2s;
+}
+
+.container svg:hover{
+    color: green;
+}
+

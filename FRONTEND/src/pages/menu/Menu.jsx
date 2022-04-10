@@ -10,13 +10,12 @@ import LocalPoliceSharpIcon from '@mui/icons-material/LocalPoliceSharp'
 import PersonIcon from '@mui/icons-material/Person'
 import SummarizeSharpIcon from '@mui/icons-material/SummarizeSharp'
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered'
-import Container from '../../components/MyContainer'
+import Container from '../../components/container/MyContainer'
 import style from '../menu/Menu.module.css'
 
 function Menu() {
 	return (
-		<Container minHeight='68vh'>
-			<h1 style={{ textAlign: 'center', margin: '0' }}>Menu Principal</h1>
+		<Container minHeight='68vh' hideIcon={true} nameH1='Menu Principal'>
 			<div className={style.container}>
 				<section>
 					<ul>
