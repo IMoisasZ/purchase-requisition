@@ -3,18 +3,16 @@ import RequisitionItensService from '../services/requisition_itens.service.js'
 async function createRequisitionItens(req, res, next) {
 	try {
 		const requisition_itens = req.body
-
+		console.log(requisition_itens)
 		if (!requisition_itens.requisition_id)
 			res.status(400).json({ error: 'A requisição é obrigatória!' })
-		if (!requisition_itens.quantity)
-			res.status(400).json({ error: 'A quantidade é obrigatória!' })
-		if (!requisition_itens.unity_id)
-			res.status(400).json({ error: 'A unidade é obrigatória!' })
-		if (!requisition_itens.cost_center_id)
-			res.status(400).json({ error: 'O centro de custos é obrigatório!' })
 		if (!requisition_itens.product_id)
 			res.status(400).json({ error: 'O produto é obrigatório!' })
-		if (!requisition_itens.deadline)
+		if (!requisition_itens.quantity)
+			res.status(400).json({ error: 'A quantidade é obrigatória!' })
+		if (!requisition_itens.cost_center_id)
+			res.status(400).json({ error: 'O centro de custos é obrigatório!' })
+		if (!requisition_itens.dead_line)
 			res.status(400).json({ error: 'O prazo é obrigatório!' })
 
 		res.send(
@@ -25,7 +23,7 @@ async function createRequisitionItens(req, res, next) {
 			`POST - /requisition_itens - ${JSON.stringify(requisition_itens)}`,
 		)
 	} catch (error) {
-		throw error
+		next(error)
 	}
 }
 
@@ -39,15 +37,13 @@ async function updateRequisitionItens(req, res, next) {
 				.json({ error: 'O id do item da requisição é obrigatório!' })
 		if (!requisition_itens.requisition_id)
 			res.status(400).json({ error: 'A requisição é obrigatória!' })
-		if (!requisition_itens.quantity)
-			res.status(400).json({ error: 'A quantidade é obrigatória!' })
-		if (!requisition_itens.unity_id)
-			res.status(400).json({ error: 'A unidade é obrigatória!' })
-		if (!requisition_itens.cost_center_id)
-			res.status(400).json({ error: 'O centro de custos é obrigatório!' })
 		if (!requisition_itens.product_id)
 			res.status(400).json({ error: 'O produto é obrigatório!' })
-		if (!requisition_itens.deadline)
+		if (!requisition_itens.quantity)
+			res.status(400).json({ error: 'A quantidade é obrigatória!' })
+		if (!requisition_itens.cost_center_id)
+			res.status(400).json({ error: 'O centro de custos é obrigatório!' })
+		if (!requisition_itens.dead_line)
 			res.status(400).json({ error: 'O prazo é obrigatório!' })
 
 		res.send(

@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize'
 import dbConnection from '../connections/db.connection.js'
-import UnityModel from './unity.model.js'
 import CostCenterModel from './cost_center.model.js'
 import ProductModel from './product.model.js'
 
@@ -17,10 +16,6 @@ const RequisitionItens = dbConnection.define(
 			allowNull: false,
 		},
 		quantity: {
-			type: Sequelize.INTEGER,
-			allowNull: false,
-		},
-		unity_id: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 		},
@@ -41,15 +36,13 @@ const RequisitionItens = dbConnection.define(
 		comments: {
 			type: Sequelize.STRING,
 		},
-		deadline: {
+		dead_line: {
 			type: Sequelize.DATE,
 			allowNull: false,
 		},
 	},
-	{ tableName: 'requisition_itens' }
+	{ tableName: 'requisition_itens' },
 )
-
-RequisitionItens.belongsTo(UnityModel, { foreignKey: 'unity_id' })
 RequisitionItens.belongsTo(CostCenterModel, { foreignKey: 'cost_center_id' })
 RequisitionItens.belongsTo(ProductModel, { foreignKey: 'product_id' })
 
