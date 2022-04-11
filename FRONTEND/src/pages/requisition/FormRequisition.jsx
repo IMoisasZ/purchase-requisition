@@ -3,6 +3,7 @@ import Input from '../../components/input/MyInput'
 import TextArea from '../../components/textArea/MyTextArea'
 import Select from '../../components/select/MySelect'
 import Button from '../../components/button/MyButton'
+import Modal from '../../components/modal/MyModal'
 import ShoppingCart from '../../components/shoppingCart/ShoppingCart'
 import TableRequisition from './TableRequisition'
 import Message from '../../components/message/Message'
@@ -93,7 +94,6 @@ function FormRequisition() {
 
 	const truncateTable = async () => {
 		const truncate = await api.delete('/requisition_itens_temp/truncate/table')
-		console.log(truncate)
 	}
 
 	useEffect(() => {
@@ -107,9 +107,7 @@ function FormRequisition() {
 		handleHide()
 	}, [listRequsitionItens])
 
-	console.log(listRequsitionItens.length)
-
-	const handleRequisitionItens = () => {
+	const handleRequisitionItensClear = () => {
 		setRequisitionItensId('')
 		setProduct('')
 		setUnity('')
@@ -120,64 +118,90 @@ function FormRequisition() {
 		setDeadLine(today)
 		setNameButton('Incluir')
 		setMessage(undefined)
+		allItens()
 	}
 
-	// truncateTable()
-
+	// insert the products to table temp
 	const submit = async (e) => {
 		e.preventDefault()
-		if (id === undefined) {
-			if (nameButton === 'Incluir') {
-				try {
-					// insert in temporary table
-					const result = await api.post('requisition_itens_temp', {
-						product_id: product,
-						quantity,
-						cost_center_id: costCenter,
-						di,
-						op,
-						dead_line: deadLine,
-						comments: commentsItem,
-					})
-					setType('success')
-					setMessage('Item incluído com sucesso!')
-					allItens()
-					setTimeout(() => {
-						handleRequisitionItens()
-					}, 1000)
-				} catch (error) {
-					setType('error')
-					setMessage(
-						error.response.data.error
-							? error.response.data.error
-							: error.response.data.erros,
-					)
-				}
-			} else {
-				try {
-					// edit in temporary table
-					await api.patch('/requisition_itens_temp', {
-						requisition_itens_id: requisitionItensId,
-						product_id: product,
-						quantity,
-						cost_center_id: costCenter,
-						di,
-						op,
-						dead_line: deadLine.toString(),
-						comments: commentsItem,
-					})
-					setType('edit')
-					setMessage('Item alterado com sucesso!')
-					setTimeout(() => {
-						handleRequisitionItens()
-					}, 1000)
-				} catch (error) {
-					setType('error')
-					setMessage(error.data.response.error || error.data.response.erros)
-				}
+		if (nameButton === 'Incluir') {
+			try {
+				// insert in temporary table
+				const result = await api.post('requisition_itens_temp', {
+					product_id: product,
+					quantity,
+					cost_center_id: costCenter,
+					di,
+					op,
+					dead_line: deadLine,
+					comments: commentsItem,
+				})
+				setType('success')
+				setMessage('Item incluído com sucesso!')
+				allItens()
+				setTimeout(() => {
+					handleRequisitionItensClear()
+				}, 1000)
+			} catch (error) {
+				setType('error')
+				setMessage(
+					error.response.data.error
+						? error.response.data.error
+						: error.response.data.erros,
+				)
 			}
-		} //else
+		} else {
+			try {
+				// edit in temporary table
+				await api.patch('/requisition_itens_temp', {
+					requisition_itens_id: requisitionItensId,
+					product_id: product,
+					quantity,
+					cost_center_id: costCenter,
+					di,
+					op,
+					dead_line: deadLine.toString(),
+					comments: commentsItem,
+				})
+				setType('edit')
+				setMessage('Item alterado com sucesso!')
+				setTimeout(() => {
+					handleRequisitionItensClear()
+				}, 1000)
+			} catch (error) {
+				setType('error')
+				setMessage(error.data.response.error || error.data.response.erros)
+			}
+		}
 	}
+
+	// insert the produts to requisition temp to reuisition real
+	const handleSaveRequisition = async () => {
+		const requisition = await api.post('/requisition', {
+			user_id: 1,
+			date,
+			comments,
+			status: 'Incluída',
+		})
+		setId(requisition.data.requisition_id)
+		setDate(requisition.data.date)
+		setStatus(requisition.data.status)
+		setComments(requisition.data.comments)
+		listRequsitionItens.map((list) => {
+			api.post('/requisition_itens', {
+				requisition_id: requisition.data.requisition_id,
+				product_id: list.product_id,
+				quantity: list.quantity,
+				cost_center_id: list.cost_center_id,
+				di: list.di,
+				op: list.op,
+				dead_line: list.dead_line,
+				comments: list.comments,
+			})
+		})
+		truncateTable()
+	}
+	// truncateTable()
 
 	return (
 		<>
@@ -335,15 +359,12 @@ function FormRequisition() {
 						type='submit'>
 						{nameButton}
 					</Button>
-					<Button
-						width='9em'
-						height='1.5em'
-						marginBottom='0'
-						marginTop='0.7em'
-						type='button'
-						hide={hide}>
-						Salvar Requisição
-					</Button>
+					<Modal
+						requisition={handleSaveRequisition}
+						hideButton={hide}
+						message={setMessage}
+						type={setType}
+					/>
 				</section>
 				{message !== undefined ? <Message type={type}>{message}</Message> : ''}
 			</form>

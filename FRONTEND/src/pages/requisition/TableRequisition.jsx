@@ -23,6 +23,7 @@ function TableRequisition({ dataTable, edit, allItens, nameButton }) {
 			<table>
 				<thead>
 					<tr>
+						<th>ID Requisition</th>
 						<th>Produto</th>
 						<th>Unidade</th>
 						<th>Qtde</th>
@@ -48,6 +49,7 @@ function TableRequisition({ dataTable, edit, allItens, nameButton }) {
 						let newDeadLine = `${day}/${month}/${year}`
 						return (
 							<tr key={data.requisition_itens_id}>
+								<td>{data.requisition_itens && data.requisition_itens}</td>
 								<td>{data.product.description}</td>
 								<td>{data.product.unity.unity_tag}</td>
 								<td>{data.quantity}</td>
