@@ -6,11 +6,15 @@ import Button from '../../components/button/MyButton'
 import Modal from '../../components/modal/MyModal'
 import ShoppingCart from '../../components/shoppingCart/ShoppingCart'
 import TableRequisition from './TableRequisition'
+import ConsultRequisition from './ConsultRequisition'
 import Message from '../../components/message/Message'
 import style from './FormRequisition.module.css'
 import api from '../../api/api'
 
 function FormRequisition() {
+	// main page
+	const [whatDo, setWhatDo] = useState('')
+
 	// today
 	const dateToday = new Date()
 	const today =
@@ -27,6 +31,7 @@ function FormRequisition() {
 	const [comments, setComments] = useState('')
 	const [nameButton, setNameButton] = useState('Incluir')
 	const [hide, setHide] = useState(true)
+	const [tempToReal, setTempToReal] = useState('temp')
 
 	// requisition itens
 	const [requisitionItensId, setRequisitionItensId] = useState('')
@@ -79,33 +84,28 @@ function FormRequisition() {
 			setListCostCenter(listCostCenter.data)
 		}
 		allLists()
-		allItens()
 	}, [])
 
-	const allItens = async () => {
-		if (id !== undefined) {
-			let result = await api.get(`/requisition_itens/requisition/${id}`)
-			setListRequisitionItens(result.data)
-		} else {
-			let resultTemp = await api.get(`/requisition_itens_temp/requisition`)
-			setListRequisitionItens(resultTemp.data)
+	useEffect(() => {
+		const real = async () => {
+			await allItensReal()
 		}
+		real()
+	}, [tempToReal])
+
+	const allItensReal = async () => {
+		let result = await api.get(`/requisition_itens/requisition/${id}`)
+		setListRequisitionItens(result.data)
+	}
+
+	const allItensTemp = async () => {
+		let resultTemp = await api.get(`/requisition_itens_temp/requisition`)
+		setListRequisitionItens(resultTemp.data)
 	}
 
 	const truncateTable = async () => {
 		const truncate = await api.delete('/requisition_itens_temp/truncate/table')
 	}
-
-	useEffect(() => {
-		const handleHide = () => {
-			if (listRequsitionItens.length > 0) {
-				setHide(false)
-			} else {
-				setHide(true)
-			}
-		}
-		handleHide()
-	}, [listRequsitionItens])
 
 	const handleRequisitionItensClear = () => {
 		setRequisitionItensId('')
@@ -118,7 +118,8 @@ function FormRequisition() {
 		setDeadLine(today)
 		setNameButton('Incluir')
 		setMessage(undefined)
-		allItens()
+		allItensTemp()
+		setTempToReal('temp')
 	}
 
 	// insert the products to table temp
@@ -136,9 +137,10 @@ function FormRequisition() {
 					dead_line: deadLine,
 					comments: commentsItem,
 				})
+				setHide(false)
 				setType('success')
 				setMessage('Item incluído com sucesso!')
-				allItens()
+				allItensTemp()
 				setTimeout(() => {
 					handleRequisitionItensClear()
 				}, 1000)
@@ -199,181 +201,217 @@ function FormRequisition() {
 				comments: list.comments,
 			})
 		})
+		setTempToReal('real')
 		truncateTable()
+		setHide(true)
 	}
-	// truncateTable()
 
 	return (
 		<>
-			<div
-				style={{
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-				}}>
-				<ShoppingCart quantityItens={listRequsitionItens.length} />
-			</div>
-			<form className={style.container} onSubmit={submit}>
-				<section className={style.section_one}>
-					<Input
-						name='requisition_id'
-						label='Numero requisição'
-						value={id}
-						type='numeric'
-						width='12em'
-						handleChange={(e) => setId(e.current.value)}
-						placeholder='Numero da requisição'
-						disable={true}
+			{whatDo === '' && (
+				<>
+					<h2 style={{ textAlign: 'center' }}>O que deseja fazer?</h2>
+					<div>
+						<div
+							style={{
+								width: '25%',
+								margin: '0 auto',
+								display: 'flex',
+								justifyContent: 'space-around',
+								alignItems: 'center',
+							}}>
+							<Button handleClick={() => setWhatDo('create')}>
+								Criar Requisição?
+							</Button>
+							<Button handleClick={() => setWhatDo('search')}>
+								Consultar Requisição?
+							</Button>
+						</div>
+					</div>
+				</>
+			)}
+			{whatDo === 'create' && (
+				<>
+					<div
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}>
+						<ShoppingCart quantityItens={listRequsitionItens.length} />
+					</div>
+					<form className={style.container} onSubmit={submit}>
+						<section className={style.section_one}>
+							<Input
+								name='requisition_id'
+								label='Numero requisição'
+								value={id}
+								type='numeric'
+								width='12em'
+								handleChange={(e) => setId(e.current.value)}
+								placeholder='Numero da requisição'
+								disable={true}
+							/>
+							<Input
+								name='date'
+								label='Data'
+								value={date}
+								width='12em'
+								type='dateTime'
+								handleChange={(e) => setDate(e.currentTarget.date)}
+								placeholder='Data'
+								disable={true}
+							/>
+							<Input
+								name='status'
+								label='Status'
+								width='18em'
+								value={status}
+								type='text'
+								handleChange={(e) => setStatus(e.currentTarget.value)}
+								placeholder='Status'
+								disable={true}
+							/>
+							<TextArea
+								name='comments'
+								text='Observação'
+								value={comments}
+								height='3.4em'
+								cols='120'
+								rows='2'
+								handleChange={(e) => setComments(e.currentTarget.value)}
+								placeholder='Observação'>
+								{comments}
+							</TextArea>
+						</section>
+						<hr />
+						<section className={style.section_three}>
+							<Select
+								text='Produto'
+								name='product'
+								value={product}
+								marginBottom='0'
+								width='25em'
+								handleChange={(e) => setProduct(e.target.value)}
+								initial_text='Escolha um produto...'>
+								{listProduct.map((prod) => {
+									return (
+										<option key={prod.product_id} value={prod.product_id}>
+											{prod.description}
+										</option>
+									)
+								})}
+							</Select>
+							<Input
+								name='unity'
+								label='Unidade'
+								value={unity}
+								type='text'
+								width='5em'
+								placeholder='Unidade'
+								disable={true}
+							/>
+							<Input
+								name='quantity'
+								label='Quantidade'
+								value={quantity}
+								width='6em'
+								type='numeric'
+								handleChange={(e) => setQuantity(e.target.value)}
+								placeholder='Quantidade'
+							/>
+							<Select
+								text='Centro de Custos'
+								name='cost_center'
+								value={costCenter}
+								marginBottom='0'
+								width='25em'
+								handleChange={(e) => setCostCenter(e.target.value)}
+								initial_text='Escolha um centro de custos...'>
+								{listCostCenter.map((cc) => {
+									return (
+										<option key={cc.cost_center_id} value={cc.cost_center_id}>
+											{cc.description}
+										</option>
+									)
+								})}
+							</Select>
+							<Input
+								name='di'
+								label='DI'
+								value={di}
+								type='text'
+								width='20em'
+								handleChange={(e) => setDi(e.target.value)}
+								placeholder='Digite a(s) DI(s)'
+							/>
+							<Input
+								name='op'
+								label='OP'
+								value={op}
+								type='text'
+								width='20em'
+								handleChange={(e) => setOp(e.target.value)}
+								placeholder='Digite a(s) OP(s)'
+							/>
+						</section>
+						<section className={style.section_three}>
+							<Input
+								name='dead_line'
+								label='Prazo'
+								value={deadLine}
+								type='date'
+								width='10em'
+								handleChange={(e) => setDeadLine(e.target.value)}
+								placeholder='Prazo'
+							/>
+							<TextArea
+								name='comments_item'
+								text='Observação'
+								value={commentsItem}
+								height='3.4em'
+								cols='140'
+								rows='2'
+								handleChange={(e) =>
+									setCommentsItem(e.currentTarget.value.toUpperCase())
+								}
+								placeholder='Observação'>
+								{commentsItem}
+							</TextArea>
+							<Button
+								width='4em'
+								height='1.5em'
+								marginBottom='0'
+								marginTop='0.7em'
+								type='submit'
+								disable={tempToReal === 'real' && true}
+								title={tempToReal === 'real' && 'Botão desativado'}
+								tempToReal={tempToReal}>
+								{nameButton}
+							</Button>
+							<Modal
+								requisition={handleSaveRequisition}
+								hideButton={hide}
+								message={setMessage}
+								type={setType}
+							/>
+						</section>
+						{message !== undefined ? (
+							<Message type={type}>{message}</Message>
+						) : (
+							''
+						)}
+					</form>
+					<TableRequisition
+						dataTable={listRequsitionItens}
+						edit={setEdit}
+						allItensTemp={allItensTemp}
+						nameButton={setNameButton}
+						tempToReal={tempToReal}
 					/>
-					<Input
-						name='date'
-						label='Data'
-						value={date}
-						width='12em'
-						type='dateTime'
-						handleChange={(e) => setDate(e.currentTarget.date)}
-						placeholder='Data'
-						disable={true}
-					/>
-					<Input
-						name='status'
-						label='Status'
-						width='18em'
-						value={status}
-						type='text'
-						handleChange={(e) => setStatus(e.currentTarget.value)}
-						placeholder='Status'
-						disable={true}
-					/>
-					<TextArea
-						name='comments'
-						text='Observação'
-						value={comments}
-						height='3.4em'
-						cols='120'
-						rows='2'
-						handleChange={(e) => setComments(e.currentTarget.value)}
-						placeholder='Observação'>
-						{comments}
-					</TextArea>
-				</section>
-				<hr />
-				<section className={style.section_three}>
-					<Select
-						text='Produto'
-						name='product'
-						value={product}
-						marginBottom='0'
-						width='25em'
-						handleChange={(e) => setProduct(e.target.value)}
-						initial_text='Escolha um produto...'>
-						{listProduct.map((prod) => {
-							return (
-								<option key={prod.product_id} value={prod.product_id}>
-									{prod.description}
-								</option>
-							)
-						})}
-					</Select>
-					<Input
-						name='unity'
-						label='Unidade'
-						value={unity}
-						type='text'
-						width='5em'
-						placeholder='Unidade'
-						disable={true}
-					/>
-					<Input
-						name='quantity'
-						label='Quantidade'
-						value={quantity}
-						width='6em'
-						type='numeric'
-						handleChange={(e) => setQuantity(e.target.value)}
-						placeholder='Quantidade'
-					/>
-					<Select
-						text='Centro de Custos'
-						name='cost_center'
-						value={costCenter}
-						marginBottom='0'
-						width='25em'
-						handleChange={(e) => setCostCenter(e.target.value)}
-						initial_text='Escolha um centro de custos...'>
-						{listCostCenter.map((cc) => {
-							return (
-								<option key={cc.cost_center_id} value={cc.cost_center_id}>
-									{cc.description}
-								</option>
-							)
-						})}
-					</Select>
-					<Input
-						name='di'
-						label='DI'
-						value={di}
-						type='text'
-						width='20em'
-						handleChange={(e) => setDi(e.target.value)}
-						placeholder='Digite a(s) DI(s)'
-					/>
-					<Input
-						name='op'
-						label='OP'
-						value={op}
-						type='text'
-						width='20em'
-						handleChange={(e) => setOp(e.target.value)}
-						placeholder='Digite a(s) OP(s)'
-					/>
-				</section>
-				<section className={style.section_three}>
-					<Input
-						name='dead_line'
-						label='Prazo'
-						value={deadLine}
-						type='date'
-						width='10em'
-						handleChange={(e) => setDeadLine(e.target.value)}
-						placeholder='Prazo'
-					/>
-					<TextArea
-						name='comments_item'
-						text='Observação'
-						value={commentsItem}
-						height='3.4em'
-						cols='140'
-						rows='2'
-						handleChange={(e) =>
-							setCommentsItem(e.currentTarget.value.toUpperCase())
-						}
-						placeholder='Observação'>
-						{commentsItem}
-					</TextArea>
-					<Button
-						width='4em'
-						height='1.5em'
-						marginBottom='0'
-						marginTop='0.7em'
-						type='submit'>
-						{nameButton}
-					</Button>
-					<Modal
-						requisition={handleSaveRequisition}
-						hideButton={hide}
-						message={setMessage}
-						type={setType}
-					/>
-				</section>
-				{message !== undefined ? <Message type={type}>{message}</Message> : ''}
-			</form>
-			<TableRequisition
-				dataTable={listRequsitionItens}
-				edit={setEdit}
-				allItens={allItens}
-				nameButton={setNameButton}
-			/>
+				</>
+			)}
+			{whatDo === 'search' && <ConsultRequisition />}
 		</>
 	)
 }
