@@ -1,9 +1,12 @@
 import RequisitionItensModel from '../models/requisition_itens.model.js'
+import ProductModel from '../models/product.model.js'
+import CostCenterModel from '../models/cost_center.model.js'
+import UnityModel from '../models/unity.model.js'
 
 async function createRequisitionItens(requisition_itens) {
 	try {
 		const newRequisitionItens = await RequisitionItensModel.create(
-			requisition_itens
+			requisition_itens,
 		)
 		return await getRequisitionItens(newRequisitionItens.requisition_itens_id)
 	} catch (error) {
@@ -30,6 +33,20 @@ async function getAllRequisitionItens(requisition_id) {
 			where: {
 				requisition_id,
 			},
+
+			include: [
+				{
+					model: ProductModel,
+					include: [
+						{
+							model: UnityModel,
+						},
+					],
+				},
+				{
+					model: CostCenterModel,
+				},
+			],
 		})
 	} catch (error) {
 		throw error

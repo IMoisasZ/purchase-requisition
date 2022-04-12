@@ -2,7 +2,6 @@ import RequisitionRepository from '../repositories/requisition.repository.js'
 
 async function createRequisition(requisition) {
 	try {
-		requisition.status = requisition.status.toUpperCase()
 		return await RequisitionRepository.createRequisition(requisition)
 	} catch (error) {
 		throw error

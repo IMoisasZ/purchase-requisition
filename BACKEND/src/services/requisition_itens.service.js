@@ -20,7 +20,7 @@ async function getAllRequisitionItens(requisition_id) {
 		)
 
 		if (result === null) {
-			throw new Error('Reuisição inexistente!')
+			throw new Error('Requisição inexistente!')
 		}
 
 		return result
