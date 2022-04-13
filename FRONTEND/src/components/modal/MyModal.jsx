@@ -28,6 +28,10 @@ export default function MyModal({ requisition, hideButton, type, message }) {
 		handleClose()
 		type('success')
 		message('Requisição incluída com sucesso!')
+		setTimeout(() => {
+			type(undefined)
+			message(undefined)
+		}, 2000)
 	}
 
 	return (
