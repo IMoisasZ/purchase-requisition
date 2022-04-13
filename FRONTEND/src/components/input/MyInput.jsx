@@ -6,7 +6,8 @@ function MyInput({
 	label,
 	value,
 	type,
-	handleChange,
+	handleChange = null,
+	handleBlur = null,
 	placeholder,
 	disable = false,
 	width,
@@ -22,6 +23,7 @@ function MyInput({
 				value={value}
 				type={type}
 				onChange={handleChange}
+				onBlur={handleBlur}
 				placeholder={placeholder}
 				disabled={disable}
 				hidden={hide}
