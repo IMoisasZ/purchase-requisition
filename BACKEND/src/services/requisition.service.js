@@ -26,8 +26,14 @@ async function updateRequisition(requisition) {
 	}
 }
 
-async function getRequisitions() {
-	return await RequisitionRepository.getRequisitions()
+async function getRequisitions(requisition_id) {
+	try {
+		if (requisition_id) {
+			return await RequisitionRepository.getRequisition(requisition_id)
+		}
+		console.log('ntem')
+		return await RequisitionRepository.getRequisitions()
+	} catch (error) {}
 }
 
 async function getRequisition(requisition_id) {

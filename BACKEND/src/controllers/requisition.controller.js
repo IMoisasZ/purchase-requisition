@@ -32,8 +32,9 @@ async function updateRequisition(req, res, next) {
 }
 
 async function getRequisitions(req, res, next) {
+	console.log(req.query)
 	try {
-		res.send(await RequisitionService.getRequisitions())
+		res.send(await RequisitionService.getRequisitions(req.query.requisition_id))
 		logger.info(`GET - /requisition - all requisitions`)
 	} catch (error) {
 		next(error)
