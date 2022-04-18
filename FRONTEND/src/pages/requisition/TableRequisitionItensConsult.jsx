@@ -1,27 +1,38 @@
 import React from 'react'
+import style from './TableRequisitionItensConsult.module.css'
 
-function TableRequisitionItensConsult() {
+function TableRequisitionItensConsult({ itens }) {
 	return (
-		<div>
-			<table>
-				<caption>Itens Requisição</caption>
-				<thead>
-					<tr>
-						<th>Requisição</th>
-						<th>Data</th>
-						<th>Observação</th>
-						<th>Status</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>4</td>
-					</tr>
-				</tbody>
-			</table>
+		<div className={style.container}>
+			<div className={style.div_table_itens}>
+				<table>
+					<caption>Itens Requisição</caption>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Produto</th>
+							<th>Quantidade</th>
+							<th>Centro de Custos</th>
+							<th>DI</th>
+							<th>OP</th>
+						</tr>
+					</thead>
+					<tbody>
+						{itens.map((it, index) => {
+							return (
+								<tr key={it.requisition_itens_id}>
+									<td>{index + 1}</td>
+									<td>{it.product.description}</td>
+									<td>{it.quantity}</td>
+									<td>{it.cost_center.description}</td>
+									<td>{it.di}</td>
+									<td>{it.op}</td>
+								</tr>
+							)
+						})}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	)
 }

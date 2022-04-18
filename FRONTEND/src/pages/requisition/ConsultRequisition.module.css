@@ -2,5 +2,20 @@
     width: 100%;
     margin: 0 auto;
     display: flex;
-    justify-content: space-around;
+}
+
+.container Input {
+    margin: 0 1em;
+}
+
+.container fieldset {
+    padding: 1em;
+    margin: 0 1em;
+    height: 20%;
+    border-radius: 0.7em;
+}
+
+.container .div_date {
+    display: flex;
+    font-size: 1em
 }
