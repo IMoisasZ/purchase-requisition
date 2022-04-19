@@ -77,7 +77,7 @@ function FormUser() {
 		setListResponsable(result.data)
 		return result.data
 	}
-	console.log(listResponsable)
+
 	const handleListUser = () => {
 		setShow('list')
 	}
@@ -180,6 +180,24 @@ function FormUser() {
 		}
 	}
 
+	const handleLoad = async () => {
+		const users = await api.get('/user')
+		const defaultUser = []
+		if (!users.length) {
+			defaultUser.push({
+				name: 'eduardo',
+				last_name: 'roberto pacheco',
+				sector_id: 1,
+				role_id: 2,
+				responsable_id: '',
+				email: 'pacheco@destaq.com.br',
+				password: 123456,
+				confirm_password: 123456,
+			})
+			const result = await api.post('/user', defaultUser)
+		}
+	}
+
 	const handleAddUser = () => {
 		setShow('create')
 	}
@@ -208,7 +226,10 @@ function FormUser() {
 						Edição
 					</p>
 				)}
-				<form className={style.container} onSubmit={submit}>
+				<form
+					className={style.container}
+					onSubmit={submit}
+					onLoad={() => handleLoad}>
 					<Input
 						label=''
 						name='id'
