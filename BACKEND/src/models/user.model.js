@@ -2,6 +2,7 @@ import Sequelize from 'sequelize'
 import dbConnection from '../connections/db.connection.js'
 import SectorModel from './sector.model.js'
 import RoleModel from './role.model.js'
+import ResponsableModel from './responsable.model.js'
 
 const User = dbConnection.define(
 	'user',
@@ -49,5 +50,6 @@ const User = dbConnection.define(
 
 User.belongsTo(SectorModel, { foreignKey: 'sector_id' })
 User.belongsTo(RoleModel, { foreignKey: 'role_id' })
+User.belongsTo(ResponsableModel, { foreignKey: 'responsable_id' })
 
 export default User
