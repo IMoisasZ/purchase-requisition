@@ -68,7 +68,7 @@ async function disableEnable(product) {
 async function deleteProduct(product_id) {
 	try {
 		const result = await ProductRepository.getProduct(product_id)
-		console.log(result)
+
 		if (result === null) {
 			throw new Error(`Produto inexistente!`)
 		}
