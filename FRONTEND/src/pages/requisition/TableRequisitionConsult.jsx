@@ -24,8 +24,6 @@ function TableRequisitionConsult({ requisitionData }) {
 			itens()
 		}
 	}, [selectedRequisition])
-	console.log(selectedRequisition)
-	console.log(requisitionItens)
 
 	if (requisitionData) {
 		requisitionData.date = newDate(requisitionData.date)

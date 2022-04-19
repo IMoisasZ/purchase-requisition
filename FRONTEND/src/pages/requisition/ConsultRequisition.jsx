@@ -75,7 +75,6 @@ function ConsultRequisition() {
 						handleChange={(e) => setProduct(e.target.value)}></Select>
 				</div>
 			</fieldset>
-
 			<div>
 				<TableRequisitionConsult requisitionData={requisitionData} />
 			</div>
