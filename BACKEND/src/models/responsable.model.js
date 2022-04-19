@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize'
 import DbConnection from '../connections/db.connection.js'
-import UserModel from './user.model.js'
 
 const Responsable = DbConnection.define(
 	'responsable',
@@ -22,7 +21,5 @@ const Responsable = DbConnection.define(
 	},
 	{ tableName: 'responsable' },
 )
-
-Responsable.belongsTo(UserModel, { foreignKey: 'user_id' })
 
 export default Responsable
