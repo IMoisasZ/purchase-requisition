@@ -1,7 +1,6 @@
 import UserModel from '../models/user.model.js'
 import SectorModel from '../models/sector.model.js'
 import RoleModel from '../models/role.model.js'
-import ResponsableModel from '../models/responsable.model.js'
 
 async function createUser(user) {
 	try {
@@ -14,14 +13,11 @@ async function createUser(user) {
 
 async function updateUser(user) {
 	try {
-		await UserModel.update(
-			{ user },
-			{
-				where: {
-					user_id: user.user_id,
-				},
+		await UserModel.update(user, {
+			where: {
+				user_id: user.user_id,
 			},
-		)
+		})
 		return await getUser(user.user_id)
 	} catch (error) {
 		throw error
@@ -87,6 +83,7 @@ async function disableEnable(user) {
 				},
 			},
 		)
+		return await getUser(user.user_id)
 	} catch (error) {
 		throw error
 	}
