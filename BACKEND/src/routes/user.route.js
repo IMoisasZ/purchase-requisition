@@ -1,13 +1,12 @@
 import express from 'express'
-import userController from '../controllers/user.controller.js'
-import RouteController from '../controllers/user.controller.js'
+import UserController from '../controllers/user.controller.js'
 
 const route = express.Router()
 
-route.post('/', RouteController.createUser)
-route.patch('/', RouteController.updateUser)
-route.get('/', RouteController.getUsers)
-route.get('/:user_id', RouteController.getUser)
-route.put('/', userController.disableEnable)
+route.post('/', UserController.createUser)
+route.patch('/', UserController.updateUser)
+route.get('/', UserController.getUsers)
+route.get('/:user_id', UserController.getUser)
+route.put('/', UserController.disableEnable)
 
 export default route
