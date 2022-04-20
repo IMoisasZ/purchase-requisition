@@ -1,5 +1,6 @@
 import ProductRepository from '../repositories/product.repository.js'
 import UnityRepository from '../repositories/unity.repository.js'
+import RequisitionItensRepository from '../repositories/requisition_itens.repository.js'
 
 async function createProduct(product) {
 	try {
@@ -71,6 +72,15 @@ async function deleteProduct(product_id) {
 
 		if (result === null) {
 			throw new Error(`Produto inexistente!`)
+		}
+
+		const requisitionItens =
+			await RequisitionItensRepository.getRequisitionByProduct(product_id)
+
+		if (requisitionItens.length > 0) {
+			throw new Error(
+				'Não é possivel deletar o produto que tenha requisição associada!',
+			)
 		}
 
 		return await ProductRepository.deleteProduct(product_id)
