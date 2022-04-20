@@ -28,11 +28,11 @@ async function createUser(req, res, next) {
 async function updateUser(req, res, next) {
 	try {
 		const user = req.body
-
 		if (!user.user_id)
 			res.status(400).json({ error: 'O id do do usuário é obrigatório!' })
 		if (!user.name)
 			res.status(400).json({ error: 'O nome do usuário é obrigatório!' })
+		if (!user.email) res.status(400).json({ error: 'O email é obrigatório!' })
 		if (!user.last_name)
 			res.status(400).json({ error: 'O sobrenome do usuário é obrigatório!' })
 		if (!user.sector_id)
