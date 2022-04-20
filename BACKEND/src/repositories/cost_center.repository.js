@@ -14,28 +14,22 @@ async function createCostCenter(cost_center) {
 async function updateCostCenter(newCostCenter, cost_center) {
 	if (newCostCenter) {
 		try {
-			await CostCenterModel.update(
-				{ newCostCenter },
-				{
-					where: {
-						cost_center_id: newCostCenter.cost_center_id,
-					},
-				}
-			)
+			await CostCenterModel.update(newCostCenter, {
+				where: {
+					cost_center_id: newCostCenter.cost_center_id,
+				},
+			})
 			return await getCostCenter(newCostCenter.cost_center_id)
 		} catch (error) {
 			throw error
 		}
 	} else {
 		try {
-			await CostCenterModel.update(
-				{ cost_center },
-				{
-					where: {
-						cost_center_id: cost_center.cost_center_id,
-					},
-				}
-			)
+			await CostCenterModel.update(cost_center, {
+				where: {
+					cost_center_id: cost_center.cost_center_id,
+				},
+			})
 			return await getCostCenter(cost_center.cost_center_id)
 		} catch (error) {
 			throw error

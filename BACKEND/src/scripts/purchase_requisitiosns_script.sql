@@ -40,6 +40,7 @@ create table cost_center(
     updatedAt datetime
 );
 
+
 create table role (
 	role_id int primary key auto_increment,
     role varchar(20) not null unique,
@@ -68,6 +69,7 @@ create table user (
 create table responsable (
 	responsable_id int primary key auto_increment,
     user_id int not null unique,
+    foreign key(user_id) references user(user_id),
     actived boolean default true,
     createdAt datetime,
     updatedAt datetime

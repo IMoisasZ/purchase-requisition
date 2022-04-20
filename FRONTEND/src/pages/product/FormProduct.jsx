@@ -98,8 +98,8 @@ function FormProduct() {
 		if (id === undefined) {
 			console.log(id)
 			try {
-				await api.post('product', {
-					code_dbcorp: codeDbcorp,
+				await api.post('/product', {
+					code_dbcorp: codeDbcorp ? codeDbcorp : null,
 					description: product,
 					unity_id: unity,
 					actived,
@@ -119,7 +119,7 @@ function FormProduct() {
 			try {
 				await api.patch('product', {
 					product_id: id,
-					code_dbcorp: codeDbcorp,
+					code_dbcorp: codeDbcorp ? codeDbcorp : null,
 					description: product,
 					unity_id: unity,
 					actived,
@@ -154,7 +154,8 @@ function FormProduct() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Inclusão
 					</p>
 				) : (
@@ -164,7 +165,8 @@ function FormProduct() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Edição
 					</p>
 				)}
@@ -175,7 +177,8 @@ function FormProduct() {
 						width='2.1em'
 						border='none'
 						handleClick={handleDelete}
-						hide={statusProduct}>
+						hide={statusProduct}
+					>
 						<DeleteIcon
 							style={{
 								fontSize: '1.5em',
@@ -217,7 +220,8 @@ function FormProduct() {
 						name='unity'
 						value={unity}
 						handleChange={(e) => setUnity(e.target.value)}
-						initial_text='Escolha uma unidade...'>
+						initial_text='Escolha uma unidade...'
+					>
 						{listUnity.map((un) => {
 							return (
 								<option key={un.unity_id} value={un.unity_id}>
@@ -239,7 +243,8 @@ function FormProduct() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							disable={btnDisable && true}>
+							disable={btnDisable && true}
+						>
 							{nameBtn}
 						</Button>
 						<Button
@@ -248,7 +253,8 @@ function FormProduct() {
 							width='4.5em'
 							marginTop='1em'
 							handleClick={handleListProducts}
-							disable={btnDisable && true}>
+							disable={btnDisable && true}
+						>
 							Produtos
 						</Button>
 						<Button
@@ -256,7 +262,8 @@ function FormProduct() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleNew}>
+							handleClick={handleNew}
+						>
 							Novo
 						</Button>
 					</div>

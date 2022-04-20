@@ -12,16 +12,17 @@ function MyNavBar() {
 			backgroundColor='#4682B4'
 			color='white'
 			hideIcon={true}
-			hideH1={true}>
+			hideH1={true}
+		>
 			<nav className={style.container}>
 				<div className={style.div_logo}>
 					<Link className={style.link} to='/'>
 						<img src={LogoInjetaq} alt='Logo' />
 					</Link>
 				</div>
-				<div className={style.div_avatar}>
+				{/* <div className={style.div_avatar}>
 					<MyAvatar />
-				</div>
+				</div> */}
 			</nav>
 		</Container>
 	)

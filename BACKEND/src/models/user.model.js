@@ -45,11 +45,13 @@ const User = dbConnection.define(
 			default: true,
 		},
 	},
-	{ tableName: 'user' },
+	{ tableName: 'user' }
 )
 
 User.belongsTo(SectorModel, { foreignKey: 'sector_id' })
 User.belongsTo(RoleModel, { foreignKey: 'role_id' })
-User.belongsTo(ResponsableModel, { foreignKey: 'responsable_id' })
+User.associate = (models) => {
+	User.hasOne(models.Responsable, { foreignKey: 'user_id', as: 'responsables' })
+}
 
 export default User

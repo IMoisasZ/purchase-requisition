@@ -1,5 +1,4 @@
 import ResponsableModel from '../models/responsable.model.js'
-import UserModel from '../models/user.model.js'
 
 async function createResponsable(responsable) {
 	try {
@@ -12,13 +11,7 @@ async function createResponsable(responsable) {
 
 async function getResponsables() {
 	try {
-		return await ResponsableModel.findAll({
-			include: [
-				{
-					model: UserModel,
-				},
-			],
-		})
+		return await ResponsableModel.findAll()
 	} catch (error) {
 		throw error
 	}
@@ -26,13 +19,7 @@ async function getResponsables() {
 
 async function getResponsable(responsable_id) {
 	try {
-		return await ResponsableModel.findByPk(responsable_id, {
-			include: [
-				{
-					model: UserModel,
-				},
-			],
-		})
+		return await ResponsableModel.findByPk(responsable_id)
 	} catch (error) {
 		throw error
 	}

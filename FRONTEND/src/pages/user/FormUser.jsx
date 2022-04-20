@@ -122,24 +122,18 @@ function FormUser() {
 		e.preventDefault()
 		if (id === undefined) {
 			try {
-				const result = await api.post('/user', {
+				let createdUser = {
 					name,
 					last_name: lastName,
 					sector_id: sector,
 					role_id: role,
-					responsable_id: responsable && responsable,
+					responsable_id: responsable ? responsable : null,
 					email,
 					password,
 					confirm_password: confirmPassword,
 					actived,
-				})
-				console.log(result)
-				if (role !== 3) {
-					await api.post('/responsable', {
-						user_id: Number(result.data.user_id),
-						actived: true,
-					})
 				}
+				await api.post('/user', createdUser)
 				setType('success')
 				setMessage('Usuário incluído com sucesso!')
 				timeNew()
@@ -158,7 +152,7 @@ function FormUser() {
 					last_name: lastName,
 					sector_id: sector,
 					role_id: role,
-					responsable_id: responsable ? responsable : '',
+					responsable_id: responsable ? responsable : null,
 					email,
 					password,
 					confirm_password: confirmPassword,
@@ -180,24 +174,6 @@ function FormUser() {
 		}
 	}
 
-	const handleLoad = async () => {
-		const users = await api.get('/user')
-		const defaultUser = []
-		if (!users.length) {
-			defaultUser.push({
-				name: 'eduardo',
-				last_name: 'roberto pacheco',
-				sector_id: 1,
-				role_id: 2,
-				responsable_id: '',
-				email: 'pacheco@destaq.com.br',
-				password: 123456,
-				confirm_password: 123456,
-			})
-			const result = await api.post('/user', defaultUser)
-		}
-	}
-
 	const handleAddUser = () => {
 		setShow('create')
 	}
@@ -212,7 +188,8 @@ function FormUser() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Inclusão
 					</p>
 				) : (
@@ -222,14 +199,12 @@ function FormUser() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}>
+						}}
+					>
 						Edição
 					</p>
 				)}
-				<form
-					className={style.container}
-					onSubmit={submit}
-					onLoad={() => handleLoad}>
+				<form className={style.container} onSubmit={submit}>
 					<Input
 						label=''
 						name='id'
@@ -268,7 +243,8 @@ function FormUser() {
 							value={sector}
 							width='18em'
 							handleChange={(e) => setSector(e.target.value)}
-							initial_text='Escolha um setor...'>
+							initial_text='Escolha um setor...'
+						>
 							{listSector.map((sector) => {
 								return (
 									<option key={sector.sector_id} value={sector.sector_id}>
@@ -283,7 +259,8 @@ function FormUser() {
 							value={role}
 							width='16em'
 							handleChange={(e) => setRole(e.target.value)}
-							initial_text='Escolha um perfil...'>
+							initial_text='Escolha um perfil...'
+						>
 							{listRole.map((role) => {
 								return (
 									<option key={role.role_id} value={role.role_id}>
@@ -298,11 +275,12 @@ function FormUser() {
 							value={responsable}
 							width='18em'
 							handleChange={(e) => setResponsable(e.target.value)}
-							initial_text='Escolha um responsável...'>
+							initial_text='Escolha um responsável...'
+						>
 							{listResponsable.map((resp) => {
 								return (
 									<option key={resp.user_id} value={resp.user_id}>
-										{resp.user.name}
+										{resp.name}
 									</option>
 								)
 							})}
@@ -351,7 +329,8 @@ function FormUser() {
 							width='4em'
 							marginTop='1em'
 							disable={btnDisable && true}
-							title='Clique para incluir um usuário!'>
+							title='Clique para incluir um usuário!'
+						>
 							{nameBtn}
 						</Button>
 						<Button
@@ -361,7 +340,8 @@ function FormUser() {
 							marginTop='1em'
 							handleClick={handleListUser}
 							disable={btnDisable && true}
-							title='Ir para lista de usuários!'>
+							title='Ir para lista de usuários!'
+						>
 							Usuários
 						</Button>
 						<Button
@@ -370,7 +350,8 @@ function FormUser() {
 							width='4em'
 							marginTop='1em'
 							handleClick={handleNew}
-							title='Clique limpar o formulário!'>
+							title='Clique limpar o formulário!'
+						>
 							Novo
 						</Button>
 					</div>
@@ -399,7 +380,8 @@ function FormUser() {
 					handleClick={handleAddUser}
 					fontSize='1em'
 					width='8em'
-					title='Cadastrar Usuário!'>
+					title='Cadastrar Usuário!'
+				>
 					Cadastrar Usuário
 				</Button>
 			</>

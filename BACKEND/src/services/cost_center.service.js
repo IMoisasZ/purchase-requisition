@@ -31,13 +31,14 @@ async function updateCostCenter(cost_center) {
 				cost_center.cost_center_id
 			)
 
-		if (foundCostCenterRequisition) {
+		if (foundCostCenterRequisition.length > 0) {
 			const newCostCenter = {
 				cost_center_id: cost_center.cost_center_id,
 				description: cost_center.description.toUpperCase(),
 				area_id: cost_center.area_id,
 				actived: cost_center.actived,
 			}
+			console.log('aqui')
 			console.log(newCostCenter)
 			return await CostCenterRepository.updateCostCenter(newCostCenter)
 		} else {

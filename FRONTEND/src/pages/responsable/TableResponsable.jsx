@@ -60,7 +60,7 @@ function TableResponsable() {
 							return (
 								<tr key={resp.responsable_id}>
 									<td>{resp.responsable_id}</td>
-									<td>{`${resp.user.name} ${resp.user.last_name}`}</td>
+									<td>{resp.name}</td>
 									<td>{resp.actived ? 'Sim' : 'Não'}</td>
 									<td>
 										<Button
@@ -70,16 +70,17 @@ function TableResponsable() {
 											value={resp.responsable_id}
 											handleClick={() => {
 												handleDisableEnable(resp.responsable_id, resp.actived)
-											}}>
+											}}
+										>
 											{resp.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}
-													titleAccess={`Responsável ${resp.user.name} ativado!`}
+													titleAccess={`Responsável ${resp.name} ativado!`}
 												/>
 											) : (
 												<DisabledByDefaultRoundedIcon
 													style={{ color: 'red' }}
-													titleAccess={`Responsável ${resp.user.name} desativado!`}
+													titleAccess={`Responsável ${resp.name} desativado!`}
 												/>
 											)}
 										</Button>

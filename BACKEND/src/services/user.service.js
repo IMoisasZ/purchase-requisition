@@ -1,11 +1,12 @@
 import UserRepository from '../repositories/user.repository.js'
 import RoleRepository from '../repositories/role.repository.js'
 import SectorRepository from '../repositories/sector.repository.js'
+import ResponsableRepository from '../repositories/responsable.repository.js'
 import hashPassword from '../utils/hashPassword.utils.js'
 
 async function createUser(user) {
 	try {
-		if (Number(user.role_id) === 3 && user.responsable_id === '') {
+		if (Number(user.role_id) === 3 && user.responsable_id === null) {
 			throw new Error('O responsável deve ser preenchido!')
 		}
 
@@ -31,7 +32,17 @@ async function createUser(user) {
 		user.name = user.name.toUpperCase()
 		user.last_name = user.last_name.toUpperCase()
 
-		return await UserRepository.createUser(user)
+		const createdUser = await UserRepository.createUser(user)
+
+		// create responsable
+		if (!(await ResponsableRepository.getResponsable(createdUser.user_id))) {
+			await ResponsableRepository.createResponsable({
+				user_id: createdUser.user_id,
+				actived: true,
+			})
+			return createdUser
+		}
+		return createdUser
 	} catch (error) {
 		throw error
 	}

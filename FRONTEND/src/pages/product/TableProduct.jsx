@@ -31,22 +31,23 @@ function TableProduct({ edit, show, msg, state, btn, status }) {
 		try {
 			const result = await api.get(`/product/${product_id}`)
 			const statusProduct = await api.get(
-				`/requisition_itens/product-requisition/${product_id}`,
+				`/requisition_itens/product-requisition/${product_id}`
 			)
+
 			edit(result.data)
 			show('create')
 			msg(undefined)
 			state('Edição')
 			btn('Editar')
-			status(statusProduct.data)
+			status(!statusProduct.data)
 		} catch (error) {
 			setType('error')
 			setMessage(
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro,
-				),
+						: error.response.data.erro
+				)
 			)
 		}
 	}
@@ -99,9 +100,10 @@ function TableProduct({ edit, show, msg, state, btn, status }) {
 											width='1.5em'
 											border='none'
 											value={product.product_id}
-											handleClick={(e) => {
+											handleClick={() => {
 												handleEditProduct(product.product_id)
-											}}>
+											}}
+										>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar produto ${product.description}`}
@@ -116,7 +118,8 @@ function TableProduct({ edit, show, msg, state, btn, status }) {
 											value={product.product_id}
 											handleClick={() => {
 												handleDisableEnable(product.product_id, product.actived)
-											}}>
+											}}
+										>
 											{product.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}

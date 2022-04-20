@@ -19,7 +19,10 @@ const Responsable = DbConnection.define(
 			default: true,
 		},
 	},
-	{ tableName: 'responsable' },
+	{ tableName: 'responsable' }
 )
 
+// Responsable.associate = (models) => {
+// 	Responsable.hasMany(models.User, { foreignKey: 'user_id', as: 'users' })
+// }
 export default Responsable
