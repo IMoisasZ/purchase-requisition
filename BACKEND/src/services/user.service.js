@@ -2,7 +2,6 @@ import UserRepository from '../repositories/user.repository.js'
 import RoleRepository from '../repositories/role.repository.js'
 import SectorRepository from '../repositories/sector.repository.js'
 import hashPassword from '../utils/hashPassword.utils.js'
-import ResponsableRepository from '../repositories/responsable.repository.js'
 
 async function createUser(user) {
 	try {
@@ -39,7 +38,6 @@ async function createUser(user) {
 }
 
 async function updateUser(user) {
-	console.log(user.responsable_id)
 	try {
 		if (user.role_id === 3 && user.responsable_id === undefined) {
 			throw new Error('O responsável deve ser preenchido!')
