@@ -14,6 +14,7 @@ import CostCenter from '../pages/cost_center/CostCenter'
 import User from '../pages/user/User'
 import Responsable from '../pages/responsable/Responsable'
 import Requisition from '../pages/requisition/Requisition'
+import RequisitionPdf from '../pages/requisition/RequisitionPdf'
 
 function KfpRoutes({ children }) {
 	return (
@@ -33,6 +34,7 @@ function KfpRoutes({ children }) {
 					<Route path='/user' element={<User />} />
 					<Route path='/responsable' element={<Responsable />} />
 					<Route path='/requisition' element={<Requisition />} />
+					<Route path='/requisition/pdf' element={<RequisitionPdf />} />
 				</Routes>
 				<Footer />
 			</Router>
