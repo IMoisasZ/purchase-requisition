@@ -20,3 +20,10 @@
     display: flex;
     font-size: 1em
 }
+
+.container .true{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    height: 50%;
+}

@@ -14,22 +14,21 @@ function TableRequisitionConsult({ requisitionData }) {
 	}
 
 	useEffect(() => {
-		if (requisitionItens) {
-			const itens = async () => {
-				const result = await api.get(
-					`/requisition_itens/requisition/${selectedRequisition}`,
-				)
-				setRequisitonItens(result.data)
-			}
-			itens()
+		const itens = async () => {
+			const result = await api.get(
+				`/requisition_itens/requisition/${selectedRequisition}`,
+			)
+			setRequisitonItens(result.data)
 		}
+		itens()
 	}, [selectedRequisition])
 
-	if (requisitionData) {
-		requisitionData.date = newDate(requisitionData.date)
-	} else {
-		requisitionData = ''
-	}
+	// if (requisitionData.length > 0) {
+	// 	requisitionData = newDate(requisitionData)
+	// 	console.log(requisitionData)
+	// } else {
+	// 	requisitionData = []
+	// }
 	return (
 		<div className={style.container}>
 			<div className={style.div_table}>
@@ -37,8 +36,8 @@ function TableRequisitionConsult({ requisitionData }) {
 					<caption>Requisições</caption>
 					<thead>
 						<tr>
-							<th>Seleção</th>
-							<th>Requisição</th>
+							<th>Sel</th>
+							<th>Req</th>
 							<th>Data</th>
 							<th>Status</th>
 						</tr>
@@ -50,7 +49,7 @@ function TableRequisitionConsult({ requisitionData }) {
 									<p>Não há dados!</p>
 								</td>
 							</tr>
-						) : requisitionData.length > 1 ? (
+						) : requisitionData.length >= 1 ? (
 							requisitionData.map((req) => {
 								let newDt = newDate(req.date)
 								return (
@@ -86,7 +85,7 @@ function TableRequisitionConsult({ requisitionData }) {
 									/>
 								</td>
 								<td>{requisitionData.requisition_id}</td>
-								<td>{requisitionData.date}</td>
+								<td>{newDate(requisitionData.date)}</td>
 								<td>{requisitionData.status}</td>
 							</tr>
 						)}

@@ -32,6 +32,10 @@
     height: 50%;
 }
 
+.container table td, th{
+  text-align: center;
+}
+
 .container .div_table {
     padding: 1em 0em 1em;
     overflow-y: hidden;
