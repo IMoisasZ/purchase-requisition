@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import Input from '../../components/input/MyInput'
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import TableRequisitionItensConsult from './TableRequisitionItensConsult'
 import newDate from '../../utils/date.utils'
 import api from '../../api/api'
 import style from './TableRequisitionConsult.module.css'
+import pdf from '../requisition_pdf/requisition_pdf'
 
 function TableRequisitionConsult({ requisitionData }) {
 	const [selectedRequisition, setSelectedRequisition] = useState('')
 	const [requisitionItens, setRequisitonItens] = useState([])
-
 	const togleSelected = (requisition_id) => {
 		setSelectedRequisition(requisition_id)
 	}
@@ -23,16 +24,19 @@ function TableRequisitionConsult({ requisitionData }) {
 		itens()
 	}, [selectedRequisition])
 
-	// if (requisitionData.length > 0) {
-	// 	requisitionData = newDate(requisitionData)
-	// 	console.log(requisitionData)
-	// } else {
-	// 	requisitionData = []
-	// }
+	const gerarPdf = () => {
+		pdf(requisitionItens)
+	}
+
+	const handleClear = () => {
+		selectedRequisition('')
+		setRequisitonItens([])
+	}
+
 	return (
 		<div className={style.container}>
 			<div className={style.div_table}>
-				<table>
+				<table className={style.table}>
 					<caption>Requisições</caption>
 					<thead>
 						<tr>
@@ -40,33 +44,47 @@ function TableRequisitionConsult({ requisitionData }) {
 							<th>Req</th>
 							<th>Data</th>
 							<th>Status</th>
+							<th>PDF</th>
 						</tr>
 					</thead>
 					<tbody>
-						{requisitionData.length === 0 ? (
+						{requisitionData.length === 0 && (
 							<tr>
 								<td>
 									<p>Não há dados!</p>
 								</td>
 							</tr>
-						) : requisitionData.length >= 1 ? (
+						)}
+						{requisitionData.length > 1 ? (
 							requisitionData.map((req) => {
-								let newDt = newDate(req.date)
 								return (
 									<tr key={req.requisition_id} title={req.comments}>
 										<td>
-											<Input
+											<input
 												name='selected'
 												type='radio'
 												value={req.requisition_id}
-												width='1em'
 												hide={requisitionData && false}
-												handleChange={() => togleSelected(req.requisition_id)}
+												onChange={() => togleSelected(req.requisition_id)}
 											/>
 										</td>
 										<td>{req.requisition_id}</td>
-										<td>{newDt}</td>
+										<td>{req.date}</td>
 										<td>{req.status}</td>
+										<td>
+											<button
+												className={
+													req.requisition_id === selectedRequisition && style.on
+												}
+												onClick={gerarPdf}
+												disabled={
+													req.requisition_id === selectedRequisition
+														? false
+														: true
+												}>
+												<PictureAsPdfIcon />
+											</button>
+										</td>
 									</tr>
 								)
 							})
@@ -85,8 +103,23 @@ function TableRequisitionConsult({ requisitionData }) {
 									/>
 								</td>
 								<td>{requisitionData.requisition_id}</td>
-								<td>{newDate(requisitionData.date)}</td>
+								<td>{requisitionData.date}</td>
 								<td>{requisitionData.status}</td>
+								<td>
+									<button
+										className={
+											requisitionData.requisition_id === selectedRequisition &&
+											style.on
+										}
+										onClick={gerarPdf}
+										disabled={
+											requisitionData.requisition_id === selectedRequisition
+												? false
+												: true
+										}>
+										<PictureAsPdfIcon />
+									</button>
+								</td>
 							</tr>
 						)}
 					</tbody>

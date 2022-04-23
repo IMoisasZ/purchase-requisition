@@ -3,7 +3,7 @@
 /*change the scrool bar */
 /* width */
 .container ::-webkit-scrollbar {
-    width: 20px;
+    width: 15px;
   }
   
   /* Track */
@@ -26,27 +26,53 @@
 /*-----------------------------------------------------------------*/
 .container {
     display: flex; 
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
-    margin: 0 2em;
-    height: 50%;
+    margin: 0 1em;
+    height: 100%;
+    border: 1px gray solid;
+    border-radius: 0.7em;
 }
 
-.container table td, th{
+.container .table tr, td{
   text-align: center;
+  font-size: 12px;
+  margin: 0;
 }
 
 .container .div_table {
-    padding: 1em 0em 1em;
+    padding: 0em 1em;
+    overflow-x: hidden;
     overflow-y: hidden;
-    transition: 1s;
 }
 
 .container .div_table:hover{
-    overflow-y: scroll;
+    overflow-y: scroll;;
+}
+
+.container tbody tr:hover{
+  background-color: #4682B4;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .container caption {
     font-weight: bold;
     color: #4682B4;
+}
+
+.container button{
+    background-color: transparent;
+    border: none;
+}
+
+.container .on {
+  color: darkred;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.container input {
+  cursor: pointer;
 }

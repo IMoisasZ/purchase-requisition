@@ -10,6 +10,7 @@ import ConsultRequisition from './ConsultRequisition'
 import Message from '../../components/message/Message'
 import style from './FormRequisition.module.css'
 import api from '../../api/api'
+import pdf from '../requisition_pdf/requisition_pdf'
 
 function FormRequisition() {
 	// main page
@@ -177,7 +178,7 @@ function FormRequisition() {
 		}
 	}
 
-	// insert the produts to requisition temp to reuisition real
+	// insert the produts to requisition temp to requisition real
 	const handleSaveRequisition = async () => {
 		const requisition = await api.post('/requisition', {
 			user_id: 1,
@@ -190,7 +191,7 @@ function FormRequisition() {
 		setStatus(requisition.data.status)
 		setComments(requisition.data.comments)
 		listRequsitionItens.map((list) => {
-			api.post('/requisition_itens', {
+			return api.post('/requisition_itens', {
 				requisition_id: requisition.data.requisition_id,
 				product_id: list.product_id,
 				quantity: list.quantity,
@@ -204,8 +205,9 @@ function FormRequisition() {
 		setTempToReal('real')
 		truncateTable()
 		setHide(true)
+		pdf(listRequsitionItens)
 	}
-
+	console.log(listRequsitionItens)
 	return (
 		<>
 			{whatDo === '' && (

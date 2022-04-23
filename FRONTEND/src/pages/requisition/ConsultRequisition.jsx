@@ -36,7 +36,7 @@ function ConsultRequisition() {
 	const toogleHideDiv = () => {
 		setHideDiv(!hideDiv)
 	}
-	console.log(hideDiv)
+
 	return (
 		<>
 			<Switch toogleOnOf={toogleHideDiv} labelSwitch={hideDiv} />
@@ -70,7 +70,9 @@ function ConsultRequisition() {
 							value={requisitionId}
 							width='14em'
 							placeholder='Digite o numero da requisição!'
-							handleChange={(e) => setRequisitionId(e.target.value)}
+							handleChange={(e) => {
+								setRequisitionId(e.target.value)
+							}}
 						/>
 					</div>
 					<hr />

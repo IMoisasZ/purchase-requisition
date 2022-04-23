@@ -2,6 +2,8 @@ import RequisitionItensModel from '../models/requisition_itens.model.js'
 import ProductModel from '../models/product.model.js'
 import CostCenterModel from '../models/cost_center.model.js'
 import UnityModel from '../models/unity.model.js'
+import RequisitionModel from '../models/requisition.model.js'
+import UserModel from '../models/user.model.js'
 
 async function createRequisitionItens(requisition_itens) {
 	try {
@@ -45,6 +47,14 @@ async function getAllRequisitionItens(requisition_id) {
 				},
 				{
 					model: CostCenterModel,
+				},
+				{
+					model: RequisitionModel,
+					include: [
+						{
+							model: UserModel,
+						},
+					],
 				},
 			],
 		})

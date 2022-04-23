@@ -2,6 +2,7 @@ import Sequelize from 'sequelize'
 import dbConnection from '../connections/db.connection.js'
 import CostCenterModel from './cost_center.model.js'
 import ProductModel from './product.model.js'
+import RequisitionModel from './requisition.model.js'
 
 const RequisitionItens = dbConnection.define(
 	'requisition_itens',
@@ -45,5 +46,6 @@ const RequisitionItens = dbConnection.define(
 )
 RequisitionItens.belongsTo(CostCenterModel, { foreignKey: 'cost_center_id' })
 RequisitionItens.belongsTo(ProductModel, { foreignKey: 'product_id' })
+RequisitionItens.belongsTo(RequisitionModel, { foreignKey: 'requisition_id' })
 
 export default RequisitionItens
