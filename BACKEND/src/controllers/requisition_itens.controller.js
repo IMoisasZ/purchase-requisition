@@ -117,6 +117,13 @@ async function getRequisitionByProduct(req, res, next) {
 	}
 }
 
+async function createRequisitionExcel(req, res, next) {
+	res.send(
+		RequisitionItensService.createRequisitionExcel(req.params.requisition_id),
+	)
+	logger.info(`POST /requisition/excel/${req.params.requisition_id}`)
+}
+
 export default {
 	createRequisitionItens,
 	updateRequisitionItens,
@@ -124,4 +131,5 @@ export default {
 	getRequisitionItens,
 	deleteRequisitionItens,
 	getRequisitionByProduct,
+	createRequisitionExcel,
 }

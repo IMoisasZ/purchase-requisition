@@ -21,5 +21,9 @@ route.get(
 	'/product-requisition/:product_id',
 	RequisitionItensController.getRequisitionByProduct,
 )
+route.post(
+	'/requisition/excel/:requisition_id',
+	RequisitionItensController.createRequisitionExcel,
+)
 
 export default route

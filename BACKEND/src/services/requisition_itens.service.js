@@ -1,5 +1,6 @@
 import RequisitionItensRepository from '../repositories/requisition_itens.repository.js'
 import ProductRepository from '../repositories/product.repository.js'
+import excel from '../utils/requisition_excel.js'
 
 async function createRequisitionItens(requisition_itens) {
 	return await RequisitionItensRepository.createRequisitionItens(
@@ -79,6 +80,23 @@ async function getRequisitionByProduct(product_id) {
 	}
 }
 
+async function createRequisitionExcel(requisition_id) {
+	try {
+		const requisition = await RequisitionItensRepository.getAllRequisitionItens(
+			requisition_id,
+		)
+
+		if (!requisition) {
+			throw new Error('Requisição inexistente!')
+		}
+
+		const newExcel = excel(requisition)
+		return newExcel
+	} catch (error) {
+		throw error
+	}
+}
+
 export default {
 	createRequisitionItens,
 	updateRequisitionItens,
@@ -86,4 +104,5 @@ export default {
 	getRequisitionItens,
 	deleteRequisitionItens,
 	getRequisitionByProduct,
+	createRequisitionExcel,
 }
