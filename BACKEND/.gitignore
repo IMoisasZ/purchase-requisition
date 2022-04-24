@@ -1,3 +1,5 @@
 node_modules
 .env
 purchase-requisitions
+.xlsx
+.pdf
