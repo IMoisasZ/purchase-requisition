@@ -22,9 +22,11 @@
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
+    "excel4node": "^1.7.2",
     "express": "^4.17.3",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.3",
     "sequelize": "^6.17.0",
     "winston": "^3.6.0"
   }
