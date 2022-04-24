@@ -1,0 +1,35 @@
+import nodemailer from 'nodemailer'
+import SMTP_CONFIG from '../utils/config_smtp.util.js'
+import path from 'path'
+
+const smtp = SMTP_CONFIG()
+
+const transport = nodemailer.createTransport({
+	host: smtp.host,
+	port: smtp.port,
+	secure: false,
+	auth: {
+		user: smtp.user,
+		pass: smtp.pass,
+	},
+	tls: {
+		rejectUnauthorized: false,
+	},
+})
+
+async function run() {
+	const mailSend = await transport.sendMail({
+		text: 'Testando',
+		subject: 'Teste de emal',
+		from: 'devimoisasz@gmail.com',
+		to: 'devimoisasz@gmail.com',
+		attachments: {
+			filename: 'requisição_6.xlsx',
+			path: '../../requisição_6.xlsx', // stream this file
+		},
+	})
+
+	console.log(mailSend)
+}
+
+run()
