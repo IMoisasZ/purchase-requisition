@@ -73,6 +73,17 @@
   transition: 1s;
 }
 
+.container .off_green {
+  font-size: 1.5em;
+}
+
+.container .on_green {
+  color: darkgreen;
+  cursor: pointer;
+  font-size: 1.5em;
+  transition: 1s;
+}
+
 .container input {
   cursor: pointer;
 }

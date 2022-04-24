@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Input from '../../components/input/MyInput'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
+import { FaFileExcel } from 'react-icons/fa'
 import TableRequisitionItensConsult from './TableRequisitionItensConsult'
 import newDate from '../../utils/date.utils'
 import api from '../../api/api'
@@ -28,6 +29,14 @@ function TableRequisitionConsult({ requisitionData }) {
 		pdf(requisitionItens)
 	}
 
+	const gerarExcel = async (requisition_id) => {
+		try {
+			await api.post(`requisition_itens/requisition/excel/${requisition_id}`)
+		} catch (error) {
+			console.log({ error })
+		}
+	}
+
 	const handleClear = () => {
 		selectedRequisition('')
 		setRequisitonItens([])
@@ -44,7 +53,7 @@ function TableRequisitionConsult({ requisitionData }) {
 							<th>Req</th>
 							<th>Data</th>
 							<th>Status</th>
-							<th>PDF</th>
+							<th colSpan={2}>Ações</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -85,6 +94,23 @@ function TableRequisitionConsult({ requisitionData }) {
 												<PictureAsPdfIcon />
 											</button>
 										</td>
+										<td>
+											<button
+												id='excel'
+												className={
+													req.requisition_id === selectedRequisition
+														? style.on_green
+														: style.off_green
+												}
+												onClick={() => gerarExcel(req.requisition_id)}
+												disabled={
+													req.requisition_id === selectedRequisition
+														? false
+														: true
+												}>
+												<FaFileExcel />
+											</button>
+										</td>
 									</tr>
 								)
 							})
@@ -118,6 +144,23 @@ function TableRequisitionConsult({ requisitionData }) {
 												: true
 										}>
 										<PictureAsPdfIcon />
+									</button>
+								</td>
+								<td>
+									<button
+										id='excel'
+										className={
+											requisitionData.requisition_id === selectedRequisition
+												? style.on_green
+												: style.off_green
+										}
+										onClick={() => gerarExcel(requisitionData.requisition_id)}
+										disabled={
+											requisitionData.requisition_id === selectedRequisition
+												? false
+												: true
+										}>
+										<FaFileExcel />
 									</button>
 								</td>
 							</tr>
