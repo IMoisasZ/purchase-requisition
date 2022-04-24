@@ -4,6 +4,7 @@ import newDate from '../../utils/date.utils'
 import { format } from 'date-fns'
 
 function pdf(requisition) {
+	console.log(requisition)
 	pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 	const requisitionTitle = [
