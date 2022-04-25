@@ -26,7 +26,7 @@ function TableRequisitionConsult({ requisitionData }) {
 	}, [selectedRequisition])
 
 	const gerarPdf = () => {
-		pdf(requisitionItens)
+		pdf(requisitionItens, 1)
 	}
 
 	const gerarExcel = async (requisition_id) => {

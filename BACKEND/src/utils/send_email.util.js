@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer'
 import SMTP_CONFIG from '../utils/config_smtp.util.js'
-import path from 'path'
 
 const smtp = SMTP_CONFIG()
 
@@ -23,10 +22,16 @@ async function run() {
 		subject: 'Teste de emal',
 		from: 'devimoisasz@gmail.com',
 		to: 'devimoisasz@gmail.com',
-		attachments: {
-			filename: 'requisição_6.xlsx',
-			path: '../../requisição_6.xlsx', // stream this file
-		},
+		attachments: [
+			{
+				filename: 'requisição_6.xlsx',
+				path: '../reports/excel/requisição_6.xlsx', // stream this file
+			},
+			{
+				filename: 'requisicao_6.pdf',
+				path: 'c://Users/Moisas/Downloads/requisicao_6.pdf', // stream this file
+			},
+		],
 	})
 
 	console.log(mailSend)

@@ -22,6 +22,10 @@ route.get(
 	RequisitionItensController.getRequisitionByProduct,
 )
 route.post(
+	'/requisition/pdf/download/:requisition_id',
+	RequisitionItensController.createRequisitionPdf,
+)
+route.post(
 	'/requisition/excel/:requisition_id',
 	RequisitionItensController.createRequisitionExcel,
 )

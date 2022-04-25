@@ -1,10 +1,9 @@
-import pdfMake from 'pdfmake/build/pdfmake'
-import pdfFonts from 'pdfmake/build/vfs_fonts'
-import newDate from '../../utils/date.utils'
+import pdfMake from 'pdfmake/build/pdfmake.js'
+import pdfFonts from 'pdfmake/build/vfs_fonts.js'
+import newDate from '../utils/date.utils.js'
 import { format } from 'date-fns'
 
-function pdf(requisition) {
-	console.log(requisition)
+function pdf(requisition, type) {
 	pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 	const requisitionTitle = [
@@ -24,7 +23,7 @@ function pdf(requisition) {
 					fontSize: 15,
 				},
 				{
-					text: 'Requisição Nº: ' + requisition[0].requisition_id,
+					text: 'Requisição - ' + requisition[0].requisition_id,
 					alignment: 'right',
 					fontSize: 15,
 					margin: [0, 0, 20, 0],
@@ -132,7 +131,10 @@ function pdf(requisition) {
 		footer: footer,
 	}
 
-	pdfMake.createPdf(docDefinitions).open()
+	const pdfDocGenerator = pdfMake.createPdf(docDefinitions)
+	pdfDocGenerator.getBlob((blob) => {
+		console.log(blob)
+	})
 }
 
 export default pdf
