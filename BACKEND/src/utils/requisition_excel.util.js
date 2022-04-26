@@ -47,7 +47,9 @@ const createExcel = (requisition) => {
 		rowIndex++
 	})
 
-	wb.write(`src/reports/excel/requisição_${requisition[0].requisition_id}.xlsx`)
+	wb.write(
+		`c://Users/Moisas/Downloads/requisicao_${requisition[0].requisition_id}.xlsx`,
+	)
 }
 
 export default createExcel

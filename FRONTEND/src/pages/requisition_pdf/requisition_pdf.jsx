@@ -137,7 +137,7 @@ function pdf(requisition, type) {
 			? pdfMake.createPdf(docDefinitions).open()
 			: pdfMake
 					.createPdf(docDefinitions)
-					.download(`requisição_${requisition[0].requisition_id}.pdf`)
+					.download(`requisicao_${requisition[0].requisition_id}.pdf`)
 	} catch (error) {
 		console.log({ error })
 	}

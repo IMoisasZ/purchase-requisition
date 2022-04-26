@@ -16,25 +16,28 @@ const transport = nodemailer.createTransport({
 	},
 })
 
-async function run() {
+async function run(
+	requisition_id,
+	user = 'devimoisasz@gmail.com',
+	compras = 'pacheco@destaq.com.br',
+) {
 	const mailSend = await transport.sendMail({
-		text: 'Testando',
-		subject: 'Teste de emal',
-		from: 'devimoisasz@gmail.com',
-		to: 'devimoisasz@gmail.com',
+		text: `Segue a requisição numero ${requisition_id}`,
+		subject: `requisição_${requisition_id}`,
+		from: user,
+		to: compras,
 		attachments: [
 			{
-				filename: 'requisição_6.xlsx',
-				path: '../reports/excel/requisição_6.xlsx', // stream this file
+				filename: `requisicao_${requisition_id}.xlsx`,
+				path: `c://Users/Moisas/Downloads/requisicao_${requisition_id}.xlsx`,
 			},
 			{
-				filename: 'requisicao_6.pdf',
-				path: 'c://Users/Moisas/Downloads/requisicao_6.pdf', // stream this file
+				filename: `requisicao_${requisition_id}.pdf`,
+				path: `c://Users/Moisas/Downloads/requisicao_${requisition_id}.pdf`,
 			},
 		],
 	})
-
 	console.log(mailSend)
 }
 
-run()
+export default run

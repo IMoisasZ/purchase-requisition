@@ -2,6 +2,7 @@ import RequisitionItensRepository from '../repositories/requisition_itens.reposi
 import ProductRepository from '../repositories/product.repository.js'
 import excel from '../utils/requisition_excel.util.js'
 import pdf from '../utils/requisition_pdf.util.js'
+import sendEmailFunction from '../utils/send_email.util.js'
 
 async function createRequisitionItens(requisition_itens) {
 	return await RequisitionItensRepository.createRequisitionItens(
@@ -115,6 +116,34 @@ async function createRequisitionPdf(requisition_id) {
 	}
 }
 
+async function sendEmail(requisition_id) {
+	console.log(
+		'-------------------------->chegou aqui<------------------------------',
+	)
+	try {
+		const requisition = await RequisitionItensRepository.getAllRequisitionItens(
+			requisition_id,
+		)
+
+		if (!requisition) {
+			throw new Error('Requisição inexistente!')
+		}
+		const compras = 'devimoisasz@gmail.com'
+
+		await createRequisitionExcel(requisition_id)
+
+		const email = sendEmailFunction(
+			requisition_id,
+			requisition[0].requisition.user.email,
+			compras,
+		)
+		return email
+	} catch (error) {
+		console.log({ error })
+		throw error
+	}
+}
+
 export default {
 	createRequisitionItens,
 	updateRequisitionItens,
@@ -124,4 +153,5 @@ export default {
 	getRequisitionByProduct,
 	createRequisitionExcel,
 	createRequisitionPdf,
+	sendEmail,
 }

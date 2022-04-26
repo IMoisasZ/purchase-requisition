@@ -30,4 +30,9 @@ route.post(
 	RequisitionItensController.createRequisitionExcel,
 )
 
+route.post(
+	'/requisition/send_email/:requisition_id',
+	RequisitionItensController.sendEmail,
+)
+
 export default route

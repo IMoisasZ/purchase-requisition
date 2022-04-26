@@ -205,9 +205,27 @@ function FormRequisition() {
 		setTempToReal('real')
 		truncateTable()
 		setHide(true)
-		pdf(listRequsitionItens)
+
+		await sendEmail(requisition.data.requisition_id)
 	}
-	console.log(listRequsitionItens)
+
+	const sendEmail = async (requisition_id) => {
+		try {
+			const requisitionItensData = await api.get(
+				`/requisition_itens/requisition/${requisition_id}`,
+			)
+			pdf(requisitionItensData.data)
+			const result = await api.post(
+				`/requisition_itens/requisition/send_email/${requisition_id}`,
+			)
+			console.log({ result })
+			alert('Email enviado com sucesso!')
+		} catch (error) {
+			console.log({ error })
+			alert('Erro ao enviar email: ' + error)
+		}
+	}
+
 	return (
 		<>
 			{whatDo === '' && (
