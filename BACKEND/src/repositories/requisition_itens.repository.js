@@ -3,10 +3,6 @@ import RequisitionModel from '../models/requisition.model.js'
 import ProductModel from '../models/product.model.js'
 import CostCenterModel from '../models/cost_center.model.js'
 import UnityModel from '../models/unity.model.js'
-<<<<<<< HEAD
-=======
-import RequisitionModel from '../models/requisition.model.js'
->>>>>>> f10b0839be077cdf6cc9626b6c23b670c196a89f
 import UserModel from '../models/user.model.js'
 
 async function createRequisitionItens(requisition_itens) {
