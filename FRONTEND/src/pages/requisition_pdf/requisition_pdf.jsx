@@ -3,8 +3,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts'
 import newDate from '../../utils/date.utils'
 import { format } from 'date-fns'
 
-function pdf(requisition, type) {
-	console.log(requisition)
+function pdf(requisition) {
 	pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 	const requisitionTitle = [
@@ -132,14 +131,8 @@ function pdf(requisition, type) {
 		footer: footer,
 	}
 
-	try {
-		type === 0
-			? pdfMake.createPdf(docDefinitions).open()
-			: pdfMake
-					.createPdf(docDefinitions)
-					.download(`requisicao_${requisition[0].requisition_id}.pdf`)
-	} catch (error) {
-		console.log({ error })
-	}
+	pdfMake
+		.createPdf(docDefinitions)
+		.download(`requisicao_${requisition[0].requisition_id}.pdf`)
 }
 export default pdf

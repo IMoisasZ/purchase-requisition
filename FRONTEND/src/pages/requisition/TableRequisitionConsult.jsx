@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Input from '../../components/input/MyInput'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
+import { RiMailSendLine } from 'react-icons/ri'
 import { FaFileExcel } from 'react-icons/fa'
 import TableRequisitionItensConsult from './TableRequisitionItensConsult'
 import newDate from '../../utils/date.utils'
@@ -42,10 +43,23 @@ function TableRequisitionConsult({ requisitionData }) {
 		setRequisitonItens([])
 	}
 
+	const sendEmail = async (requisition_id) => {
+		try {
+			pdf(requisitionItens)
+			const result = await api.post(
+				`/requisition_itens/requisition/send_email/${requisition_id}`,
+			)
+			alert('Email enviado com sucesso!')
+		} catch (error) {
+			console.log({ error })
+			alert('Erro ao enviar email: ' + error)
+		}
+	}
+
 	return (
-		<div className={style.container}>
+		<div className={style.container_req}>
 			<div className={style.div_table}>
-				<table className={style.table}>
+				<table className={style.table_req}>
 					<caption>Requisições</caption>
 					<thead>
 						<tr>
@@ -53,7 +67,7 @@ function TableRequisitionConsult({ requisitionData }) {
 							<th>Req</th>
 							<th>Data</th>
 							<th>Status</th>
-							<th colSpan={2}>Ações</th>
+							<th colSpan={3}>Ações</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -90,7 +104,8 @@ function TableRequisitionConsult({ requisitionData }) {
 													req.requisition_id === selectedRequisition
 														? false
 														: true
-												}>
+												}
+												title='Export PDF!'>
 												<PictureAsPdfIcon />
 											</button>
 										</td>
@@ -107,8 +122,27 @@ function TableRequisitionConsult({ requisitionData }) {
 													req.requisition_id === selectedRequisition
 														? false
 														: true
-												}>
+												}
+												title='Export Excel!'>
 												<FaFileExcel />
+											</button>
+										</td>
+										<td>
+											<button
+												id='email'
+												className={
+													req.requisition_id === selectedRequisition
+														? style.on_email
+														: style.off_email
+												}
+												onClick={() => sendEmail(req.requisition_id)}
+												disabled={
+													req.requisition_id === selectedRequisition
+														? false
+														: true
+												}
+												title='Enviar email!'>
+												<RiMailSendLine />
 											</button>
 										</td>
 									</tr>

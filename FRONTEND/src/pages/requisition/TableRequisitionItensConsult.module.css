@@ -24,10 +24,11 @@
   background: #4682B4; 
 }
 
-/*-----------------------------------------------------------------*/
+/* ----------------------------------------------------------------- */
 .container {
-  margin-left: 1em;
+  margin: 0 1em;
   font-size: 12px;
+  width: 100%;
 }
 
 .container .div_table_itens {
@@ -35,6 +36,11 @@
   overflow-y: hidden;
   overflow-x: hidden;
   transition: 1s;
+}
+
+.container .div_table_itens:hover{
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 .container .div_table_itens th, td {

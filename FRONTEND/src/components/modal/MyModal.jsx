@@ -52,7 +52,7 @@ export default function MyModal({ requisition, hideButton, type, message }) {
 				keepMounted
 				onClose={handleClose}
 				aria-describedby='alert-dialog-slide-description'>
-				<DialogTitle>{'Requisição de copras!'}</DialogTitle>
+				<DialogTitle>{'Requisição de compras!'}</DialogTitle>
 				<DialogContent>
 					<DialogContentText id='alert-dialog-slide-description'>
 						Deseja salvar a requisição?

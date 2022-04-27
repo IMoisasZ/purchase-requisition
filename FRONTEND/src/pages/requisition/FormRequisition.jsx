@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Input from '../../components/input/MyInput'
+import { MdOutlineRestartAlt } from 'react-icons/md'
 import TextArea from '../../components/textArea/MyTextArea'
 import Select from '../../components/select/MySelect'
 import Button from '../../components/button/MyButton'
@@ -11,24 +12,19 @@ import Message from '../../components/message/Message'
 import style from './FormRequisition.module.css'
 import api from '../../api/api'
 import pdf from '../requisition_pdf/requisition_pdf'
+import { format } from 'date-fns'
 
 function FormRequisition() {
 	// main page
 	const [whatDo, setWhatDo] = useState('')
 
 	// today
-	const dateToday = new Date()
-	const today =
-		dateToday.getDate() +
-		'/' +
-		(dateToday.getMonth() + 1) +
-		'/' +
-		dateToday.getFullYear()
+	const dateToday = format(new Date(), 'dd-MM-yyyy').toString()
 
 	// requisition
 	const [id, setId] = useState(undefined)
-	const [date, setDate] = useState(today)
-	const [status, setStatus] = useState('Pendente')
+	const [date, setDate] = useState('')
+	const [status, setStatus] = useState('')
 	const [comments, setComments] = useState('')
 	const [nameButton, setNameButton] = useState('Incluir')
 	const [hide, setHide] = useState(true)
@@ -109,6 +105,7 @@ function FormRequisition() {
 	}
 
 	const handleRequisitionItensClear = () => {
+		setId('')
 		setRequisitionItensId('')
 		setProduct('')
 		setUnity('')
@@ -116,12 +113,18 @@ function FormRequisition() {
 		setCostCenter('')
 		setDi('')
 		setOp('')
-		setDeadLine(today)
+		setDeadLine('')
 		setNameButton('Incluir')
 		setMessage(undefined)
 		allItensTemp()
 		setTempToReal('temp')
+		setDate('')
+		setStatus('')
+		setComments('')
+		truncateTable()
+		setListRequisitionItens([])
 	}
+	console.log(id)
 
 	// insert the products to table temp
 	const submit = async (e) => {
@@ -163,7 +166,7 @@ function FormRequisition() {
 					cost_center_id: costCenter,
 					di,
 					op,
-					dead_line: deadLine.toString(),
+					dead_line: deadLine,
 					comments: commentsItem,
 				})
 				setType('edit')
@@ -182,7 +185,7 @@ function FormRequisition() {
 	const handleSaveRequisition = async () => {
 		const requisition = await api.post('/requisition', {
 			user_id: 1,
-			date,
+			date: new Date(),
 			comments,
 			status: 'Incluída',
 		})
@@ -207,6 +210,7 @@ function FormRequisition() {
 		setHide(true)
 
 		await sendEmail(requisition.data.requisition_id)
+		handleRequisitionItensClear()
 	}
 
 	const sendEmail = async (requisition_id) => {
@@ -260,15 +264,24 @@ function FormRequisition() {
 						}}>
 						<ShoppingCart quantityItens={listRequsitionItens.length} />
 					</div>
+					<div>
+						<button
+							className={style.new_requisition}
+							onClick={handleRequisitionItensClear}
+							hidden={false}
+							title='Atualizar requisição!'>
+							<MdOutlineRestartAlt />
+						</button>
+					</div>
 					<form className={style.container} onSubmit={submit}>
 						<section className={style.section_one}>
 							<Input
 								name='requisition_id'
 								label='Numero requisição'
 								value={id}
-								type='numeric'
+								type={id ? 'numeric' : 'text'}
 								width='12em'
-								handleChange={(e) => setId(e.current.value)}
+								handleChange={(e) => setId(e.currentTarget.value)}
 								placeholder='Numero da requisição'
 								disable={true}
 							/>
