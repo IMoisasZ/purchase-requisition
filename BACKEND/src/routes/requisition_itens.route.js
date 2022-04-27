@@ -25,5 +25,18 @@ route.get(
 	'/requisition_pdf/:requisition_id',
 	RequisitionItensController.getAllRequisitionItens
 )
+route.post(
+	'/requisition/pdf/download/:requisition_id',
+	RequisitionItensController.createRequisitionPdf,
+)
+route.post(
+	'/requisition/excel/:requisition_id',
+	RequisitionItensController.createRequisitionExcel,
+)
+
+route.post(
+	'/requisition/send_email/:requisition_id',
+	RequisitionItensController.sendEmail,
+)
 
 export default route

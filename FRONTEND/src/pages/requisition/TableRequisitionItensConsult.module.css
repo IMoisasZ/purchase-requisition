@@ -24,19 +24,35 @@
   background: #4682B4; 
 }
 
-/*-----------------------------------------------------------------*/
+/* ----------------------------------------------------------------- */
 .container {
-  margin-left: 5em;
+  margin: 0 1em;
+  font-size: 12px;
+  width: 100%;
 }
 
 .container .div_table_itens {
   padding: 1em 0em 1em;
   overflow-y: hidden;
+  overflow-x: hidden;
   transition: 1s;
 }
 
+.container .div_table_itens:hover{
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
 .container .div_table_itens th, td {
-  min-width: 5em;
+  min-width: 7em;
+  margin: 1em 0;
+}
+
+.container tbody tr:hover {
+  background-color: #4682B4;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .container .div_table_itens:hover{

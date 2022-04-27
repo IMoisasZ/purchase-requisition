@@ -2,47 +2,105 @@
 
 /*change the scrool bar */
 /* width */
-.container ::-webkit-scrollbar {
-    width: 20px;
+.container_req ::-webkit-scrollbar {
+    width: 15px;
   }
   
   /* Track */
-  .container ::-webkit-scrollbar-track {
+  .container_req ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
     border-radius: 10px;
   }
   
   /* Handle */
-  .container ::-webkit-scrollbar-thumb {
+  .container_req ::-webkit-scrollbar-thumb {
     background: #4682B4; 
     border-radius: 10px;
   }
   
   /* Handle on hover */
-  .container ::-webkit-scrollbar-thumb:hover {
+  .container_req ::-webkit-scrollbar-thumb:hover {
     background: #4682B4; 
   }
 
 /*-----------------------------------------------------------------*/
-.container {
+.container_req {
     display: flex; 
-    justify-content: center;
-    width: 100%;
-    margin: 0 2em;
-    height: 50%;
+    justify-content: space-between;
+    width:80%;
+    margin: 0 1em;
+    height: 30%;
+    border: 1px gray solid;
+    border-radius: 0.7em;
 }
 
-.container .div_table {
-    padding: 1em 0em 1em;
+.container_req .table {
+  font-size: 10px;
+}   
+
+.container_req .table_req td{
+  text-align: center;
+  font-size: 12px;
+  margin: 0;
+  width: 0.5em;
+}
+
+.container_req .div_table {
+    padding: 0em 1em;
+    overflow-x: hidden;
     overflow-y: hidden;
-    transition: 1s;
 }
 
-.container .div_table:hover{
+.container_req .div_table:hover{
     overflow-y: scroll;
+    overflow-x: scroll;
 }
 
-.container caption {
+.container_req tbody tr:hover{
+  background-color: #4682B4;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.container_req caption {
     font-weight: bold;
     color: #4682B4;
+}
+
+.container_req button{
+    background-color: transparent;
+    border: none;
+}
+
+.container_req .on {
+  color: darkred;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.container_req .off_green {
+  font-size: 1.5em;
+}
+
+.container_req .on_green {
+  color: darkgreen;
+  cursor: pointer;
+  font-size: 1.5em;
+  transition: 1s;
+}
+
+.container_req input {
+  cursor: pointer;
+}
+
+.container_req .off_email {
+  font-size: 1.5em;
+}
+
+.container_req .on_email {
+  color: blue;
+  cursor: pointer;
+  font-size: 1.5em;
+  transition: 1s;
 }

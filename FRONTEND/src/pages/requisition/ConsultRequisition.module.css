@@ -3,10 +3,7 @@
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-}
-
-.container Input {
-    margin: 0 1em;
+    align-items: flex-start;
 }
 
 .container fieldset {
@@ -16,7 +13,26 @@
     border-radius: 0.7em;
 }
 
+.container input {
+    margin: 0 1em;
+}
+
 .container .div_date {
     display: flex;
     font-size: 1em
+
+}
+
+.container .true{
+    width: 80%;
+    margin: 0 20em;
+    height: 100em;
+ 
+}
+
+.container .false{
+    width: 80%;
+    margin: 0 auto;
+    height: 100em;
+
 }

@@ -117,6 +117,41 @@ async function getRequisitionByProduct(req, res, next) {
 	}
 }
 
+async function createRequisitionExcel(req, res, next) {
+	try {
+		res.send(
+			RequisitionItensService.createRequisitionExcel(req.params.requisition_id),
+		)
+		logger.info(`POST /requisition/excel/${req.params.requisition_id}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
+async function createRequisitionPdf(req, res, next) {
+	try {
+		res.send(
+			RequisitionItensService.createRequisitionPdf(req.params.requisition_id),
+		)
+
+		logger.info(`POST /requisition/pdf/${req.params.requisition_id}`)
+	} catch (error) {
+		next(error)
+	}
+}
+
+async function sendEmail(req, res, next) {
+	try {
+		res.send(await RequisitionItensService.sendEmail(req.params.requisition_id))
+
+		logger.info(
+			`POST /requisition_itens/requisition/send_email/${req.params.requisition_id}`,
+		)
+	} catch (error) {
+		next(error)
+	}
+}
+
 export default {
 	createRequisitionItens,
 	updateRequisitionItens,
@@ -124,4 +159,7 @@ export default {
 	getRequisitionItens,
 	deleteRequisitionItens,
 	getRequisitionByProduct,
+	createRequisitionExcel,
+	createRequisitionPdf,
+	sendEmail,
 }

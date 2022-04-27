@@ -32,3 +32,14 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.new_requisition {
+    background-color: transparent;
+    border: none;
+    font-size: 3em;
+    color: #4682B4;
+    cursor: pointer;
+    position: absolute;
+    left: 96.4%;
+    top: 16%;
+}
