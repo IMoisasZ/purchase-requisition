@@ -1,38 +1,38 @@
 .container {
-  display: flex;
-  /* height: 30%; */
-  margin: 0 auto;
+    display: flex;
+    /* height: 30%; */
+    margin: 0 auto;
 }
 
 .container .table_requisition, span {
-  text-align: center;
-  font-weight: bold;
-  margin-right: 1%;
-  width: 40%;
+    text-align: center;
+    font-weight: bold;
+    margin-right: 1%;
+    width: 40%;
 }
 
 .container td, tr, th {
-  font-size: smaller;
-  font-weight: bold;
-  padding: 0;
-  margin: 0;
+    font-size: smaller;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
 }
 
 .container tbody tr:hover{
-  background-color: #4682B4;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+    background-color: #4682B4;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .container caption {
-  font-weight: bold;
-  color: #4682B4;
+    font-weight: bold;
+    color: #4682B4;
 }
 
 .container button{
-  background-color: transparent;
-  border: none;
+    background-color: transparent;
+    border: none;
 }
 
 .container .on {

@@ -13,6 +13,7 @@ import style from './FormRequisition.module.css'
 import api from '../../api/api'
 import pdf from '../requisition_pdf/requisition_pdf'
 import { format } from 'date-fns'
+import TableRequisitionConsult from './TableRequisitionConsult'
 
 function FormRequisition() {
 	// main page
@@ -444,7 +445,7 @@ function FormRequisition() {
 					/>
 				</>
 			)}
-			{whatDo === 'search' && <ConsultRequisition />}
+			{whatDo === 'search' && <TableRequisitionConsult />}
 		</>
 	)
 }

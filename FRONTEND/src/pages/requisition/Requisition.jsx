@@ -6,8 +6,8 @@ function Requisition() {
 	return (
 		<>
 			<Container
-				minHeight='40em'
-				maxWidth='89.7em'
+				minHeight='28em'
+				maxWidth='100%'
 				margin='0'
 				padding='0'
 				nameH1='Requisição'>
