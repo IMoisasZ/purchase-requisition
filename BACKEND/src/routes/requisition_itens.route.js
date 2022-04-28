@@ -7,19 +7,23 @@ route.post('/', RequisitionItensController.createRequisitionItens)
 route.patch('/', RequisitionItensController.updateRequisitionItens)
 route.get(
 	'/requisition/:requisition_id',
-	RequisitionItensController.getAllRequisitionItens,
+	RequisitionItensController.getAllRequisitionItens
 )
 route.get(
 	'/:requisition_itens_id',
-	RequisitionItensController.getRequisitionItens,
+	RequisitionItensController.getRequisitionItens
 )
 route.delete(
 	'/:requisition_itens_id',
-	RequisitionItensController.deleteRequisitionItens,
+	RequisitionItensController.deleteRequisitionItens
 )
 route.get(
 	'/product-requisition/:product_id',
-	RequisitionItensController.getRequisitionByProduct,
+	RequisitionItensController.getRequisitionByProduct
+)
+route.get(
+	'/requisition_pdf/:requisition_id',
+	RequisitionItensController.getAllRequisitionItens
 )
 route.post(
 	'/requisition/pdf/download/:requisition_id',

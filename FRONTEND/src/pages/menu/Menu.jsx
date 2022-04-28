@@ -95,6 +95,12 @@ function Menu() {
 									<li>Requisição</li>
 								</div>
 							</Link>
+							<Link to='/requisition/pdf'>
+								<div className={style.menu}>
+									<SummarizeSharpIcon />
+									<li>Requisição PDF</li>
+								</div>
+							</Link>
 						</ul>
 					</ul>
 				</section>

@@ -42,7 +42,7 @@ const RequisitionItens = dbConnection.define(
 			allowNull: false,
 		},
 	},
-	{ tableName: 'requisition_itens' },
+	{ tableName: 'requisition_itens' }
 )
 RequisitionItens.belongsTo(CostCenterModel, { foreignKey: 'cost_center_id' })
 RequisitionItens.belongsTo(ProductModel, { foreignKey: 'product_id' })

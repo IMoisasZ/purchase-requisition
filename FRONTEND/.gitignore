@@ -23,4 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 .pdf
+<<<<<<< HEAD
+=======
 .xlsx
+>>>>>>> f10b0839be077cdf6cc9626b6c23b670c196a89f

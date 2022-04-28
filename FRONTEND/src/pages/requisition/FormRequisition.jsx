@@ -154,7 +154,7 @@ function FormRequisition() {
 				setMessage(
 					error.response.data.error
 						? error.response.data.error
-						: error.response.data.erros,
+						: error.response.data.erros
 				)
 			}
 		} else {
@@ -206,6 +206,13 @@ function FormRequisition() {
 				comments: list.comments,
 			})
 		})
+		const listRequisitionPdf = await api.get(
+			`/requisition_itens/requisition_pdf/${Number(
+				requisition.data.requisition_id
+			)}`
+		)
+		console.log(listRequisitionPdf)
+		localStorage.setItem('itens_pdf', JSON.stringify(listRequisitionPdf))
 		setTempToReal('real')
 		truncateTable()
 		setHide(true)
@@ -244,7 +251,8 @@ function FormRequisition() {
 								display: 'flex',
 								justifyContent: 'space-around',
 								alignItems: 'center',
-							}}>
+							}}
+						>
 							<Button handleClick={() => setWhatDo('create')}>
 								Criar Requisição?
 							</Button>
@@ -262,7 +270,8 @@ function FormRequisition() {
 							display: 'flex',
 							alignItems: 'center',
 							justifyContent: 'center',
-						}}>
+						}}
+					>
 						<ShoppingCart quantityItens={listRequsitionItens.length} />
 					</div>
 					<div>
@@ -314,7 +323,8 @@ function FormRequisition() {
 								cols='120'
 								rows='2'
 								handleChange={(e) => setComments(e.currentTarget.value)}
-								placeholder='Observação'>
+								placeholder='Observação'
+							>
 								{comments}
 							</TextArea>
 						</section>
@@ -327,7 +337,8 @@ function FormRequisition() {
 								marginBottom='0'
 								width='25em'
 								handleChange={(e) => setProduct(e.target.value)}
-								initial_text='Escolha um produto...'>
+								initial_text='Escolha um produto...'
+							>
 								{listProduct.map((prod) => {
 									return (
 										<option key={prod.product_id} value={prod.product_id}>
@@ -361,7 +372,8 @@ function FormRequisition() {
 								marginBottom='0'
 								width='25em'
 								handleChange={(e) => setCostCenter(e.target.value)}
-								initial_text='Escolha um centro de custos...'>
+								initial_text='Escolha um centro de custos...'
+							>
 								{listCostCenter.map((cc) => {
 									return (
 										<option key={cc.cost_center_id} value={cc.cost_center_id}>
@@ -409,7 +421,8 @@ function FormRequisition() {
 								handleChange={(e) =>
 									setCommentsItem(e.currentTarget.value.toUpperCase())
 								}
-								placeholder='Observação'>
+								placeholder='Observação'
+							>
 								{commentsItem}
 							</TextArea>
 							<Button
@@ -420,7 +433,8 @@ function FormRequisition() {
 								type='submit'
 								disable={tempToReal === 'real' && true}
 								title={tempToReal === 'real' && 'Botão desativado'}
-								tempToReal={tempToReal}>
+								tempToReal={tempToReal}
+							>
 								{nameButton}
 							</Button>
 							<Modal
