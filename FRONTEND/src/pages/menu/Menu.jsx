@@ -79,26 +79,7 @@ function Menu() {
 							<Link to='/requisition'>
 								<div className={style.menu}>
 									<FormatListNumberedIcon />
-									<li>Criar Requisição</li>
-								</div>
-							</Link>
-						</ul>
-					</ul>
-				</section>
-				<section>
-					<ul>
-						<li>Relatórios/Conusltas</li>
-						<ul>
-							<Link to='/consultar_requisicao'>
-								<div className={style.menu}>
-									<SummarizeSharpIcon />
-									<li>Requisição</li>
-								</div>
-							</Link>
-							<Link to='/requisition/pdf'>
-								<div className={style.menu}>
-									<SummarizeSharpIcon />
-									<li>Requisição PDF</li>
+									<li>Criar/Consultar Requisição</li>
 								</div>
 							</Link>
 						</ul>

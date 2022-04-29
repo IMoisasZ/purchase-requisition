@@ -10,7 +10,11 @@ export default function MyTable({ children, height = '30%' }) {
 			component={Paper}
 			className={style.container}
 			style={{ height }}>
-			<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
+			<Table
+				sx={{ minWidth: 650, maxHeight: 10 }}
+				size='small'
+				aria-label='a dense table'
+				style={{ height }}>
 				{children}
 			</Table>
 		</TableContainer>

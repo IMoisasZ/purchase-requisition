@@ -13,10 +13,13 @@ function MyInput({
 	width,
 	hide = false,
 	flexDirection = 'column',
+	margin,
 }) {
 	return (
 		<div className={style.container} style={{ flexDirection }}>
-			<label htmlFor={name}>{label}</label>
+			<label htmlFor={name} style={{ margin }}>
+				{label}
+			</label>
 			<input
 				style={{ width }}
 				id={name}

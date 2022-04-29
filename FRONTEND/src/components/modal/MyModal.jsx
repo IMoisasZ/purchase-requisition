@@ -35,7 +35,7 @@ export default function MyModal({ requisition, hideButton, type, message }) {
 	}
 
 	return (
-		<div>
+		<div style={{ width: '60%' }}>
 			<Button
 				width='9em'
 				height='1.5em'

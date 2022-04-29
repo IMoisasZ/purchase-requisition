@@ -1,68 +1,97 @@
-.container {
+.container_req {
   display: flex;
-  /* height: 30%; */
-  margin: 0 auto;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 94em;
+  height: 25em;
 }
 
-.container .table_requisition, span {
-  text-align: center;
-  font-weight: bold;
-  margin-right: 1%;
-  width: 40%;
-}
-
-.container td, tr, th {
-  font-size: smaller;
-  font-weight: bold;
+/* requisition */
+.container_req .table_req {
+  width: 35em;
+  max-height: 25em;
   padding: 0;
   margin: 0;
+  font-size: small;
+  text-align: center;
 }
 
-.container tbody tr:hover{
+.container_req .div_table_req {
+  width: 30em;
+  min-height: 22em;
+  max-height: 22em;
+  overflow-y: scroll;
+  border: 1px solid gray;
+  margin-right: 1%;
+  
+}
+
+
+/* requisition itens */
+.container_req .table_itens {
+  width: 65em;
+  max-height: 25em;
+  padding: 0;
+  margin: 0;
+  font-size: small;
+  text-align: center;
+}
+
+.container_req .div_table_itens {
+  width: 65em;
+  min-height: 22em;
+  max-height: 22em;
+  overflow-y: scroll;
+  border: 1px solid gray;
+  margin: 0%;
+  
+}
+
+.container_req tbody tr:hover{
   background-color: #4682B4;
   color: white;
   font-weight: bold;
   cursor: pointer;
 }
 
-.container caption {
+.container_req caption {
   font-weight: bold;
   color: #4682B4;
 }
 
-.container button{
+.container_req button{
   background-color: transparent;
   border: none;
 }
 
-.container .on {
-color: darkred;
-cursor: pointer;
-transition: 1s;
+.container_req .on {
+  color: darkred;
+  cursor: pointer;
+  transition: 1s;
 }
 
-.container .off_green {
-font-size: 1.5em;
+.container_req .off_green {
+  font-size: 1.5em;
 }
 
-.container .on_green {
-color: darkgreen;
-cursor: pointer;
-font-size: 1.5em;
-transition: 1s;
+.container_req .on_green {
+  color: darkgreen;
+  cursor: pointer;
+  font-size: 1.5em;
+  transition: 1s;
 }
 
-.container input {
-cursor: pointer;
+.container_req input {
+  cursor: pointer;
 }
 
-.container .off_email {
-font-size: 1.5em;
+.container_req .off_email {
+  font-size: 1.5em;
 }
 
-.container .on_email {
-color: blue;
-cursor: pointer;
-font-size: 1.5em;
-transition: 1s;
+.container_req .on_email {
+  color: blue;
+  cursor: pointer;
+  font-size: 1.5em;
+  transition: 1s;
 }
