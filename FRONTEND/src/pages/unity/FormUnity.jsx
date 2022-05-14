@@ -57,14 +57,9 @@ function FormUnity() {
 		setActived(edit.actived)
 	}, [edit])
 
-	useEffect(() => {
-		setNameBtn('Incluir')
-		setState('Inclusão')
-	}, [])
-
 	const submit = async (e) => {
 		e.preventDefault()
-		if (id === '') {
+		if (nameBtn === 'Incluir') {
 			try {
 				await api.post('unity', {
 					unity_tag: unity,
@@ -74,13 +69,11 @@ function FormUnity() {
 				setType('success')
 				setMessage('Unidade cadastrada com sucesso!')
 			} catch (error) {
-				if (error.response.data.error === 'Validation error') {
-					setType('error')
-					setMessage('Unidade já cadastrada!')
-				} else {
-					setType('error')
-					setMessage(error.response.data.error)
-				}
+				setType('error')
+				setMessage(
+					error.response.data.error ||
+						(error.response.data.erros && 'Unidade já cadastrada'),
+				)
 			}
 			setTimeout(() => {
 				handleNew()
@@ -120,8 +113,7 @@ function FormUnity() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}
-					>
+						}}>
 						Inclusão
 					</p>
 				) : (
@@ -131,8 +123,7 @@ function FormUnity() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}
-					>
+						}}>
 						Edição
 					</p>
 				)}
@@ -183,8 +174,7 @@ function FormUnity() {
 							height='2em'
 							width='5em'
 							marginTop='1em'
-							handleClick={handleListUnits}
-						>
+							handleClick={handleListUnits}>
 							Unidades
 						</Button>
 						<Button
@@ -192,8 +182,7 @@ function FormUnity() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleNew}
-						>
+							handleClick={handleNew}>
 							Novo
 						</Button>
 					</div>
@@ -221,8 +210,7 @@ function FormUnity() {
 				<Button
 					handleClick={() => setShow('create')}
 					fontSize='1em'
-					width='8em'
-				>
+					width='8em'>
 					Cadastrar Unidade
 				</Button>
 			</>

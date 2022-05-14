@@ -82,7 +82,7 @@ function FormCostCenter() {
 
 	const submit = async (e) => {
 		e.preventDefault()
-		if (id === undefined) {
+		if (nameBtn === 'Incluir') {
 			try {
 				await api.post('/cost_center', {
 					cost_center: costCenter,
@@ -141,8 +141,7 @@ function FormCostCenter() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}
-					>
+						}}>
 						Inclusão
 					</p>
 				) : (
@@ -152,8 +151,7 @@ function FormCostCenter() {
 							fontSize: '1.5em',
 							textAlign: 'center',
 							margin: '0',
-						}}
-					>
+						}}>
 						Edição
 					</p>
 				)}
@@ -191,8 +189,7 @@ function FormCostCenter() {
 						name='area'
 						value={area}
 						handleChange={(e) => setArea(e.target.value)}
-						initial_text='Escolha uma área...'
-					>
+						initial_text='Escolha uma área...'>
 						{listArea.map((ar) => {
 							return (
 								<option key={ar.area_id} value={ar.area_id}>
@@ -214,8 +211,7 @@ function FormCostCenter() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							disable={btnDisable && true}
-						>
+							disable={btnDisable && true}>
 							{nameBtn}
 						</Button>
 						<Button
@@ -225,8 +221,7 @@ function FormCostCenter() {
 							marginTop='1em'
 							handleClick={handleListCostCenter}
 							disable={btnDisable && true}
-							title='Ir para lista de centro de custos!'
-						>
+							title='Ir para lista de centro de custos!'>
 							Lista CC
 						</Button>
 						<Button
@@ -234,8 +229,7 @@ function FormCostCenter() {
 							height='2em'
 							width='4em'
 							marginTop='1em'
-							handleClick={handleNew}
-						>
+							handleClick={handleNew}>
 							Novo
 						</Button>
 					</div>
@@ -264,8 +258,7 @@ function FormCostCenter() {
 					handleClick={handleAddCostCenter}
 					fontSize='1em'
 					width='8em'
-					title='Cadastrar Centro de Custos!'
-				>
+					title='Cadastrar Centro de Custos!'>
 					Cadastrar CC
 				</Button>
 			</>

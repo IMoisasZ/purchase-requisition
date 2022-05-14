@@ -25,11 +25,6 @@ function FormRole() {
 		setActived(edit.actived)
 	}, [edit])
 
-	useEffect(() => {
-		setNameBtn('Incluir')
-		setState('Inclusão')
-	}, [])
-
 	const togleActived = () => {
 		setActived(!actived)
 	}
@@ -60,7 +55,7 @@ function FormRole() {
 
 	const submit = async (e) => {
 		e.preventDefault()
-		if (id === '') {
+		if (nameBtn === 'Incluir') {
 			try {
 				await api.post('role', {
 					role,

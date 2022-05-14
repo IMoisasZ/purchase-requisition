@@ -33,11 +33,6 @@ function FormArea() {
 		allSector()
 	}, [])
 
-	useEffect(() => {
-		setNameBtn('Incluir')
-		setState('Inclusão')
-	}, [])
-
 	const togleActived = () => {
 		setActived(!actived)
 	}
@@ -74,7 +69,7 @@ function FormArea() {
 
 	const submit = async (e) => {
 		e.preventDefault()
-		if (id === '') {
+		if (nameBtn === 'Incluir') {
 			try {
 				await api.post('area', {
 					area,
@@ -87,10 +82,10 @@ function FormArea() {
 			} catch (error) {
 				console.log({ error })
 				setType('error')
-				error.response.data.error && setMessage(error.response.data.error)
-				error.response.data.erros === 'Validation error'
-					? setMessage('Área já cadastrada!')
-					: setMessage(error.response.data.error)
+				setMessage(
+					error.response.data.error ||
+						(error.response.data.erros && 'Area já cadastrada!'),
+				)
 			}
 			time()
 		} else {

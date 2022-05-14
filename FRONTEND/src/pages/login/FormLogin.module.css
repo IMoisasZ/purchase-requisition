@@ -1,7 +1,28 @@
 .container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	width: 20em;
 	margin: 0 auto;
 	padding: 2em;
 	border: 1px solid gray;
 	border-radius: 1em;
+}
+
+.container ul {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0%;
+}
+
+.container ul li {
+	list-style: none;
+	font-size: smaller;
+	padding: 0.2em;
+}
+
+.container ul li:hover{
+	background-color: #4682B4;
 }

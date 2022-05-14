@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Input from '../../components/input/MyInput'
+import Message from '../../components/message/Message'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import { RiMailSendLine } from 'react-icons/ri'
 import { FaFileExcel } from 'react-icons/fa'
-import TableRequisitionItensConsult from './TableRequisitionItensConsult'
+import newDate from '../../utils/date.utils'
 import api from '../../api/api'
 import style from '../requisition/TableRequisitionConsult.module.css'
 import pdf from '../requisition_pdf/requisition_pdf'
@@ -13,6 +14,8 @@ function TableRequisitionConsult() {
 	const [requisitionItens, setRequisitonItens] = useState([])
 	const [requisitionId, setRequisitionId] = useState('')
 	const [requisitionData, setRequisitionData] = useState([])
+	const [message, setMessage] = useState(undefined)
+	const [type, setType] = useState(undefined)
 
 	const togleSelected = (requisition_id) => {
 		setSelectedRequisition(requisition_id)
@@ -46,15 +49,30 @@ function TableRequisitionConsult() {
 		}
 		itens()
 	}, [selectedRequisition])
-
+	console.log(requisitionItens)
 	const gerarPdf = () => {
-		pdf(requisitionItens, 1)
+		try {
+			pdf(requisitionItens, 1)
+			setType('success')
+			setMessage(
+				`Requisição ${requisitionItens[0].requisition_id} exportada em pdf com sucesso para pasta "Downloads"`,
+			)
+		} catch (error) {
+			setType = 'error'
+			setMessage(error)
+		}
 	}
 
 	const gerarExcel = async (requisition_id) => {
 		try {
 			await api.post(`requisition_itens/requisition/excel/${requisition_id}`)
+			setType('success')
+			setMessage(
+				`Requisição ${requisition_id} exportada em excel com sucesso para pasta "Downloads"`,
+			)
 		} catch (error) {
+			type('error')
+			setMessage(error)
 			console.log({ error })
 		}
 	}
@@ -79,19 +97,26 @@ function TableRequisitionConsult() {
 
 	return (
 		<div>
-			<Input
-				flexDirection='row'
-				name='requisition_id'
-				label='Requisição'
-				type='numeric'
-				value={requisitionId}
-				width='14em'
-				margin='0 0.5em 0 0'
-				placeholder='Digite o numero da requisição!'
-				handleChange={(e) => {
-					setRequisitionId(e.target.value)
-				}}
-			/>
+			<div>
+				<Input
+					flexDirection='row'
+					name='requisition_id'
+					label='Requisição'
+					type='numeric'
+					value={requisitionId}
+					width='14em'
+					margin='0 0.5em 0 0'
+					placeholder='Digite o numero da requisição!'
+					handleChange={(e) => {
+						setRequisitionId(e.target.value)
+					}}
+				/>
+				{message && (
+					<Message type={type} width='35em'>
+						{message}
+					</Message>
+				)}
+			</div>
 
 			<div className={style.container_req}>
 				<div className={style.div_table_req}>
@@ -128,7 +153,7 @@ function TableRequisitionConsult() {
 												/>
 											</td>
 											<td>{req.requisition_id}</td>
-											<td>{req.date}</td>
+											<td>{newDate(req.date)}</td>
 											<td>{req.status}</td>
 											<td>
 												<button

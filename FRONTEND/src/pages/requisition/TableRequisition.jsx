@@ -11,6 +11,8 @@ function TableRequisition({
 	allItensTemp,
 	nameButton,
 	tempToReal,
+	message,
+	typeMessage,
 }) {
 	const handleEditItem = async (requisition_itens_id) => {
 		const result = await api.get(
@@ -23,6 +25,8 @@ function TableRequisition({
 	const handleDeleteItem = async (requisition_itens_id) => {
 		await api.delete(`/requisition_itens_temp/${requisition_itens_id}`)
 		allItensTemp()
+		typeMessage('success')
+		message('Item deletado com sucesso!')
 	}
 	return (
 		<div className={style.container}>

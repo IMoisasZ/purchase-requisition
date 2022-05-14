@@ -1,14 +1,18 @@
 import React from 'react'
 import MyRoute from './routes/MyRoute'
+import { UserContext } from './pages/context/userContext'
 
 function App() {
+	const theme = 'dark'
 	return (
-		<div
-			style={{
-				fontFamily: `Segoe UI, Tahoma, Geneva, Verdana, sans - serif`,
-			}}>
-			<MyRoute></MyRoute>
-		</div>
+		<UserContext value={theme}>
+			<div
+				style={{
+					fontFamily: `Segoe UI, Tahoma, Geneva, Verdana, sans - serif`,
+				}}>
+				<MyRoute></MyRoute>
+			</div>
+		</UserContext>
 	)
 }
 

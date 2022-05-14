@@ -22,7 +22,7 @@ function MyTextArea({
 			}}>
 			<label htmlFor={name}>{text}</label>
 			<textarea
-				style={{ resize: 'none', borderRadius: '0.3em' }}
+				style={{ resize: 'none', borderRadius: '0.3em', margin: '0 1em' }}
 				name={name}
 				id={name}
 				cols={cols}

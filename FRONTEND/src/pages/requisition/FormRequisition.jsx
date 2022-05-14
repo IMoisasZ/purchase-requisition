@@ -106,7 +106,7 @@ function FormRequisition() {
 	}
 
 	const handleRequisitionItensClear = () => {
-		setId('')
+		// setId('')
 		setRequisitionItensId('')
 		setProduct('')
 		setUnity('')
@@ -119,10 +119,10 @@ function FormRequisition() {
 		setMessage(undefined)
 		allItensTemp()
 		setTempToReal('temp')
-		setDate('')
-		setStatus('')
-		setComments('')
-		truncateTable()
+		// setDate('')
+		// setStatus('')
+		// setComments('')
+		// truncateTable()
 		setListRequisitionItens([])
 	}
 	console.log(id)
@@ -451,6 +451,8 @@ function FormRequisition() {
 						allItensTemp={allItensTemp}
 						nameButton={setNameButton}
 						tempToReal={tempToReal}
+						message={setMessage}
+						typeMessage={setType}
 					/>
 				</>
 			)}

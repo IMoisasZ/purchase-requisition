@@ -51,7 +51,7 @@
 .container .div_avatar {
 	display: flex;
 	justify-content: flex-end;
-	margin: 0.5em;
+	align-items: center;
 	cursor: pointer;
 }
 
@@ -64,4 +64,19 @@
 	cursor: pointer;
 	background-color: transparent;
 	transition: 1s;
+}
+
+.container .log_out button{
+	cursor: pointer;
+	margin: 0.2em 0;
+	background-color: transparent;
+	border: none;
+	color: white;
+	transition: 0.5s;
+}
+
+.container .log_out button:hover{
+	text-decoration: underline;
+	font-weight: 600;
+	border-radius: 0.2em;
 }
