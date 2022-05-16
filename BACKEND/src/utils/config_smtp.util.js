@@ -3,6 +3,6 @@ export default function smtp() {
 		host: 'smtp.gmail.com',
 		port: 587,
 		user: 'devimoisasz@gmail.com',
-		pass: 'I1506Z1009',
+		pass: '@1IvyZoe1@',
 	}
 }

@@ -4,7 +4,7 @@ import Container from '../container/MyContainer'
 import MyAvatar from '../MyAvatar'
 import LogoInjetaq from '../../images/logo_injetaq.jpg'
 import style from './MyNavBar.module.css'
-import { User } from '../../pages/context/userContext'
+import { User } from '../../context/userContext'
 
 function MyNavBar() {
 	const [showAvatar, setShowAvatar] = useState(false)
@@ -13,10 +13,11 @@ function MyNavBar() {
 	const navigate = useNavigate()
 
 	const { userLogado } = useContext(User)
-
+	console.log(userLogado)
 	const initials = (user) => {
 		if (user) {
-			const names = user.nome.split(' ')
+			const full_name = `${user.data.name} ${user.data.last_name}`
+			const names = full_name.split(' ')
 			const nameAvatar =
 				names[0].substring(0, 1) + '' + names[1].substring(0, 1)
 			setAvatar(nameAvatar)
@@ -29,13 +30,13 @@ function MyNavBar() {
 	}, [userLogado])
 
 	const logOut = () => {
-		alert(`Até a próxima ${userLogado.nome}`)
+		alert(`Até a próxima ${userLogado.data.name}`)
 		localStorage.clear('user_log')
 		setAvatar('')
 		setShowAvatar(false)
 		navigate('/login')
 	}
-
+	console.log(userLogado)
 	return (
 		<Container
 			minHeight='1vh'
@@ -62,7 +63,8 @@ function MyNavBar() {
 							padding: 0,
 						}}>
 						<div className={style.div_avatar}>
-							<MyAvatar title={`${userLogado.nome} - ${userLogado.role}`}>
+							<MyAvatar
+								title={`${userLogado.data.name} - ${userLogado.data.role.role}`}>
 								{avatar}
 							</MyAvatar>
 						</div>

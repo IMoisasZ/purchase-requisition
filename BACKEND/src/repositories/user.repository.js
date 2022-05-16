@@ -60,11 +60,12 @@ async function getUser(user_id) {
 
 async function getUserByEmail(email) {
 	try {
-		return await UserModel.findOne({
+		const user = await UserModel.findOne({
 			where: {
 				email,
 			},
 		})
+		return await getUser(user.user_id)
 	} catch (error) {
 		throw error
 	}

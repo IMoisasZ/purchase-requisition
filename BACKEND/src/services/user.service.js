@@ -26,7 +26,7 @@ async function createUser(user) {
 		}
 
 		const passwordHash = hashPassword(user.password)
-
+		console.log(passwordHash)
 		user.password = passwordHash
 
 		user.name = user.name.toUpperCase()

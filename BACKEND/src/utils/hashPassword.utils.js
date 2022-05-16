@@ -1,7 +1,7 @@
-import bcrypt from 'bcrypt'
+import { hashSync } from 'bcrypt'
 
 function hashPassword(password) {
-	const hash = bcrypt.hashSync(password, 12)
+	const hash = hashSync(password, 12)
 	return hash
 }
 

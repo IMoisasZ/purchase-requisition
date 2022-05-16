@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Input from '../../components/input/MyInput'
 import { MdOutlineRestartAlt } from 'react-icons/md'
@@ -9,11 +9,14 @@ import Modal from '../../components/modal/MyModal'
 import ShoppingCart from '../../components/shoppingCart/ShoppingCart'
 import TableRequisition from './TableRequisition'
 import Message from '../../components/message/Message'
+import TableRequisitionConsult from './TableRequisitionConsult'
+import Tooltip from '@mui/material/Tooltip'
 import style from './FormRequisition.module.css'
 import api from '../../api/api'
 import pdf from '../requisition_pdf/requisition_pdf'
 import { format } from 'date-fns'
-import TableRequisitionConsult from './TableRequisitionConsult'
+import { User } from '../../context/userContext'
+import newDate from '../../utils/date.utils'
 
 function FormRequisition() {
 	// main page
@@ -106,7 +109,21 @@ function FormRequisition() {
 	}
 
 	const handleRequisitionItensClear = () => {
-		// setId('')
+		setProduct('')
+		setUnity('')
+		setQuantity('')
+		setCostCenter('')
+		setDi('')
+		setOp('')
+		setDeadLine('')
+		setNameButton('Incluir')
+		setMessage(undefined)
+		allItensTemp()
+		setTempToReal('temp')
+	}
+
+	const handleRequisitionClear = () => {
+		setId('')
 		setRequisitionItensId('')
 		setProduct('')
 		setUnity('')
@@ -119,13 +136,12 @@ function FormRequisition() {
 		setMessage(undefined)
 		allItensTemp()
 		setTempToReal('temp')
-		// setDate('')
-		// setStatus('')
-		// setComments('')
-		// truncateTable()
+		setDate('')
+		setStatus('')
+		setComments('')
+		truncateTable()
 		setListRequisitionItens([])
 	}
-	console.log(id)
 
 	// insert the products to table temp
 	const submit = async (e) => {
@@ -182,10 +198,12 @@ function FormRequisition() {
 		}
 	}
 
+	const { userLogado } = useContext(User)
+
 	// insert the produts to requisition temp to requisition real
 	const handleSaveRequisition = async () => {
 		const requisition = await api.post('/requisition', {
-			user_id: 1,
+			user_id: userLogado.data.user_id,
 			date: new Date(),
 			comments,
 			status: 'Incluída',
@@ -218,7 +236,7 @@ function FormRequisition() {
 		setHide(true)
 
 		await sendEmail(requisition.data.requisition_id)
-		handleRequisitionItensClear()
+		handleRequisitionClear()
 	}
 
 	const sendEmail = async (requisition_id) => {
@@ -231,12 +249,16 @@ function FormRequisition() {
 				`/requisition_itens/requisition/send_email/${requisition_id}`,
 			)
 			console.log({ result })
-			alert('Email enviado com sucesso!')
+			alert(
+				`Solicitação de compras nº ${requisition_id} enviada ao setor de compras!`,
+			)
 		} catch (error) {
 			console.log({ error })
 			alert('Erro ao enviar email: ' + error)
 		}
 	}
+
+	console.log(tempToReal)
 
 	return (
 		<>
@@ -272,7 +294,21 @@ function FormRequisition() {
 							alignItems: 'center',
 							justifyContent: 'center',
 						}}>
-						<ShoppingCart quantityItens={listRequsitionItens.length} />
+						<Tooltip
+							title={
+								listRequsitionItens.length > 1
+									? `Solicitação de compras com ${listRequsitionItens.length} itens!`
+									: `Solicitação de compras com ${listRequsitionItens.length} item!`
+							}>
+							<button
+								style={{
+									backgroundColor: 'transparent',
+									border: 'none',
+									cursor: 'pointer',
+								}}>
+								<ShoppingCart quantityItens={listRequsitionItens.length} />
+							</button>
+						</Tooltip>
 					</div>
 					<div>
 						<button
@@ -428,8 +464,7 @@ function FormRequisition() {
 								marginTop='0.7em'
 								type='submit'
 								disable={tempToReal === 'real' && true}
-								title={tempToReal === 'real' && 'Botão desativado'}
-								tempToReal={tempToReal}>
+								title={tempToReal === 'real' && 'Botão desativado'}>
 								{nameButton}
 							</Button>
 							<Modal

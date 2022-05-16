@@ -40,10 +40,29 @@ create table cost_center(
     updatedAt datetime
 );
 
-
 create table role (
 	role_id int primary key auto_increment,
     role varchar(20) not null unique,
+    actived boolean default true,
+    createdAt datetime,
+    updatedAt datetime
+);
+
+create table product (
+	product_id int primary key auto_increment,
+    code_dbcorp int unique,
+    description varchar(255) not null unique,
+    unity_id int not null,
+    foreign key(unity_id) references unity(unity_id),
+    actived boolean default true,
+    createdAt datetime,
+    updatedAt datetime
+);
+
+create table responsable (
+	responsable_id int primary key auto_increment,
+    user_id int not null unique,
+    /*foreign key(user_id) references user(user_id),*/
     actived boolean default true,
     createdAt datetime,
     updatedAt datetime
@@ -60,27 +79,7 @@ create table user (
     responsable_id int,
 	foreign key (responsable_id) references responsable(responsable_id),
     email varchar(50) not null unique,
-    password varchar(12) not null,
-    actived boolean default true,
-    createdAt datetime,
-    updatedAt datetime
-);
-
-create table responsable (
-	responsable_id int primary key auto_increment,
-    user_id int not null unique,
-    foreign key(user_id) references user(user_id),
-    actived boolean default true,
-    createdAt datetime,
-    updatedAt datetime
-);
-
-create table product (
-	product_id int primary key auto_increment,
-    code_dbcorp int unique,
-    description varchar(255) not null unique,
-    unity_id int not null,
-    foreign key(unity_id) references unity(unity_id),
+    password varchar(64) not null,
     actived boolean default true,
     createdAt datetime,
     updatedAt datetime
@@ -128,3 +127,4 @@ create table requisition_itens_temp (
     createdAt datetime,
     updatedAt datetime
 );
+

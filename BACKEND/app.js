@@ -12,6 +12,7 @@ import RequisitionRoute from './src/routes/requisition.route.js'
 import RequisitionItensRoute from './src/routes/requisition_itens.route.js'
 import RequisitionItensTempRoute from './src/routes/requisition_itens_temp.route.js'
 import ResponsableRoute from './src/routes/responsable.route.js'
+import LoginRoute from './src/routes/login.route.js'
 
 // app
 const app = express()
@@ -34,6 +35,7 @@ app.use('/requisition', RequisitionRoute)
 app.use('/requisition_itens', RequisitionItensRoute)
 app.use('/requisition_itens_temp', RequisitionItensTempRoute)
 app.use('/responsable', ResponsableRoute)
+app.use('/login', LoginRoute)
 
 // winston(log)
 const { combine, timestamp, label, printf } = winston.format

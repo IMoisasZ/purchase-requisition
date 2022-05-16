@@ -45,7 +45,7 @@ const User = dbConnection.define(
 			default: true,
 		},
 	},
-	{ tableName: 'user' }
+	{ tableName: 'user' },
 )
 
 User.belongsTo(SectorModel, { foreignKey: 'sector_id' })

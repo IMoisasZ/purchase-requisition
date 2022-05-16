@@ -22,7 +22,7 @@
 .container .menu{
 	display: flex;
 	align-items: center;
-	justify-content: start;
+	justify-content: flex-start;
 	margin-bottom: 1em;
 	transition: 1s;
 }

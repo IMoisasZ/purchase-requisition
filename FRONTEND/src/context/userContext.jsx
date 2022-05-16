@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 
 const User = createContext()
 
@@ -9,6 +9,13 @@ function UserContext({ children }) {
 		const user = JSON.parse(localStorage.getItem('user_log'))
 		setUserLogado(user)
 	}
+
+	useEffect(() => {
+		const user = JSON.parse(localStorage.getItem('user_log'))
+		if (user) {
+			setUserLogado(user)
+		}
+	}, [])
 
 	return (
 		<User.Provider value={{ userLogado, handleUserLogado }}>

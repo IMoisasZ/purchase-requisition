@@ -5,7 +5,8 @@ import Button from '../../components/button/MyButton'
 import Message from '../../components/message/Message'
 import Spinner from '../../components/spinner/Spinner'
 import style from '../login/FormLogin.module.css'
-import { User } from '../context/userContext'
+import { User } from '../../context/userContext'
+import api from '../../api/api'
 
 function FormLogin() {
 	const [email, setEmail] = useState('')
@@ -17,12 +18,26 @@ function FormLogin() {
 
 	const navigate = useNavigate()
 
-	const handleOnClick = (e) => {
+	const handleOnClick = async (e) => {
 		e.preventDefault()
-		validation()
-		setTimeout(() => {
+		try {
+			const logUser = {
+				email,
+				password: senha,
+			}
+			const user = await api.post('/login', logUser)
+			console.log(user)
+
+			localStorage.setItem('user_log', JSON.stringify(user))
+			setUserLogado(user)
+			alert(`Bem vindo ${user.data.name}`)
 			handleUserLogado()
-		}, 1000)
+			navigate('/menu')
+		} catch (error) {
+			console.error({ error })
+			setType('error')
+			setMessage(error.response.data.error || error.response.data.erros)
+		}
 	}
 
 	const handleSubmit = (e) => {
@@ -32,58 +47,10 @@ function FormLogin() {
 		}
 	}
 
-	const users = [
-		{
-			nome: 'Moisés Santos',
-			email: 'devimoisasz@gmail.com',
-			senha: '123456',
-			role: 'MASTER',
-		},
-		{
-			nome: 'Moisas Barbosa',
-			email: 'mopri08@gmail.com',
-			senha: '456321',
-			role: 'user',
-		},
-	]
-
-	const validation = () => {
-		if (!email) {
-			setType('error')
-			setMessage('Email não informado!')
-			return
-		}
-
-		if (!senha) {
-			setType('error')
-			setMessage('Senha não informado!')
-			return
-		}
-
-		let user = users.find((u) => u.email === email)
-		if (!user || user.senha !== senha) {
-			setType('error')
-			setMessage('Usuário e ou senha não conferem!')
-			return
-		}
-
-		user.senha = undefined
-
-		localStorage.setItem('user_log', JSON.stringify(user))
-		setUserLogado(user)
-		setType('success')
-		setSpinner(true)
-		setTimeout(() => {
-			navigate('/menu')
-		}, 1000)
-	}
 	const { handleUserLogado } = useContext(User)
 
 	return (
 		<>
-			<div style={{ display: 'flex', justifyContent: 'center' }}>
-				{spinner && <Spinner />}
-			</div>
 			<form className={style.container} onSubmit={handleSubmit}>
 				<Input
 					name='email'

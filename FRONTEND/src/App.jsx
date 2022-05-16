@@ -1,6 +1,6 @@
 import React from 'react'
 import MyRoute from './routes/MyRoute'
-import { UserContext } from './pages/context/userContext'
+import { UserContext } from './context/userContext'
 
 function App() {
 	const theme = 'dark'
