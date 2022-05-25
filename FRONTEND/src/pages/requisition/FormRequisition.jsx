@@ -15,8 +15,8 @@ import style from './FormRequisition.module.css'
 import api from '../../api/api'
 import pdf from '../requisition_pdf/requisition_pdf'
 import { format } from 'date-fns'
+import compare from '../../utils/compareDatas'
 import { User } from '../../context/userContext'
-import newDate from '../../utils/date.utils'
 
 function FormRequisition() {
 	// main page
@@ -33,6 +33,7 @@ function FormRequisition() {
 	const [nameButton, setNameButton] = useState('Incluir')
 	const [hide, setHide] = useState(true)
 	const [tempToReal, setTempToReal] = useState('temp')
+	const [btnIncluirHide, setBtnIncluirHide] = useState(false)
 
 	// requisition itens
 	const [requisitionItensId, setRequisitionItensId] = useState('')
@@ -198,6 +199,21 @@ function FormRequisition() {
 		}
 	}
 
+	const handleDeadLine = (e) => {
+		const result = e.target.value
+		console.log(compare(result))
+		if (compare(result) < 0) {
+			setType('error')
+			setMessage('O prazo deve ser maior ou igual que a data de hoje!')
+			setBtnIncluirHide(true)
+		} else {
+			setType(undefined)
+			setMessage(undefined)
+			setDeadLine(result)
+			setBtnIncluirHide(false)
+		}
+	}
+
 	const { userLogado } = useContext(User)
 
 	// insert the produts to requisition temp to requisition real
@@ -229,7 +245,6 @@ function FormRequisition() {
 				requisition.data.requisition_id,
 			)}`,
 		)
-		console.log(listRequisitionPdf)
 		localStorage.setItem('itens_pdf', JSON.stringify(listRequisitionPdf))
 		setTempToReal('real')
 		truncateTable()
@@ -257,8 +272,6 @@ function FormRequisition() {
 			alert('Erro ao enviar email: ' + error)
 		}
 	}
-
-	console.log(tempToReal)
 
 	return (
 		<>
@@ -441,7 +454,7 @@ function FormRequisition() {
 								value={deadLine}
 								type='date'
 								width='10em'
-								handleChange={(e) => setDeadLine(e.target.value)}
+								handleChange={handleDeadLine}
 								placeholder='Prazo'
 							/>
 							<TextArea
@@ -463,6 +476,7 @@ function FormRequisition() {
 								marginBottom='0'
 								marginTop='0.7em'
 								type='submit'
+								hide={btnIncluirHide}
 								disable={tempToReal === 'real' && true}
 								title={tempToReal === 'real' && 'Botão desativado'}>
 								{nameButton}
