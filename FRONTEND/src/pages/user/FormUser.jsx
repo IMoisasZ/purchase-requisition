@@ -29,6 +29,7 @@ function FormUser() {
 	const [type, setType] = useState(undefined)
 	const [btnDisable, setBtnDisable] = useState(false)
 	const [edit, setEdit] = useState({})
+	const [disableSelect, setDisableSelect] = useState(true)
 
 	useEffect(() => {
 		setId(edit.user_id)
@@ -52,6 +53,18 @@ function FormUser() {
 		setNameBtn('Incluir')
 		setState('Inclusão')
 	}, [])
+
+	useEffect(() => {
+		if (role === '3') {
+			setResponsable('')
+			setDisableSelect(false)
+		} else {
+			setResponsable('')
+			setDisableSelect(true)
+		}
+	}, [role])
+
+	console.log(typeof role)
 
 	const togleActived = () => {
 		setActived(!actived)
@@ -271,7 +284,8 @@ function FormUser() {
 							value={responsable}
 							width='18em'
 							handleChange={(e) => setResponsable(e.target.value)}
-							initial_text='Escolha um responsável...'>
+							initial_text='Escolha um responsável...'
+							disable={disableSelect}>
 							{listResponsable.map((resp) => {
 								return (
 									<option key={resp.user_id} value={resp.user_id}>

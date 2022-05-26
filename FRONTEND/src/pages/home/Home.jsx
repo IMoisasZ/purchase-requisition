@@ -11,6 +11,7 @@ function Home() {
 		try {
 			const result = await api.get('/user')
 			console.log(result.data.length === 0)
+
 			if (result.data.length === 0) {
 				await api.post('/sector', {
 					sector: 'ADMINISTRACAO',

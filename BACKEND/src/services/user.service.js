@@ -35,7 +35,10 @@ async function createUser(user) {
 		const createdUser = await UserRepository.createUser(user)
 
 		// create responsable
-		if (!(await ResponsableRepository.getResponsable(createdUser.user_id))) {
+		if (
+			Number(user.role_id) !== 3 &&
+			!(await ResponsableRepository.getResponsable(createdUser.user_id))
+		) {
 			await ResponsableRepository.createResponsable({
 				user_id: createdUser.user_id,
 				actived: true,
