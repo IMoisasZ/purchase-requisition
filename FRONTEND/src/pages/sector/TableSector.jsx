@@ -17,7 +17,7 @@ function TableSector({ edit, show, msg }) {
 	const [type, setType] = useState('')
 
 	// pagination
-	const [itensPorPagina, setItensPorPagina] = useState(2)
+	const [itensPorPagina, setItensPorPagina] = useState(8)
 	const [currentPage, setCurrentPage] = useState(0)
 	const pages = Math.ceil(listSectors.length / itensPorPagina)
 	const startIndex = currentPage * itensPorPagina
@@ -41,8 +41,8 @@ function TableSector({ edit, show, msg }) {
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro
-				)
+						: error.response.data.erro,
+				),
 			)
 		}
 	}
@@ -95,8 +95,7 @@ function TableSector({ edit, show, msg }) {
 											value={sector.sector_id}
 											handleClick={(e) => {
 												handleEditSector(sector.sector_id)
-											}}
-										>
+											}}>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar setor ${sector.sector}`}
@@ -112,8 +111,7 @@ function TableSector({ edit, show, msg }) {
 											handleClick={() => {
 												setDisable(sector.sector_id)
 												setActived(!sector.actived)
-											}}
-										>
+											}}>
 											{sector.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}

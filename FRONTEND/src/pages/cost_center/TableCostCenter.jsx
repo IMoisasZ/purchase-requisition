@@ -15,7 +15,7 @@ function TableCostCenter({ edit, show, msg, state, btn }) {
 	const [type, setType] = useState('')
 
 	// pagination
-	const [itensPorPagina, setItensPorPagina] = useState(2)
+	const [itensPorPagina, setItensPorPagina] = useState(8)
 	const [currentPage, setCurrentPage] = useState(0)
 	const pages = Math.ceil(listCostCenter.length / itensPorPagina)
 	const startIndex = currentPage * itensPorPagina
@@ -41,8 +41,8 @@ function TableCostCenter({ edit, show, msg, state, btn }) {
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro
-				)
+						: error.response.data.erro,
+				),
 			)
 		}
 	}
@@ -99,8 +99,7 @@ function TableCostCenter({ edit, show, msg, state, btn }) {
 											value={cc.cost_center_id}
 											handleClick={(e) => {
 												handleEditCostCenter(cc.cost_center_id)
-											}}
-										>
+											}}>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar centro de custos ${cc.description}`}
@@ -115,8 +114,7 @@ function TableCostCenter({ edit, show, msg, state, btn }) {
 											value={cc.cost_center_id}
 											handleClick={() => {
 												handleDisableEnable(cc.cost_center_id, cc.actived)
-											}}
-										>
+											}}>
 											{cc.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}

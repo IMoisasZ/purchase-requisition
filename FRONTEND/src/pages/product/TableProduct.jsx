@@ -15,7 +15,7 @@ function TableProduct({ edit, show, msg, state, btn, status }) {
 	const [type, setType] = useState('')
 
 	// pagination
-	const [itensPorPagina, setItensPorPagina] = useState(2)
+	const [itensPorPagina, setItensPorPagina] = useState(8)
 	const [currentPage, setCurrentPage] = useState(0)
 	const pages = Math.ceil(listProducts.length / itensPorPagina)
 	const startIndex = currentPage * itensPorPagina
@@ -31,7 +31,7 @@ function TableProduct({ edit, show, msg, state, btn, status }) {
 		try {
 			const result = await api.get(`/product/${product_id}`)
 			const statusProduct = await api.get(
-				`/requisition_itens/product-requisition/${product_id}`
+				`/requisition_itens/product-requisition/${product_id}`,
 			)
 
 			edit(result.data)
@@ -46,8 +46,8 @@ function TableProduct({ edit, show, msg, state, btn, status }) {
 				setMessage(
 					error.response.data.erros
 						? error.response.data.erros
-						: error.response.data.erro
-				)
+						: error.response.data.erro,
+				),
 			)
 		}
 	}
@@ -102,8 +102,7 @@ function TableProduct({ edit, show, msg, state, btn, status }) {
 											value={product.product_id}
 											handleClick={() => {
 												handleEditProduct(product.product_id)
-											}}
-										>
+											}}>
 											<EditRoundedIcon
 												style={{ color: 'orange' }}
 												titleAccess={`Editar produto ${product.description}`}
@@ -118,8 +117,7 @@ function TableProduct({ edit, show, msg, state, btn, status }) {
 											value={product.product_id}
 											handleClick={() => {
 												handleDisableEnable(product.product_id, product.actived)
-											}}
-										>
+											}}>
 											{product.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}

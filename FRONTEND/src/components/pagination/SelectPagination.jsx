@@ -8,7 +8,7 @@ function SelectPagination({ handleOnChange }) {
 				onChange={handleOnChange}
 				name='number_pages'
 				id='number_pages'
-				defaultValue={2}>
+				defaultValue={8}>
 				<option value={2}>2</option>
 				<option value={5}>5</option>
 				<option value={8}>8</option>

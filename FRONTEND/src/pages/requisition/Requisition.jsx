@@ -6,9 +6,9 @@ function Requisition() {
 	return (
 		<>
 			<Container
-				minHeight='30em'
+				minHeight='69vh'
 				maxWidth='100%'
-				margin='0'
+				margin='0 auto'
 				padding='0'
 				nameH1='Requisição'>
 				<FormRequisition />

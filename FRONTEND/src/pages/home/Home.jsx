@@ -4,34 +4,31 @@ import Container from '../../components/container/MyContainer'
 import Button from '../../components/button/MyButton'
 import style from './Home.module.css'
 import api from '../../api/api'
+import {
+	SectorDefault,
+	roleDefault,
+	userDefault,
+} from '../../utils/defaultData'
 
 function Home() {
+	if (localStorage.getItem('user_log')) {
+		localStorage.clear('user_log')
+	}
+
 	const navigate = useNavigate()
 	const handleDefault = async () => {
 		try {
 			const result = await api.get('/user')
-			console.log(result.data.length === 0)
 
 			if (result.data.length === 0) {
-				await api.post('/sector', {
-					sector: 'ADMINISTRACAO',
-					actived: true,
+				const sector = SectorDefault()
+				const role = roleDefault()
+				const user = userDefault()
+				await api.post('/sector', sector)
+				role.map(async (r) => {
+					await api.post('/role', r)
 				})
-				await api.post('/role', {
-					role: 'MASTER',
-					actived: true,
-				})
-				await api.post('/user', {
-					name: 'MOISES',
-					last_name: 'SANTOS',
-					sector_id: 1,
-					role_id: 1,
-					responsable_id: null,
-					email: 'devimoisasz@gmail.com',
-					password: '123456',
-					confirm_password: '123456',
-					actived: true,
-				})
+				await api.post('/user', user)
 				navigate('/login')
 			}
 			navigate('/login')
@@ -40,7 +37,7 @@ function Home() {
 		}
 	}
 	return (
-		<Container minHeight='71.3vh' hideIcon={true} hideH1={true}>
+		<Container minHeight='69vh' hideIcon={true} hideH1={true}>
 			<div className={style.container}>
 				<div className={style.div_h1}>
 					<h1>Solicitação de Compras</h1>

@@ -17,7 +17,7 @@ function TableUnity({ edit, show, msg, state, btn }) {
 	const [type, setType] = useState('')
 
 	// pagination
-	const [itensPorPagina, setItensPorPagina] = useState(2)
+	const [itensPorPagina, setItensPorPagina] = useState(8)
 	const [currentPage, setCurrentPage] = useState(0)
 	const pages = Math.ceil(listUnity.length / itensPorPagina)
 	const startIndex = currentPage * itensPorPagina

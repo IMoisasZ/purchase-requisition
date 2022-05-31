@@ -11,7 +11,7 @@ function TableResponsable() {
 	const [listResponsable, setListResponsable] = useState([])
 
 	// pagination
-	const [itensPorPagina, setItensPorPagina] = useState(2)
+	const [itensPorPagina, setItensPorPagina] = useState(8)
 	const [currentPage, setCurrentPage] = useState(0)
 	const pages = Math.ceil(listResponsable.length / itensPorPagina)
 	const startIndex = currentPage * itensPorPagina
@@ -70,8 +70,7 @@ function TableResponsable() {
 											value={resp.responsable_id}
 											handleClick={() => {
 												handleDisableEnable(resp.responsable_id, resp.actived)
-											}}
-										>
+											}}>
 											{resp.actived ? (
 												<CheckCircleIcon
 													style={{ color: 'green' }}

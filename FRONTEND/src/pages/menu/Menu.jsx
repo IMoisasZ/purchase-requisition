@@ -18,7 +18,7 @@ function Menu() {
 	const user = JSON.parse(localStorage.getItem('user_log'))
 
 	return (
-		<Container minHeight='68vh' hideIcon={true} nameH1='Menu Principal'>
+		<Container minHeight='69vh' hideIcon={true} nameH1='Menu Principal'>
 			{user.data.role_id === 1 && (
 				<div className={style.container}>
 					<section>
